@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طلبات التسجيل - ITWS Union</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* نفس تنسيقات الصفحات السابقة مع إضافات */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+        }
+
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            z-index: 100;
+            overflow-y: auto;
+        }
+
+        .main-content {
+            margin-right: 280px;
+            padding: 20px;
+        }
+
+        .requests-container {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .request-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f5f5f5;
+            padding-bottom: 10px;
+        }
+
+        .request-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .request-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .request-tab .count {
+            background: rgba(0,0,0,0.1);
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-right: 5px;
+            font-size: 12px;
+        }
+
+        .request-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-right: 4px solid #667eea;
+            transition: all 0.3s;
+        }
+
+        .request-card:hover {
+            transform: translateX(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .request-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .request-user {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .request-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .request-user-info h4 {
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .request-user-info p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .request-status {
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status-rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .request-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: white;
+            border-radius: 10px;
+        }
+
+        .detail-item {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .detail-item .label {
+            font-size: 12px;
+            color: #666;
+        }
+
+        .detail-item .value {
+            font-size: 14px;
+            color: #333;
+            font-weight: 600;
+        }
+
+        .request-documents {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .document-link {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 15px;
+            background: #e3f2fd;
+            color: #1976d2;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 13px;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .btn-approve {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            color: #155724;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-reject {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: #721c24;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .btn-edit {
+            background: #fff3e0;
+            color: #f57c00;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .ai-toggle {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255,107,107,0.3);
+            z-index: 999;
+        }
+
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 2000;
+            display: none;
+        }
+
+        .loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 3000;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            width: 90%;
+            max-width: 500px;
+        }
+
+        .reject-reason {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            margin: 15px 0;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <!-- الشريط الجانبي -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header" id="userInfo">
+            <!-- يتم تعبئتها ديناميكياً -->
+        </div>
+
+        <div class="sidebar-menu">
+            <a href="dashboard.html" class="menu-item">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </a>
+            <a href="committees.html" class="menu-item">
+                <i class="fas fa-users"></i>
+                اللجان
+            </a>
+            <a href="branches.html" class="menu-item">
+                <i class="fas fa-building"></i>
+                الفروع
+            </a>
+            <a href="members.html" class="menu-item">
+                <i class="fas fa-user-tie"></i>
+                الأعضاء
+            </a>
+            <a href="requests.html" class="menu-item active">
+                <i class="fas fa-clipboard-list"></i>
+                طلبات التسجيل
+                <span class="badge" id="pendingCount">0</span>
+            </a>
+            <a href="reports.html" class="menu-item">
+                <i class="fas fa-chart-bar"></i>
+                التقارير
+            </a>
+            <a href="tracking.html" class="menu-item">
+                <i class="fas fa-exchange-alt"></i>
+                نظام التتبع
+            </a>
+            
+            <div style="height: 20px;"></div>
+            <a href="#" class="menu-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                تسجيل الخروج
+            </a>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <div class="top-bar">
+            <div class="page-title">
+                <h2>طلبات التسجيل</h2>
+                <p id="currentDateTime"></p>
+            </div>
+        </div>
+
+        <div class="requests-container">
+            <!-- تبويبات الطلبات -->
+            <div class="request-tabs">
+                <div class="request-tab active" onclick="switchTab('pending')">
+                    <i class="fas fa-clock"></i>
+                    في الانتظار
+                    <span class="count" id="pendingCount">0</span>
+                </div>
+                <div class="request-tab" onclick="switchTab('approved')">
+                    <i class="fas fa-check-circle"></i>
+                    مقبولة
+                    <span class="count" id="approvedCount">0</span>
+                </div>
+                <div class="request-tab" onclick="switchTab('rejected')">
+                    <i class="fas fa-times-circle"></i>
+                    مرفوضة
+                    <span class="count" id="rejectedCount">0</span>
+                </div>
+                <div class="request-tab" onclick="switchTab('all')">
+                    <i class="fas fa-list"></i>
+                    الكل
+                    <span class="count" id="totalCount">0</span>
+                </div>
+            </div>
+
+            <!-- قائمة الطلبات -->
+            <div id="requestsList">
+                <!-- يتم تعبئتها ديناميكياً -->
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة رفض مع سبب -->
+    <div class="modal" id="rejectModal">
+        <div class="modal-content">
+            <h3>سبب الرفض</h3>
+            <textarea class="reject-reason" id="rejectReason" placeholder="اكتب سبب الرفض..." rows="4"></textarea>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-reject" style="flex: 1;" onclick="confirmReject()">تأكيد الرفض</button>
+                <button class="btn-edit" style="flex: 1;" onclick="closeRejectModal()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- زر ITWS AI -->
+    <div class="ai-toggle" onclick="toggleAIChat()">
+        <i class="fas fa-robot"></i>
+    </div>
+
+    <!-- رسائل النظام -->
+    <div id="messageBox" class="message-box"></div>
+
+    <!-- شاشة التحميل -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <script type="module">
+        // استيراد Firebase
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, set, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
+            authDomain: "itws-system.firebaseapp.com",
+            databaseURL: "https://itws-system-default-rtdb.firebaseio.com",
+            projectId: "itws-system",
+            storageBucket: "itws-system.firebasestorage.app",
+            messagingSenderId: "770452248691",
+            appId: "1:770452248691:web:0e94e65e01298b398bb206",
+            measurementId: "G-8V5WSYEX0B"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // التحقق من تسجيل الدخول
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+
+        // التحقق من الصلاحية (فقط النقيب والنائب)
+        if (currentUser.role !== 'president' && currentUser.role !== 'vice_president') {
+            window.location.href = 'dashboard.html';
+        }
+
+        let requests = [];
+        let currentTab = 'pending';
+        let currentRequestId = null;
+
+        // تحديث التاريخ والوقت
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ar-EG', options);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        // عرض معلومات المستخدم
+        function displayUserInfo() {
+            const userInfo = document.getElementById('userInfo');
+            userInfo.innerHTML = `
+                <div class="user-avatar" style="width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #667eea;">
+                    <i class="fas fa-user-circle"></i>
+                </div>
+                <h3>${currentUser.fullName || currentUser.username}</h3>
+                <p>${currentUser.title || currentUser.role}</p>
+            `;
+        }
+        displayUserInfo();
+
+        function showMessage(text, type) {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.textContent = text;
+            msgBox.className = `message-box ${type}`;
+            msgBox.style.display = 'block';
+            setTimeout(() => {
+                msgBox.style.display = 'none';
+            }, 3000);
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
+        }
+
+        // تحميل الطلبات
+        async function loadRequests() {
+            showLoading(true);
+            try {
+                const requestsRef = ref(database, 'pending_requests');
+                const snapshot = await get(requestsRef);
+                
+                if (snapshot.exists()) {
+                    requests = Object.entries(snapshot.val()).map(([id, data]) => ({
+                        id,
+                        ...data
+                    }));
+                } else {
+                    requests = [];
+                }
+
+                updateCounts();
+                displayRequests();
+
+            } catch (error) {
+                console.error('Error loading requests:', error);
+                showMessage('حدث خطأ في تحميل الطلبات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // تحديث الإحصائيات
+        function updateCounts() {
+            const pending = requests.filter(r => r.status === 'pending').length;
+            const approved = requests.filter(r => r.status === 'approved').length;
+            const rejected = requests.filter(r => r.status === 'rejected').length;
+
+            document.getElementById('pendingCount').textContent = pending;
+            document.getElementById('approvedCount').textContent = approved;
+            document.getElementById('rejectedCount').textContent = rejected;
+            document.getElementById('totalCount').textContent = requests.length;
+        }
+
+        // عرض الطلبات
+        function displayRequests() {
+            const list = document.getElementById('requestsList');
+            
+            let filteredRequests = requests;
+            if (currentTab !== 'all') {
+                filteredRequests = requests.filter(r => r.status === currentTab);
+            }
+
+            if (filteredRequests.length === 0) {
+                list.innerHTML = '<p style="text-align: center; color: #999; padding: 40px;">لا توجد طلبات</p>';
+                return;
+            }
+
+            list.innerHTML = filteredRequests.map(request => `
+                <div class="request-card">
+                    <div class="request-header">
+                        <div class="request-user">
+                            <div class="request-avatar">
+                                ${(request.fullName || '?').charAt(0)}
+                            </div>
+                            <div class="request-user-info">
+                                <h4>${request.fullName}</h4>
+                                <p>${request.phone}</p>
+                            </div>
+                        </div>
+                        <span class="request-status status-${request.status}">
+                            ${request.status === 'pending' ? 'في الانتظار' : 
+                              request.status === 'approved' ? 'مقبول' : 'مرفوض'}
+                        </span>
+                    </div>
+
+                    <div class="request-details">
+                        <div class="detail-item">
+                            <span class="label">الرقم القومي</span>
+                            <span class="value">${request.nationalId}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">الصفة</span>
+                            <span class="value">${request.position}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">المحافظة</span>
+                            <span class="value">${request.governorate}</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="label">تاريخ الطلب</span>
+                            <span class="value">${new Date(request.requestDate).toLocaleDateString('ar-EG')}</span>
+                        </div>
+                    </div>
+
+                    <div class="request-documents">
+                        <a href="${request.profileImage}" target="_blank" class="document-link">
+                            <i class="fas fa-image"></i>
+                            الصورة الشخصية
+                        </a>
+                        <a href="${request.appointmentDoc}" target="_blank" class="document-link">
+                            <i class="fas fa-file-pdf"></i>
+                            قرار التعيين
+                        </a>
+                    </div>
+
+                    ${request.status === 'pending' ? `
+                        <div class="request-actions">
+                            <button class="btn-approve" onclick="approveRequest('${request.id}')">
+                                <i class="fas fa-check"></i>
+                                قبول
+                            </button>
+                            <button class="btn-edit" onclick="editRequest('${request.id}')">
+                                <i class="fas fa-edit"></i>
+                                تعديل
+                            </button>
+                            <button class="btn-reject" onclick="showRejectModal('${request.id}')">
+                                <i class="fas fa-times"></i>
+                                رفض
+                            </button>
+                        </div>
+                    ` : request.status === 'rejected' && request.rejectReason ? `
+                        <div style="background: #f8d7da; color: #721c24; padding: 10px; border-radius: 8px; margin-top: 10px;">
+                            <strong>سبب الرفض:</strong> ${request.rejectReason}
+                        </div>
+                    ` : ''}
+                </div>
+            `).join('');
+        }
+
+        // قبول طلب
+        window.approveRequest = async function(requestId) {
+            if (!confirm('هل أنت متأكد من قبول هذا الطلب؟')) return;
+
+            showLoading(true);
+            try {
+                const request = requests.find(r => r.id === requestId);
+                if (!request) return;
+
+                // إنشاء حساب جديد
+                const userData = {
+                    fullName: request.fullName,
+                    nationalId: request.nationalId,
+                    password: request.nationalId,
+                    phone: request.phone,
+                    position: request.position,
+                    governorate: request.governorate,
+                    profileImage: request.profileImage,
+                    role: request.position === 'committee_member' ? 'committee_member' : 'branch_member',
+                    title: request.position === 'committee_member' ? 'عضو لجنة' : 'عضو فرع',
+                    status: 'active',
+                    online: false,
+                    createdAt: new Date().toISOString(),
+                    approvedBy: currentUser.userId,
+                    approvedAt: new Date().toISOString()
+                };
+
+                if (request.committeeName) {
+                    userData.committee = request.committeeName;
+                }
+                if (request.branchName) {
+                    userData.branch = request.branchName;
+                }
+
+                // حفظ المستخدم
+                const usersRef = ref(database, 'users');
+                const newUserRef = push(usersRef);
+                await set(newUserRef, userData);
+
+                // تحديث حالة الطلب
+                await update(ref(database, `pending_requests/${requestId}`), {
+                    status: 'approved',
+                    approvedAt: new Date().toISOString(),
+                    approvedBy: currentUser.userId,
+                    userId: newUserRef.key
+                });
+
+                // إضافة العضو إلى اللجنة أو الفرع
+                if (request.committeeName) {
+                    // البحث عن اللجنة أو إنشائها
+                    const committeesRef = ref(database, 'committees');
+                    const committeesSnap = await get(committeesRef);
+                    let committeeId = null;
+                    
+                    if (committeesSnap.exists()) {
+                        const committees = committeesSnap.val();
+                        for (const [id, committee] of Object.entries(committees)) {
+                            if (committee.name === request.committeeName) {
+                                committeeId = id;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (committeeId) {
+                        await update(ref(database, `committees/${committeeId}/members/${newUserRef.key}`), {
+                            role: request.memberPosition || 'member',
+                            joinedAt: new Date().toISOString()
+                        });
+                    }
+                }
+
+                if (request.branchName) {
+                    // البحث عن الفرع أو إنشائه
+                    const branchesRef = ref(database, 'branches');
+                    const branchesSnap = await get(branchesRef);
+                    let branchId = null;
+                    
+                    if (branchesSnap.exists()) {
+                        const branches = branchesSnap.val();
+                        for (const [id, branch] of Object.entries(branches)) {
+                            if (branch.name === request.branchName) {
+                                branchId = id;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (branchId) {
+                        await update(ref(database, `branches/${branchId}/members/${newUserRef.key}`), {
+                            role: request.memberPosition || 'member',
+                            joinedAt: new Date().toISOString()
+                        });
+                    }
+                }
+
+                // تسجيل النشاط
+                await push(ref(database, 'activities'), {
+                    type: 'member',
+                    title: 'عضو جديد',
+                    description: `تم قبول طلب ${request.fullName}`,
+                    icon: 'fa-user-plus',
+                    timestamp: new Date().toISOString()
+                });
+
+                showMessage('تم قبول الطلب وإضافة العضو بنجاح', 'success');
+                loadRequests();
+
+            } catch (error) {
+                console.error('Error approving request:', error);
+                showMessage('حدث خطأ في قبول الطلب', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // رفض طلب
+        window.showRejectModal = function(requestId) {
+            currentRequestId = requestId;
+            document.getElementById('rejectModal').classList.add('active');
+        };
+
+        window.closeRejectModal = function() {
+            document.getElementById('rejectModal').classList.remove('active');
+            document.getElementById('rejectReason').value = '';
+        };
+
+        window.confirmReject = async function() {
+            const reason = document.getElementById('rejectReason').value.trim();
+            if (!reason) {
+                showMessage('يرجى كتابة سبب الرفض', 'error');
+                return;
+            }
+
+            showLoading(true);
+            try {
+                await update(ref(database, `pending_requests/${currentRequestId}`), {
+                    status: 'rejected',
+                    rejectReason: reason,
+                    rejectedAt: new Date().toISOString(),
+                    rejectedBy: currentUser.userId
+                });
+
+                showMessage('تم رفض الطلب', 'success');
+                closeRejectModal();
+                loadRequests();
+
+            } catch (error) {
+                console.error('Error rejecting request:', error);
+                showMessage('حدث خطأ في رفض الطلب', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // تعديل الطلب
+        window.editRequest = function(requestId) {
+            // التوجيه إلى صفحة التعديل
+            sessionStorage.setItem('editRequest', requestId);
+            window.location.href = 'edit-request.html';
+        };
+
+        // تبديل التبويبات
+        window.switchTab = function(tab) {
+            currentTab = tab;
+            document.querySelectorAll('.request-tab').forEach(t => t.classList.remove('active'));
+            event.target.classList.add('active');
+            displayRequests();
+        };
+
+        // دوال ITWS AI
+        window.toggleAIChat = function() {
+            // تنفيذ محادثة AI
+            alert('ITWS AI: كيف يمكنني مساعدتك في إدارة الطلبات؟');
+        };
+
+        // تسجيل الخروج
+        window.logout = async function() {
+            await update(ref(database, `users/${currentUser.userId}`), {
+                online: false,
+                lastSeen: new Date().toISOString()
+            });
+            sessionStorage.removeItem('currentUser');
+            window.location.href = 'index.html';
+        };
+
+        // تحميل البيانات عند فتح الصفحة
+        window.addEventListener('load', () => {
+            loadRequests();
+        });
+
+        // تحديث مباشر
+        onValue(ref(database, 'pending_requests'), () => loadRequests());
+
+    </script>
+</body>
+</html>
