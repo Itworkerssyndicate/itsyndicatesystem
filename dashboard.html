@@ -1060,6 +1060,32 @@
             sessionStorage.removeItem('currentUser');
             window.location.href = 'index.html';
         };
+
+        <!-- أضف هذا في نهاية الصفحة قبل إغلاق </body> -->
+<script type="module">
+    import ITWSAI from './assets/js/itws-ai.js';
+    import ChatInterface from './assets/js/chat-interface.js';
+    
+    // المستخدم الحالي
+    const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+    
+    // تهيئة AI
+    const ai = new ITWSAI(currentUser);
+    
+    // تفعيل AI
+    ai.initialize().then(result => {
+        console.log('AI جاهز:', result);
+        
+        // تفعيل واجهة المحادثة
+        const chat = new ChatInterface(ai);
+    });
+    
+    // دالة عالمية للاستخدام
+    window.processAICommand = async function(command) {
+        const result = await ai.processCommand(command);
+        console.log('النتيجة:', result);
+        return result;
+    };
     </script>
 </body>
 </html>
