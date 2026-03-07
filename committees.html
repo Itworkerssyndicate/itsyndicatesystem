@@ -6,8 +6,8 @@
     <title>إدارة اللجان - ITWS Union</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/themes.css">
     <style>
-        /* نفس تنسيقات dashboard.html مع إضافات */
         * {
             margin: 0;
             padding: 0;
@@ -16,26 +16,45 @@
         }
 
         body {
-            background: #f5f5f5;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: all 0.3s ease;
         }
 
+        /* الشريط الجانبي */
         .sidebar {
             position: fixed;
             right: 0;
             top: 0;
             width: 280px;
             height: 100%;
-            background: white;
-            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            background: var(--bg-sidebar);
+            box-shadow: -5px 0 20px var(--shadow-color);
             z-index: 100;
             overflow-y: auto;
         }
 
         .sidebar-header {
             padding: 30px 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--bg-header);
             color: white;
             text-align: center;
+        }
+
+        .sidebar-header .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: var(--primary-color);
+            border: 3px solid rgba(255,255,255,0.3);
+            cursor: pointer;
         }
 
         .sidebar-menu {
@@ -46,7 +65,7 @@
             display: flex;
             align-items: center;
             padding: 12px 15px;
-            color: #666;
+            color: var(--text-secondary);
             text-decoration: none;
             border-radius: 10px;
             margin-bottom: 5px;
@@ -59,33 +78,49 @@
         }
 
         .menu-item:hover, .menu-item.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
             color: white;
         }
 
+        .menu-item .badge {
+            background: var(--danger-color);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: auto;
+        }
+
+        .ai-menu-item {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
+            color: white !important;
+            margin-top: 20px;
+        }
+
+        /* المحتوى الرئيسي */
         .main-content {
             margin-right: 280px;
             padding: 20px;
         }
 
         .top-bar {
-            background: white;
+            background: var(--bg-card);
             padding: 15px 25px;
             border-radius: 15px;
             margin-bottom: 25px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px var(--shadow-color);
         }
 
         .page-title h2 {
-            color: #333;
+            color: var(--text-primary);
             font-size: 24px;
         }
 
         .page-title p {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 14px;
         }
 
@@ -95,7 +130,7 @@
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: var(--gradient-primary);
             color: white;
             border: none;
             padding: 10px 20px;
@@ -111,14 +146,14 @@
 
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+            box-shadow: 0 5px 15px var(--shadow-hover);
         }
 
         .btn-secondary {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            border: none;
-            padding: 10px 20px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            padding: 8px 18px;
             border-radius: 10px;
             font-size: 14px;
             font-weight: 600;
@@ -129,6 +164,45 @@
             transition: all 0.3s;
         }
 
+        .btn-secondary:hover {
+            border-color: var(--primary-color);
+        }
+
+        /* تبويبات اللجان */
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: var(--bg-card);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px var(--shadow-color);
+            flex-wrap: wrap;
+        }
+
+        .tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.3s;
+            color: var(--text-secondary);
+        }
+
+        .tab i {
+            margin-left: 8px;
+        }
+
+        .tab:hover {
+            background: var(--bg-primary);
+        }
+
+        .tab.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        /* شبكة اللجان */
         .committees-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -137,17 +211,30 @@
         }
 
         .committee-card {
-            background: white;
+            background: var(--bg-card);
             border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            box-shadow: 0 5px 15px var(--shadow-color);
             transition: all 0.3s;
-            border-right: 4px solid #667eea;
+            border-right: 4px solid var(--primary-color);
+            border: 1px solid var(--border-light);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .committee-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            box-shadow: 0 10px 25px var(--shadow-hover);
         }
 
         .committee-header {
@@ -158,7 +245,7 @@
         }
 
         .committee-header h3 {
-            color: #333;
+            color: var(--text-primary);
             font-size: 18px;
             display: flex;
             align-items: center;
@@ -166,7 +253,7 @@
         }
 
         .committee-header h3 i {
-            color: #667eea;
+            color: var(--primary-color);
         }
 
         .committee-status {
@@ -187,11 +274,11 @@
         }
 
         .committee-description {
-            color: #666;
+            color: var(--text-secondary);
             font-size: 14px;
             margin-bottom: 15px;
             padding-bottom: 15px;
-            border-bottom: 1px solid #eee;
+            border-bottom: 1px solid var(--border-light);
         }
 
         .committee-stats {
@@ -199,7 +286,7 @@
             justify-content: space-around;
             margin-bottom: 15px;
             padding: 10px;
-            background: #f8f9fa;
+            background: var(--bg-primary);
             border-radius: 10px;
         }
 
@@ -211,21 +298,23 @@
             display: block;
             font-size: 20px;
             font-weight: 700;
-            color: #667eea;
+            color: var(--primary-color);
         }
 
         .stat .label {
             font-size: 11px;
-            color: #666;
+            color: var(--text-secondary);
         }
 
         .committee-actions {
             display: flex;
             gap: 10px;
+            flex-wrap: wrap;
         }
 
         .committee-actions button {
             flex: 1;
+            min-width: 60px;
             padding: 8px;
             border: none;
             border-radius: 8px;
@@ -259,12 +348,17 @@
             color: #8e24aa;
         }
 
+        .btn-send {
+            background: #e1f5fe;
+            color: #0288d1;
+        }
+
         .btn-delete {
             background: #ffebee;
             color: #c62828;
         }
 
-        /* نافذة إنشاء لجنة جديدة */
+        /* نافذة منبثقة */
         .modal {
             display: none;
             position: fixed;
@@ -276,14 +370,16 @@
             z-index: 1000;
             align-items: center;
             justify-content: center;
+            backdrop-filter: blur(5px);
         }
 
         .modal.active {
             display: flex;
+            animation: fadeIn 0.3s ease;
         }
 
         .modal-content {
-            background: white;
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 30px;
             width: 90%;
@@ -298,23 +394,20 @@
             justify-content: space-between;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid #f5f5f5;
+            border-bottom: 2px solid var(--border-light);
         }
 
         .modal-header h3 {
-            color: #333;
+            color: var(--text-primary);
             font-size: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
         }
 
         .close-modal {
             background: none;
             border: none;
+            color: var(--text-secondary);
             font-size: 24px;
             cursor: pointer;
-            color: #666;
         }
 
         .form-group {
@@ -324,139 +417,26 @@
         .form-group label {
             display: block;
             margin-bottom: 8px;
-            color: #555;
+            color: var(--text-secondary);
             font-weight: 600;
-            font-size: 14px;
         }
 
         .form-group input, .form-group select, .form-group textarea {
             width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #e0e0e0;
+            padding: 12px;
+            border: 2px solid var(--border-color);
             border-radius: 10px;
-            font-size: 14px;
-            transition: all 0.3s;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: 'Cairo', sans-serif;
         }
 
         .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
-            border-color: #667eea;
+            border-color: var(--primary-color);
             outline: none;
-            box-shadow: 0 0 0 3px rgba(102,126,234,0.1);
         }
 
-        .tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #f5f5f5;
-            padding-bottom: 10px;
-        }
-
-        .tab {
-            padding: 10px 20px;
-            cursor: pointer;
-            border-radius: 10px;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .tab.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .tab-content {
-            display: none;
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
-        .members-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .member-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 12px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .member-item:hover {
-            background: #f8f9fa;
-        }
-
-        .member-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-        }
-
-        .member-avatar {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-        }
-
-        .member-details h4 {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 3px;
-        }
-
-        .member-details p {
-            color: #666;
-            font-size: 12px;
-        }
-
-        .member-role {
-            padding: 4px 10px;
-            background: #e3f2fd;
-            color: #1976d2;
-            border-radius: 20px;
-            font-size: 11px;
-            font-weight: 600;
-        }
-
-        .reports-list {
-            max-height: 400px;
-            overflow-y: auto;
-        }
-
-        .report-item {
-            padding: 15px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .report-item h4 {
-            color: #333;
-            font-size: 14px;
-            margin-bottom: 5px;
-        }
-
-        .report-meta {
-            display: flex;
-            gap: 15px;
-            color: #666;
-            font-size: 12px;
-            margin-bottom: 10px;
-        }
-
-        .report-actions {
-            display: flex;
-            gap: 10px;
-        }
-
+        /* أيقونة AI */
         .ai-toggle {
             position: fixed;
             bottom: 20px;
@@ -473,106 +453,15 @@
             cursor: pointer;
             box-shadow: 0 5px 20px rgba(255,107,107,0.3);
             z-index: 999;
+            transition: all 0.3s;
+            animation: pulse 2s infinite;
         }
 
-        .ai-chat-window {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 350px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 1000;
-            display: none;
+        .ai-toggle:hover {
+            transform: scale(1.1);
         }
 
-        .ai-chat-header {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-            color: white;
-            padding: 15px;
-            border-radius: 15px 15px 0 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .ai-chat-body {
-            height: 300px;
-            padding: 15px;
-            overflow-y: auto;
-        }
-
-        .ai-message, .user-message {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .user-message {
-            flex-direction: row-reverse;
-        }
-
-        .ai-message .avatar, .user-message .avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-        }
-
-        .ai-message .avatar {
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-        }
-
-        .user-message .avatar {
-            background: #667eea;
-        }
-
-        .ai-message .message, .user-message .message {
-            padding: 10px;
-            border-radius: 10px;
-            max-width: 80%;
-            font-size: 13px;
-        }
-
-        .ai-message .message {
-            background: #f0f2f5;
-        }
-
-        .user-message .message {
-            background: #667eea;
-            color: white;
-        }
-
-        .ai-chat-footer {
-            padding: 15px;
-            border-top: 1px solid #eee;
-            display: flex;
-            gap: 10px;
-        }
-
-        .ai-chat-footer input {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 20px;
-            outline: none;
-        }
-
-        .ai-chat-footer button {
-            width: 40px;
-            height: 40px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-        }
-
+        /* رسائل النظام */
         .message-box {
             position: fixed;
             top: 20px;
@@ -582,16 +471,21 @@
             border-radius: 10px;
             color: white;
             font-weight: 600;
-            z-index: 2000;
+            z-index: 9999;
             display: none;
+            animation: slideDown 0.3s ease;
         }
 
         .message-box.success {
-            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+            background: var(--success-color);
         }
 
         .message-box.error {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            background: var(--danger-color);
+        }
+
+        .message-box.info {
+            background: var(--info-color);
         }
 
         .loading-spinner {
@@ -600,19 +494,20 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255,255,255,0.9);
+            background: rgba(0,0,0,0.5);
             display: none;
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            z-index: 3000;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
         }
 
         .spinner {
             width: 50px;
             height: 50px;
             border: 5px solid #f3f3f3;
-            border-top: 5px solid #667eea;
+            border-top: 5px solid var(--primary-color);
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-bottom: 15px;
@@ -621,6 +516,36 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
+        /* استجابة للجوال */
+        @media (max-width: 768px) {
+            .sidebar {
+                right: -280px;
+            }
+            .sidebar.active {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+            .committees-grid {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
@@ -656,22 +581,32 @@
                 طلبات التسجيل
                 <span class="badge" id="pendingRequests">0</span>
             </a>
-            <a href="reports.html" class="menu-item">
-                <i class="fas fa-chart-bar"></i>
-                التقارير
-            </a>
             <a href="tracking.html" class="menu-item">
                 <i class="fas fa-exchange-alt"></i>
                 نظام التتبع
+                <span class="badge" id="trackingCount">0</span>
             </a>
-            <a href="suggestions.html" class="menu-item">
-                <i class="fas fa-lightbulb"></i>
-                الاقتراحات
+            <a href="messages.html" class="menu-item">
+                <i class="fas fa-envelope"></i>
+                الرسائل
+                <span class="badge" id="messagesCount">0</span>
+            </a>
+            <a href="evaluations.html" class="menu-item">
+                <i class="fas fa-star"></i>
+                التقييمات
+            </a>
+            <a href="attendance.html" class="menu-item">
+                <i class="fas fa-clock"></i>
+                الحضور
+            </a>
+            <a href="profile.html" class="menu-item">
+                <i class="fas fa-user-circle"></i>
+                الملف الشخصي
             </a>
             
             <div style="height: 20px;"></div>
             
-            <a href="#" class="menu-item" style="background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%); color: white;" onclick="toggleAIChat()">
+            <a href="#" class="menu-item ai-menu-item" onclick="toggleAIChat()">
                 <i class="fas fa-robot"></i>
                 ITWS AI مساعد
             </a>
@@ -690,77 +625,73 @@
         <!-- الشريط العلوي -->
         <div class="top-bar">
             <div class="page-title">
-                <h2>إدارة اللجان</h2>
+                <h2><i class="fas fa-users"></i> إدارة اللجان</h2>
                 <p id="currentDateTime"></p>
             </div>
             <div class="action-buttons">
                 <button class="btn-primary" onclick="showCreateCommitteeModal()">
                     <i class="fas fa-plus"></i>
-                    إنشاء لجنة جديدة
+                    إنشاء لجنة
                 </button>
-                <button class="btn-secondary" onclick="showTrackingModal()">
-                    <i class="fas fa-exchange-alt"></i>
-                    تتبع المراسلات
+                <button class="btn-secondary" onclick="showSendRequestModal()">
+                    <i class="fas fa-paper-plane"></i>
+                    طلب إلى فرع
                 </button>
             </div>
         </div>
 
         <!-- تبويبات اللجان -->
         <div class="tabs">
-            <div class="tab active" onclick="switchTab('all')">جميع اللجان</div>
-            <div class="tab" onclick="switchTab('my')">لجاني</div>
-            <div class="tab" onclick="switchTab('reports')">التقارير</div>
-            <div class="tab" onclick="switchTab('requests')">الطلبات الواردة</div>
+            <div class="tab active" onclick="switchTab('all')">
+                <i class="fas fa-list"></i>
+                جميع اللجان
+            </div>
+            <div class="tab" onclick="switchTab('my')">
+                <i class="fas fa-user-tie"></i>
+                لجنتي
+            </div>
+            <div class="tab" onclick="switchTab('requests')">
+                <i class="fas fa-inbox"></i>
+                الطلبات الواردة
+                <span class="badge" id="requestsBadge">0</span>
+            </div>
+            <div class="tab" onclick="switchTab('reports')">
+                <i class="fas fa-file-alt"></i>
+                التقارير
+            </div>
         </div>
 
         <!-- محتوى جميع اللجان -->
-        <div id="allCommitteesTab" class="tab-content active">
+        <div id="allCommitteesTab" class="tab-content" style="display: block;">
             <div class="committees-grid" id="committeesGrid">
                 <!-- يتم تعبئتها ديناميكياً -->
+                <div class="loading-spinner" style="display: flex; position: relative; background: transparent;">
+                    <div class="spinner"></div>
+                </div>
             </div>
         </div>
 
-        <!-- محتوى لجاني -->
-        <div id="myCommitteesTab" class="tab-content">
-            <div class="committees-grid" id="myCommitteesGrid">
-                <!-- يتم تعبئتها ديناميكياً -->
-            </div>
+        <!-- محتوى لجنتي -->
+        <div id="myCommitteesTab" class="tab-content" style="display: none;">
+            <div class="committees-grid" id="myCommitteesGrid"></div>
+        </div>
+
+        <!-- محتوى الطلبات -->
+        <div id="requestsTab" class="tab-content" style="display: none;">
+            <div class="requests-list" id="requestsList"></div>
         </div>
 
         <!-- محتوى التقارير -->
-        <div id="reportsTab" class="tab-content">
-            <div class="section-card">
-                <div class="section-header">
-                    <h3>تقارير اللجان</h3>
-                    <button class="btn-primary" onclick="generateReport()">
-                        <i class="fas fa-file-pdf"></i>
-                        إنشاء تقرير شامل
-                    </button>
-                </div>
-                <div class="reports-list" id="committeeReportsList">
-                    <!-- يتم تعبئتها ديناميكياً -->
-                </div>
-            </div>
-        </div>
-
-        <!-- محتوى الطلبات الواردة -->
-        <div id="requestsTab" class="tab-content">
-            <div class="section-card">
-                <div class="section-header">
-                    <h3>الطلبات الواردة للجان</h3>
-                </div>
-                <div class="requests-list" id="incomingRequestsList">
-                    <!-- يتم تعبئتها ديناميكياً -->
-                </div>
-            </div>
+        <div id="reportsTab" class="tab-content" style="display: none;">
+            <div class="reports-section" id="reportsSection"></div>
         </div>
     </div>
 
-    <!-- نافذة إنشاء لجنة جديدة -->
+    <!-- نافذة إنشاء لجنة -->
     <div class="modal" id="createCommitteeModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3><i class="fas fa-users"></i> إنشاء لجنة جديدة</h3>
+                <h3><i class="fas fa-plus-circle"></i> إنشاء لجنة جديدة</h3>
                 <button class="close-modal" onclick="closeCreateCommitteeModal()">&times;</button>
             </div>
             <form id="createCommitteeForm">
@@ -768,52 +699,87 @@
                     <label>اسم اللجنة</label>
                     <input type="text" id="committeeName" required placeholder="أدخل اسم اللجنة">
                 </div>
-                
+
                 <div class="form-group">
                     <label>وصف اللجنة</label>
                     <textarea id="committeeDescription" rows="3" required placeholder="أدخل وصف اللجنة ومهامها"></textarea>
                 </div>
-                
+
                 <div class="form-group">
                     <label>مدير اللجنة</label>
                     <select id="committeeManager" required>
                         <option value="">اختر مدير اللجنة</option>
                     </select>
                 </div>
-                
+
                 <div class="form-group">
-                    <label>اللجان التابعة (اختياري)</label>
+                    <label>اللجنة الأم (اختياري)</label>
                     <select id="parentCommittee">
-                        <option value="">بدون لجنة أم</option>
+                        <option value="">بدون</option>
                     </select>
                 </div>
-                
-                <div class="form-group">
-                    <label>المهام الرئيسية</label>
-                    <textarea id="committeeTasks" rows="3" placeholder="أدخل المهام الرئيسية للجنة"></textarea>
-                </div>
-                
-                <div class="form-group">
-                    <label>الصلاحيات</label>
-                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
-                        <label style="display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" value="can_create_reports"> إنشاء تقارير
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" value="can_manage_members"> إدارة الأعضاء
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" value="can_send_to_branches"> مراسلة الفروع
-                        </label>
-                        <label style="display: flex; align-items: center; gap: 5px;">
-                            <input type="checkbox" value="can_receive_complaints"> استقبال شكاوي
-                        </label>
-                    </div>
-                </div>
-                
+
                 <button type="submit" class="btn-primary" style="width: 100%;">
                     <i class="fas fa-save"></i>
                     إنشاء اللجنة
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- نافذة إرسال طلب إلى فرع -->
+    <div class="modal" id="sendRequestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-paper-plane"></i> إرسال طلب إلى فرع</h3>
+                <button class="close-modal" onclick="closeSendRequestModal()">&times;</button>
+            </div>
+            <form id="sendRequestForm">
+                <div class="form-group">
+                    <label>الفرع المستلم</label>
+                    <select id="targetBranch" required>
+                        <option value="">اختر الفرع</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>نوع الطلب</label>
+                    <select id="requestType" required>
+                        <option value="request">طلب</option>
+                        <option value="report">تقرير</option>
+                        <option value="complaint">شكوى</option>
+                        <option value="suggestion">اقتراح</option>
+                        <option value="decision">قرار</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>عنوان الطلب</label>
+                    <input type="text" id="requestTitle" required placeholder="أدخل عنوان الطلب">
+                </div>
+
+                <div class="form-group">
+                    <label>محتوى الطلب</label>
+                    <textarea id="requestContent" rows="5" required placeholder="أدخل محتوى الطلب..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>الأولوية</label>
+                    <select id="requestPriority">
+                        <option value="normal">عادية</option>
+                        <option value="high">عالية</option>
+                        <option value="urgent">عاجلة</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>المهلة (اختياري)</label>
+                    <input type="date" id="requestDeadline">
+                </div>
+
+                <button type="submit" class="btn-primary" style="width: 100%;">
+                    <i class="fas fa-paper-plane"></i>
+                    إرسال الطلب
                 </button>
             </form>
         </div>
@@ -823,96 +789,16 @@
     <div class="modal" id="committeeDetailsModal">
         <div class="modal-content">
             <div class="modal-header">
-                <h3 id="committeeDetailsTitle"><i class="fas fa-info-circle"></i> تفاصيل اللجنة</h3>
+                <h3><i class="fas fa-info-circle"></i> تفاصيل اللجنة</h3>
                 <button class="close-modal" onclick="closeCommitteeDetailsModal()">&times;</button>
             </div>
-            <div id="committeeDetailsContent">
-                <!-- يتم تعبئتها ديناميكياً -->
-            </div>
+            <div id="committeeDetailsContent"></div>
         </div>
     </div>
 
-    <!-- نافذة إرسال طلب/تقرير إلى فرع -->
-    <div class="modal" id="sendToBranchModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3><i class="fas fa-paper-plane"></i> إرسال إلى فرع</h3>
-                <button class="close-modal" onclick="closeSendToBranchModal()">&times;</button>
-            </div>
-            <form id="sendToBranchForm">
-                <input type="hidden" id="fromCommitteeId">
-                
-                <div class="form-group">
-                    <label>الفرع المستلم</label>
-                    <select id="targetBranch" required>
-                        <option value="">اختر الفرع</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>نوع الإرسال</label>
-                    <select id="sendType" required onchange="toggleSendTypeFields()">
-                        <option value="request">طلب</option>
-                        <option value="report">تقرير</option>
-                        <option value="complaint">شكوى</option>
-                        <option value="suggestion">اقتراح</option>
-                        <option value="decision">قرار</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>العنوان</label>
-                    <input type="text" id="sendTitle" required placeholder="أدخل العنوان">
-                </div>
-                
-                <div class="form-group">
-                    <label>المحتوى</label>
-                    <textarea id="sendContent" rows="5" required placeholder="أدخل المحتوى"></textarea>
-                </div>
-                
-                <div class="form-group" id="deadlineGroup" style="display: none;">
-                    <label>المهلة الزمنية</label>
-                    <input type="date" id="deadline">
-                </div>
-                
-                <div class="form-group">
-                    <label>الأولوية</label>
-                    <select id="priority">
-                        <option value="normal">عادية</option>
-                        <option value="high">عالية</option>
-                        <option value="urgent">عاجلة</option>
-                    </select>
-                </div>
-                
-                <button type="submit" class="btn-primary" style="width: 100%;">
-                    <i class="fas fa-paper-plane"></i>
-                    إرسال
-                </button>
-            </form>
-        </div>
-    </div>
-
-    <!-- زر ITWS AI -->
+    <!-- أيقونة AI -->
     <div class="ai-toggle" onclick="toggleAIChat()">
         <i class="fas fa-robot"></i>
-    </div>
-
-    <!-- نافذة ITWS AI -->
-    <div class="ai-chat-window" id="aiChatWindow">
-        <div class="ai-chat-header">
-            <h4><i class="fas fa-robot"></i> ITWS AI - المساعد الذكي</h4>
-            <button class="close-chat" onclick="toggleAIChat()">&times;</button>
-        </div>
-        <div class="ai-chat-body" id="aiChatBody">
-            <div class="ai-message">
-                <div class="avatar"><i class="fas fa-robot"></i></div>
-                <div class="message">مرحباً! أنا ITWS AI، المساعد الذكي للنظام. كيف يمكنني مساعدتك في إدارة اللجان؟</div>
-            </div>
-        </div>
-        <div class="ai-chat-footer">
-            <input type="text" id="aiMessageInput" placeholder="اكتب رسالتك..." onkeypress="if(event.key === 'Enter') sendAIMessage()">
-            <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
     </div>
 
     <!-- رسائل النظام -->
@@ -921,15 +807,15 @@
     <!-- شاشة التحميل -->
     <div id="loadingSpinner" class="loading-spinner">
         <div class="spinner"></div>
-        <p style="color: #667eea; font-weight: 600;">جاري التحميل...</p>
+        <p>جاري التحميل...</p>
     </div>
 
     <script type="module">
-        // استيراد Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, get, set, push, update, remove, onValue, query, orderByChild, equalTo } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, set, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import NotificationSystem from './assets/js/notifications.js';
+        import ThemeManager from './assets/js/theme-manager.js';
 
-        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
             authDomain: "itws-system.firebaseapp.com",
@@ -937,8 +823,7 @@
             projectId: "itws-system",
             storageBucket: "itws-system.firebasestorage.app",
             messagingSenderId: "770452248691",
-            appId: "1:770452248691:web:0e94e65e01298b398bb206",
-            measurementId: "G-8V5WSYEX0B"
+            appId: "1:770452248691:web:0e94e65e01298b398bb206"
         };
 
         const app = initializeApp(firebaseConfig);
@@ -950,6 +835,10 @@
             window.location.href = 'index.html';
         }
 
+        // تهيئة الأنظمة
+        const notificationSystem = new NotificationSystem(currentUser);
+        const themeManager = new ThemeManager(currentUser);
+
         // متغيرات عامة
         let committees = {};
         let branches = {};
@@ -958,15 +847,10 @@
         // تحديث التاريخ والوقت
         function updateDateTime() {
             const now = new Date();
-            const options = { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit'
-            };
-            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ar-EG', options);
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ar-EG', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
+                hour: '2-digit', minute: '2-digit'
+            });
         }
         updateDateTime();
         setInterval(updateDateTime, 60000);
@@ -974,21 +858,26 @@
         // عرض معلومات المستخدم
         function displayUserInfo() {
             const userInfo = document.getElementById('userInfo');
+            let title = currentUser.role === 'president' ? 'النقيب العام' :
+                       currentUser.role === 'vice_president' ? 'النائب الأول' :
+                       currentUser.role === 'committee_manager' ? 'مدير لجنة' : 'عضو';
+
             userInfo.innerHTML = `
-                <div class="user-avatar" style="width: 80px; height: 80px; background: white; border-radius: 50%; margin: 0 auto 15px; display: flex; align-items: center; justify-content: center; font-size: 40px; color: #667eea;">
-                    <i class="fas fa-user-circle"></i>
+                <div class="user-avatar" onclick="window.location.href='profile.html'">
+                    ${currentUser.profileImage ? 
+                        `<img src="${currentUser.profileImage}" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">` : 
+                        '<i class="fas fa-user-circle"></i>'}
                 </div>
                 <h3>${currentUser.fullName || currentUser.username}</h3>
-                <p>${currentUser.title || currentUser.role}</p>
-                <div style="display: inline-flex; align-items: center; gap: 5px; background: rgba(255,255,255,0.2); padding: 5px 10px; border-radius: 20px; font-size: 12px; margin-top: 10px;">
-                    <i class="fas fa-circle" style="color: #4caf50; font-size: 8px;"></i>
-                    متصل الآن
+                <p>${title}</p>
+                <div class="online-badge">
+                    <i class="fas fa-circle"></i> متصل الآن
                 </div>
             `;
         }
         displayUserInfo();
 
-        // دوال المساعدة
+        // دوال مساعدة
         function showMessage(text, type) {
             const msgBox = document.getElementById('messageBox');
             msgBox.textContent = text;
@@ -1007,38 +896,29 @@
         async function loadData() {
             showLoading(true);
             try {
-                // تحميل اللجان
-                const committeesRef = ref(database, 'committees');
-                const committeesSnap = await get(committeesRef);
+                const [committeesSnap, branchesSnap, usersSnap] = await Promise.all([
+                    get(ref(database, 'committees')),
+                    get(ref(database, 'branches')),
+                    get(ref(database, 'users'))
+                ]);
+
                 if (committeesSnap.exists()) {
                     committees = committeesSnap.val();
                     document.getElementById('committeesCount').textContent = Object.keys(committees).length;
                 }
 
-                // تحميل الفروع
-                const branchesRef = ref(database, 'branches');
-                const branchesSnap = await get(branchesRef);
                 if (branchesSnap.exists()) {
                     branches = branchesSnap.val();
                     document.getElementById('branchesCount').textContent = Object.keys(branches).length;
                 }
 
-                // تحميل المستخدمين
-                const usersRef = ref(database, 'users');
-                const usersSnap = await get(usersRef);
                 if (usersSnap.exists()) {
                     users = usersSnap.val();
                     document.getElementById('membersCount').textContent = Object.keys(users).length;
                 }
 
-                // عرض اللجان
                 displayCommittees();
-                
-                // تعبئة خيارات المديرين
-                populateManagerSelect();
-                
-                // تعبئة خيارات الفروع
-                populateBranchesSelect();
+                populateSelects();
 
             } catch (error) {
                 console.error('Error loading data:', error);
@@ -1050,28 +930,24 @@
 
         // عرض اللجان
         function displayCommittees() {
-            const committeesGrid = document.getElementById('committeesGrid');
-            const myCommitteesGrid = document.getElementById('myCommitteesGrid');
+            const grid = document.getElementById('committeesGrid');
             
             if (!committees || Object.keys(committees).length === 0) {
-                committeesGrid.innerHTML = '<p style="text-align: center; color: #999; grid-column: 1/-1;">لا توجد لجان حالياً</p>';
-                myCommitteesGrid.innerHTML = '<p style="text-align: center; color: #999;">لا توجد لجان تابع لها</p>';
+                grid.innerHTML = '<p style="text-align: center; color: var(--text-muted); padding: 40px;">لا توجد لجان</p>';
                 return;
             }
 
-            let allCommitteesHtml = '';
-            let myCommitteesHtml = '';
-
-            Object.entries(committees).forEach(([id, committee]) => {
+            grid.innerHTML = Object.entries(committees).map(([id, committee]) => {
                 const membersCount = committee.members ? Object.keys(committee.members).length : 0;
                 const reportsCount = committee.reports ? Object.keys(committee.reports).length : 0;
-                const tasksCount = committee.tasks ? Object.keys(committee.tasks).length : 0;
 
-                const committeeCard = `
+                return `
                     <div class="committee-card">
                         <div class="committee-header">
                             <h3><i class="fas fa-users"></i> ${committee.name}</h3>
-                            <span class="committee-status status-active">نشط</span>
+                            <span class="committee-status status-${committee.status || 'active'}">
+                                ${committee.status === 'active' ? 'نشط' : 'غير نشط'}
+                            </span>
                         </div>
                         <div class="committee-description">${committee.description || 'لا يوجد وصف'}</div>
                         <div class="committee-stats">
@@ -1083,25 +959,25 @@
                                 <span class="number">${reportsCount}</span>
                                 <span class="label">تقارير</span>
                             </div>
-                            <div class="stat">
-                                <span class="number">${tasksCount}</span>
-                                <span class="label">مهام</span>
-                            </div>
                         </div>
                         <div class="committee-actions">
                             <button class="btn-view" onclick="viewCommittee('${id}')">
-                                <i class="fas fa-eye"></i> عرض
+                                <i class="fas fa-eye"></i>
                             </button>
-                            ${currentUser.role === 'president' || currentUser.role === 'vice_president' ? `
+                            ${(currentUser.role === 'president' || currentUser.role === 'vice_president' || 
+                               (currentUser.role === 'committee_manager' && committee.managerId === currentUser.userId)) ? `
                                 <button class="btn-edit" onclick="editCommittee('${id}')">
-                                    <i class="fas fa-edit"></i> تعديل
+                                    <i class="fas fa-edit"></i>
                                 </button>
                             ` : ''}
                             <button class="btn-manage" onclick="manageCommittee('${id}')">
-                                <i class="fas fa-tasks"></i> إدارة
+                                <i class="fas fa-tasks"></i>
                             </button>
-                            <button class="btn-report" onclick="showSendToBranch('${id}')">
-                                <i class="fas fa-paper-plane"></i> إرسال
+                            <button class="btn-send" onclick="showSendToBranch('${id}')">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                            <button class="btn-report" onclick="generateCommitteeReport('${id}')">
+                                <i class="fas fa-file-alt"></i>
                             </button>
                             ${currentUser.role === 'president' ? `
                                 <button class="btn-delete" onclick="deleteCommittee('${id}')">
@@ -1111,43 +987,39 @@
                         </div>
                     </div>
                 `;
-
-                allCommitteesHtml += committeeCard;
-
-                // التحقق إذا كان المستخدم عضو في هذه اللجنة
-                if (committee.members && committee.members[currentUser.userId]) {
-                    myCommitteesHtml += committeeCard;
-                }
-            });
-
-            committeesGrid.innerHTML = allCommitteesHtml;
-            myCommitteesGrid.innerHTML = myCommitteesHtml || '<p style="text-align: center; color: #999; grid-column: 1/-1;">لا توجد لجان تابع لها</p>';
+            }).join('');
         }
 
-        // تعبئة خيارات المديرين
-        function populateManagerSelect() {
+        // تعبئة الخيارات
+        function populateSelects() {
+            // تعبئة خيارات المديرين
             const managerSelect = document.getElementById('committeeManager');
-            if (!managerSelect) return;
-            
-            managerSelect.innerHTML = '<option value="">اختر مدير اللجنة</option>';
-            
-            Object.entries(users).forEach(([id, user]) => {
-                if (user.role !== 'president' && user.role !== 'vice_president') {
-                    managerSelect.innerHTML += `<option value="${id}">${user.fullName || user.username}</option>`;
-                }
-            });
-        }
+            if (managerSelect) {
+                managerSelect.innerHTML = '<option value="">اختر مدير اللجنة</option>';
+                Object.entries(users).forEach(([id, user]) => {
+                    if (user.role !== 'president' && user.role !== 'vice_president') {
+                        managerSelect.innerHTML += `<option value="${id}">${user.fullName || user.username}</option>`;
+                    }
+                });
+            }
 
-        // تعبئة خيارات الفروع
-        function populateBranchesSelect() {
+            // تعبئة خيارات الفروع
             const branchSelect = document.getElementById('targetBranch');
-            if (!branchSelect) return;
-            
-            branchSelect.innerHTML = '<option value="">اختر الفرع</option>';
-            
-            Object.entries(branches).forEach(([id, branch]) => {
-                branchSelect.innerHTML += `<option value="${id}">${branch.name} - ${branch.governorate}</option>`;
-            });
+            if (branchSelect) {
+                branchSelect.innerHTML = '<option value="">اختر الفرع</option>';
+                Object.entries(branches).forEach(([id, branch]) => {
+                    branchSelect.innerHTML += `<option value="${id}">${branch.name} - ${branch.governorate}</option>`;
+                });
+            }
+
+            // تعبئة خيارات اللجان الأم
+            const parentSelect = document.getElementById('parentCommittee');
+            if (parentSelect) {
+                parentSelect.innerHTML = '<option value="">بدون</option>';
+                Object.entries(committees).forEach(([id, committee]) => {
+                    parentSelect.innerHTML += `<option value="${id}">${committee.name}</option>`;
+                });
+            }
         }
 
         // إنشاء لجنة جديدة
@@ -1179,29 +1051,27 @@
                     description: document.getElementById('committeeDescription').value,
                     managerId: document.getElementById('committeeManager').value,
                     parentCommittee: document.getElementById('parentCommittee').value || null,
-                    tasks: document.getElementById('committeeTasks').value,
-                    permissions: Array.from(document.querySelectorAll('#createCommitteeForm input[type="checkbox"]:checked')).map(cb => cb.value),
                     members: {},
                     reports: {},
                     subCommittees: {},
                     createdAt: new Date().toISOString(),
                     createdBy: currentUser.userId,
-                    status: 'active'
+                    status: 'active',
+                    trackingNumber: await generateTrackingNumber('COM')
                 };
 
-                // حفظ في Firebase
                 const committeesRef = ref(database, 'committees');
-                const newCommitteeRef = push(committeesRef);
+                const newCommitteeRef = push(communitiesRef);
                 await set(newCommitteeRef, committeeData);
 
-                // تسجيل النشاط
-                await push(ref(database, 'activities'), {
+                // إرسال إشعار للأعضاء
+                await notificationSystem.broadcastNotification({
                     type: 'committee',
                     title: 'لجنة جديدة',
-                    description: `تم إنشاء لجنة ${committeeData.name}`,
-                    icon: 'fa-users',
-                    timestamp: new Date().toISOString()
-                });
+                    message: `تم إنشاء لجنة ${committeeData.name}`,
+                    link: 'committees.html',
+                    priority: 'normal'
+                }, Object.keys(users));
 
                 showMessage('تم إنشاء اللجنة بنجاح', 'success');
                 closeCreateCommitteeModal();
@@ -1220,49 +1090,35 @@
             const committee = committees[committeeId];
             if (!committee) return;
 
-            const content = document.getElementById('committeeDetailsContent');
             const membersList = committee.members ? Object.entries(committee.members).map(([id, member]) => `
                 <div class="member-item">
+                    <div class="member-avatar">${(users[id]?.fullName || '?').charAt(0)}</div>
                     <div class="member-info">
-                        <div class="member-avatar">${(users[id]?.fullName || 'عضو').charAt(0)}</div>
-                        <div class="member-details">
-                            <h4>${users[id]?.fullName || 'عضو'}</h4>
-                            <p>${member.role || 'عضو'}</p>
-                        </div>
+                        <h4>${users[id]?.fullName || 'عضو'}</h4>
+                        <p>${member.role || 'عضو'}</p>
                     </div>
-                    <span class="member-role">${member.position || 'عضو'}</span>
                 </div>
-            `).join('') : '<p style="text-align: center; color: #999;">لا يوجد أعضاء</p>';
+            `).join('') : '<p>لا يوجد أعضاء</p>';
 
+            const content = document.getElementById('committeeDetailsContent');
             content.innerHTML = `
                 <div style="margin-bottom: 20px;">
-                    <h4 style="color: #333; margin-bottom: 10px;">${committee.name}</h4>
-                    <p style="color: #666;">${committee.description}</p>
+                    <h4>${committee.name}</h4>
+                    <p>${committee.description}</p>
+                    <p><strong>رقم التتبع:</strong> ${committee.trackingNumber || 'غير محدد'}</p>
                 </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <h5 style="color: #333; margin-bottom: 10px;">المهام:</h5>
-                    <p style="color: #666;">${committee.tasks || 'لا توجد مهام محددة'}</p>
-                </div>
-                
-                <div style="margin-bottom: 20px;">
-                    <h5 style="color: #333; margin-bottom: 10px;">الأعضاء (${Object.keys(committee.members || {}).length})</h5>
-                    <div class="members-list">
-                        ${membersList}
-                    </div>
-                </div>
-                
-                <div style="display: flex; gap: 10px;">
-                    <button class="btn-primary" style="flex: 1;" onclick="manageCommittee('${committeeId}')">
-                        <i class="fas fa-tasks"></i> إدارة اللجنة
+                <h5>الأعضاء (${Object.keys(committee.members || {}).length})</h5>
+                <div class="members-list">${membersList}</div>
+                <div style="display: flex; gap: 10px; margin-top: 20px;">
+                    <button class="btn-primary" onclick="manageCommittee('${committeeId}')">
+                        <i class="fas fa-tasks"></i> إدارة
                     </button>
-                    <button class="btn-secondary" style="flex: 1;" onclick="showSendToBranch('${committeeId}')">
-                        <i class="fas fa-paper-plane"></i> إرسال إلى فرع
+                    <button class="btn-secondary" onclick="showSendToBranch('${committeeId}')">
+                        <i class="fas fa-paper-plane"></i> إرسال طلب
                     </button>
                 </div>
             `;
 
-            document.getElementById('committeeDetailsTitle').innerHTML = `<i class="fas fa-info-circle"></i> تفاصيل ${committee.name}`;
             document.getElementById('committeeDetailsModal').classList.add('active');
         };
 
@@ -1272,7 +1128,6 @@
 
         // إدارة اللجنة
         window.manageCommittee = function(committeeId) {
-            // التوجيه إلى صفحة إدارة اللجنة
             sessionStorage.setItem('currentCommittee', committeeId);
             window.location.href = `committee-management.html?id=${committeeId}`;
         };
@@ -1305,203 +1160,154 @@
             }
         };
 
-        // إرسال إلى فرع
+        // إرسال طلب إلى فرع
         window.showSendToBranch = function(committeeId) {
-            document.getElementById('fromCommitteeId').value = committeeId;
-            document.getElementById('sendToBranchModal').classList.add('active');
+            sessionStorage.setItem('fromCommitteeId', committeeId);
+            document.getElementById('sendRequestModal').classList.add('active');
         };
 
-        window.closeSendToBranchModal = function() {
-            document.getElementById('sendToBranchModal').classList.remove('active');
-            document.getElementById('sendToBranchForm').reset();
+        window.closeSendRequestModal = function() {
+            document.getElementById('sendRequestModal').classList.remove('active');
         };
 
-        window.toggleSendTypeFields = function() {
-            const type = document.getElementById('sendType').value;
-            const deadlineGroup = document.getElementById('deadlineGroup');
-            deadlineGroup.style.display = type === 'request' ? 'block' : 'none';
-        };
-
-        document.getElementById('sendToBranchForm').addEventListener('submit', async function(e) {
+        document.getElementById('sendRequestForm').addEventListener('submit', async function(e) {
             e.preventDefault();
-
             showLoading(true);
 
             try {
-                const fromCommitteeId = document.getElementById('fromCommitteeId').value;
-                const toBranchId = document.getElementById('targetBranch').value;
-                const type = document.getElementById('sendType').value;
-                const title = document.getElementById('sendTitle').value;
-                const content = document.getElementById('sendContent').value;
-                const priority = document.getElementById('priority').value;
-                const deadline = document.getElementById('deadline').value;
+                const fromCommitteeId = sessionStorage.getItem('fromCommitteeId');
+                const committee = committees[fromCommitteeId];
+                const branchId = document.getElementById('targetBranch').value;
+                const branch = branches[branchId];
 
-                const trackingData = {
-                    id: `track_${Date.now()}`,
-                    type: type,
+                const trackingNumber = await generateTrackingNumber('REQ');
+                
+                const requestData = {
+                    trackingNumber,
+                    type: document.getElementById('requestType').value,
                     fromType: 'committee',
                     fromId: fromCommitteeId,
-                    fromName: committees[fromCommitteeId]?.name,
+                    fromName: committee.name,
                     toType: 'branch',
-                    toId: toBranchId,
-                    toName: branches[toBranchId]?.name,
-                    title: title,
-                    content: content,
-                    priority: priority,
-                    deadline: deadline || null,
+                    toId: branchId,
+                    toName: branch.name,
+                    title: document.getElementById('requestTitle').value,
+                    content: document.getElementById('requestContent').value,
+                    priority: document.getElementById('requestPriority').value,
+                    deadline: document.getElementById('requestDeadline').value || null,
                     status: 'pending',
                     history: [{
                         status: 'sent',
                         timestamp: new Date().toISOString(),
-                        by: currentUser.userId
+                        by: currentUser.userId,
+                        note: 'تم إرسال الطلب'
                     }],
                     createdAt: new Date().toISOString(),
                     createdBy: currentUser.userId
                 };
 
-                // حفظ في نظام التتبع
                 const trackingRef = ref(database, 'tracking');
-                await push(trackingRef, trackingData);
+                await push(trackingRef, requestData);
 
-                // إضافة إلى سجل اللجنة
-                await push(ref(database, `committees/${fromCommitteeId}/sent_items`), {
-                    trackingId: trackingData.id,
-                    to: branches[toBranchId]?.name,
-                    type: type,
-                    title: title,
-                    sentAt: new Date().toISOString()
-                });
+                // إشعار مدير الفرع
+                if (branch.managerId) {
+                    await notificationSystem.createNotification({
+                        userId: branch.managerId,
+                        type: 'request',
+                        title: 'طلب جديد من لجنة',
+                        message: `لديك طلب جديد من ${committee.name}`,
+                        link: 'tracking.html',
+                        priority: requestData.priority,
+                        metadata: { trackingNumber }
+                    });
+                }
 
-                // إضافة إلى سجل الفرع
-                await push(ref(database, `branches/${toBranchId}/received_items`), {
-                    trackingId: trackingData.id,
-                    from: committees[fromCommitteeId]?.name,
-                    type: type,
-                    title: title,
-                    receivedAt: new Date().toISOString(),
-                    status: 'pending'
-                });
-
-                // تسجيل النشاط
-                await push(ref(database, 'activities'), {
-                    type: 'tracking',
-                    title: 'مراسلة جديدة',
-                    description: `تم إرسال ${type} من ${committees[fromCommitteeId]?.name} إلى ${branches[toBranchId]?.name}`,
-                    icon: 'fa-paper-plane',
-                    timestamp: new Date().toISOString()
-                });
-
-                showMessage('تم الإرسال بنجاح', 'success');
-                closeSendToBranchModal();
+                showMessage('تم إرسال الطلب بنجاح', 'success');
+                closeSendRequestModal();
 
             } catch (error) {
-                console.error('Error sending to branch:', error);
+                console.error('Error sending request:', error);
                 showMessage('حدث خطأ في الإرسال', 'error');
             } finally {
                 showLoading(false);
             }
         });
 
+        // توليد رقم تتبع
+        async function generateTrackingNumber(prefix) {
+            const year = new Date().getFullYear();
+            const counterRef = ref(database, `counters/${prefix}_${year}`);
+            const snapshot = await get(counterRef);
+            const currentCount = snapshot.exists() ? snapshot.val() : 0;
+            const newCount = currentCount + 1;
+            await set(counterRef, newCount);
+            
+            const paddedNumber = newCount.toString().padStart(4, '0');
+            return `${prefix}-${paddedNumber}-${year}`;
+        }
+
+        // توليد تقرير لجنة
+        window.generateCommitteeReport = async function(committeeId) {
+            const committee = committees[committeeId];
+            if (!committee) return;
+
+            const report = {
+                committeeName: committee.name,
+                membersCount: Object.keys(committee.members || {}).length,
+                reportsCount: Object.keys(committee.reports || {}).length,
+                createdAt: new Date(committee.createdAt).toLocaleDateString('ar-EG'),
+                status: committee.status,
+                trackingNumber: committee.trackingNumber,
+                generatedAt: new Date().toLocaleString('ar-EG')
+            };
+
+            // فتح نافذة الطباعة
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html dir="rtl">
+                <head>
+                    <title>تقرير ${committee.name}</title>
+                    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+                    <style>
+                        body { font-family: 'Cairo', sans-serif; padding: 20px; }
+                        .report-header { text-align: center; margin-bottom: 30px; }
+                        .report-title { color: #667eea; }
+                        .info-table { width: 100%; border-collapse: collapse; }
+                        .info-table td { padding: 10px; border: 1px solid #ddd; }
+                    </style>
+                </head>
+                <body>
+                    <div class="report-header">
+                        <h1 class="report-title">نقابة تكنولوجيا المعلومات والبرمجيات</h1>
+                        <h2>تقرير اللجنة: ${committee.name}</h2>
+                    </div>
+                    <table class="info-table">
+                        <tr><td>رقم التتبع</td><td>${report.trackingNumber || 'غير محدد'}</td></tr>
+                        <tr><td>عدد الأعضاء</td><td>${report.membersCount}</td></tr>
+                        <tr><td>عدد التقارير</td><td>${report.reportsCount}</td></tr>
+                        <tr><td>تاريخ الإنشاء</td><td>${report.createdAt}</td></tr>
+                        <tr><td>الحالة</td><td>${report.status === 'active' ? 'نشط' : 'غير نشط'}</td></tr>
+                        <tr><td>تاريخ التقرير</td><td>${report.generatedAt}</td></tr>
+                    </table>
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        };
+
         // تبديل التبويبات
         window.switchTab = function(tab) {
             document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.style.display = 'none');
             
             event.target.classList.add('active');
-            document.getElementById(`${tab}CommitteesTab`).classList.add('active');
+            document.getElementById(`${tab}CommitteesTab`).style.display = 'block';
         };
 
-        // توليد تقرير
-        window.generateReport = async function() {
-            showLoading(true);
-            try {
-                // جمع البيانات
-                const report = {
-                    generatedAt: new Date().toISOString(),
-                    generatedBy: currentUser.fullName,
-                    committees: Object.values(committees).map(c => ({
-                        name: c.name,
-                        membersCount: Object.keys(c.members || {}).length,
-                        reportsCount: Object.keys(c.reports || {}).length,
-                        tasksCount: Object.keys(c.tasks || {}).length
-                    })),
-                    summary: {
-                        totalCommittees: Object.keys(committees).length,
-                        totalMembers: Object.values(committees).reduce((acc, c) => acc + Object.keys(c.members || {}).length, 0),
-                        totalReports: Object.values(committees).reduce((acc, c) => acc + Object.keys(c.reports || {}).length, 0)
-                    }
-                };
-
-                // حفظ التقرير
-                const reportRef = ref(database, 'reports');
-                await push(reportRef, {
-                    type: 'committees',
-                    content: report,
-                    createdAt: new Date().toISOString(),
-                    createdBy: currentUser.userId
-                });
-
-                // عرض التقرير
-                alert(JSON.stringify(report, null, 2));
-                showMessage('تم إنشاء التقرير بنجاح', 'success');
-
-            } catch (error) {
-                console.error('Error generating report:', error);
-                showMessage('حدث خطأ في إنشاء التقرير', 'error');
-            } finally {
-                showLoading(false);
-            }
-        };
-
-        // دوال ITWS AI
+        // دوال AI
         window.toggleAIChat = function() {
-            const chatWindow = document.getElementById('aiChatWindow');
-            chatWindow.style.display = chatWindow.style.display === 'none' ? 'block' : 'none';
-        };
-
-        window.sendAIMessage = async function() {
-            const input = document.getElementById('aiMessageInput');
-            const message = input.value.trim();
-            
-            if (!message) return;
-            
-            const chatBody = document.getElementById('aiChatBody');
-            
-            // إضافة رسالة المستخدم
-            chatBody.innerHTML += `
-                <div class="user-message">
-                    <div class="avatar"><i class="fas fa-user"></i></div>
-                    <div class="message">${message}</div>
-                </div>
-            `;
-            
-            input.value = '';
-            chatBody.scrollTop = chatBody.scrollHeight;
-            
-            // معالجة مع ITWS AI
-            setTimeout(() => {
-                let response = '';
-                
-                if (message.includes('لجنة') || message.includes('لجنة جديدة')) {
-                    response = 'يمكنك إنشاء لجنة جديدة بالضغط على زر "إنشاء لجنة جديدة" في أعلى الصفحة. هل تريد مساعدة في إعداد بيانات اللجنة؟';
-                } else if (message.includes('تقرير')) {
-                    response = 'يمكنك إنشاء تقارير شاملة عن اللجان من تبويب "التقارير". هل تريد تقريراً عن لجنة معينة؟';
-                } else if (message.includes('إرسال') || message.includes('مراسلة')) {
-                    response = 'لإرسال مراسلة إلى فرع، اختر اللجنة ثم اضغط على زر "إرسال". هل تريد معرفة المزيد عن نظام التتبع؟';
-                } else if (currentUser.role === 'president' && message.includes('عدل') || message.includes('ضيف') || message.includes('شاشة')) {
-                    response = 'بصفتك النقيب العام، يمكنني تعديل النظام وإضافة شاشات جديدة. ماذا تريد تحديداً؟\n\nمثلاً:\n- ضيف شاشة جديدة لإدارة المشاريع\n- عدل صلاحيات الأعضاء\n- ضيف حقل جديد في بيانات اللجنة';
-                } else {
-                    response = 'أنا ITWS AI، المساعد الذكي. كيف يمكنني مساعدتك في إدارة اللجان اليوم؟';
-                }
-                
-                chatBody.innerHTML += `
-                    <div class="ai-message">
-                        <div class="avatar"><i class="fas fa-robot"></i></div>
-                        <div class="message">${response}</div>
-                    </div>
-                `;
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
+            showMessage('🤖 ITWS AI: كيف يمكنني مساعدتك في إدارة اللجان؟', 'info');
         };
 
         // تسجيل الخروج
@@ -1516,12 +1322,10 @@
 
         // تحديث حالة المتصل
         async function updateOnlineStatus(status) {
-            if (currentUser) {
-                await update(ref(database, `users/${currentUser.userId}`), {
-                    online: status,
-                    lastSeen: new Date().toISOString()
-                });
-            }
+            await update(ref(database, `users/${currentUser.userId}`), {
+                online: status,
+                lastSeen: new Date().toISOString()
+            });
         }
 
         window.addEventListener('load', () => {
@@ -1533,7 +1337,7 @@
             updateOnlineStatus(false);
         });
 
-        // تحديث مباشر للبيانات
+        // تحديث مباشر
         onValue(ref(database, 'committees'), () => loadData());
 
     </script>
