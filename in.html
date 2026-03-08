@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تهيئة النظام - نقابة تكنولوجيا المعلومات والبرمجيات</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .init-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 100%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: slideUp 0.5s ease;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .credentials {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+        }
+
+        .credentials h3 {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cred-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 10px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .cred-item i {
+            width: 20px;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 15px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        .btn-reset {
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .status-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            display: none;
+        }
+
+        .status-box.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+
+        .status-box.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-left: 10px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="init-card">
+        <h1>🚀 تهيئة النظام</h1>
+        <p class="subtitle">نقابة تكنولوجيا المعلومات والبرمجيات</p>
+
+        <div class="credentials">
+            <h3><i class="fas fa-crown"></i> بيانات النقيب العام</h3>
+            <div class="cred-item">
+                <i class="fas fa-user"></i>
+                <span><strong>الاسم:</strong> المهندس / محمود جميل</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-id-card"></i>
+                <span><strong>الرقم القومي:</strong> 30010250202679</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-key"></i>
+                <span><strong>كلمة المرور:</strong> 30010250202679</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-phone"></i>
+                <span><strong>رقم الهاتف:</strong> 01068865596</span>
+            </div>
+        </div>
+
+        <button class="btn" onclick="initializeSystem()">
+            <i class="fas fa-play"></i>
+            تهيئة النظام
+        </button>
+
+        <button class="btn btn-reset" onclick="resetSystem()">
+            <i class="fas fa-trash"></i>
+            مسح كل البيانات
+        </button>
+
+        <div id="statusBox" class="status-box"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
+            authDomain: "itws-system.firebaseapp.com",
+            databaseURL: "https://itws-system-default-rtdb.firebaseio.com",
+            projectId: "itws-system",
+            storageBucket: "itws-system.firebasestorage.app",
+            messagingSenderId: "770452248691",
+            appId: "1:770452248691:web:0e94e65e01298b398bb206"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        function showStatus(message, type) {
+            const statusBox = document.getElementById('statusBox');
+            statusBox.className = `status-box ${type}`;
+            statusBox.innerHTML = message;
+        }
+
+        window.initializeSystem = async function() {
+            const btn = event.target;
+            btn.innerHTML = 'جاري التهيئة <span class="loading"></span>';
+            btn.disabled = true;
+
+            try {
+                // إنشاء النقيب العام
+                const presidentData = {
+                    userId: 'president_001',
+                    username: 'المهندس / محمود جميل',
+                    fullName: 'محمود جميل',
+                    password: '30010250202679',
+                    nationalId: '30010250202679',
+                    phone: '01068865596',
+                    email: 'president@itws.org',
+                    role: 'president',
+                    position: 'president',
+                    positionName: 'نقيب عام',
+                    title: 'النقيب العام',
+                    governorate: 'القاهرة',
+                    profileImage: 'default-president.png',
+                    status: 'active',
+                    online: false,
+                    lastLogin: null,
+                    permissions: {
+                        level: 100,
+                        all: true,
+                        manageSystem: true,
+                        manageITWSAI: true,
+                        canModifyCode: true,
+                        canAddScreens: true
+                    },
+                    createdAt: new Date().toISOString()
+                };
+
+                await set(ref(database, 'users/president_001'), presidentData);
+
+                // إنشاء المجلدات الرئيسية فاضية
+                await set(ref(database, 'committees'), {});
+                await set(ref(database, 'branches'), {});
+                await set(ref(database, 'pending_requests'), {});
+                await set(ref(database, 'tracking'), {});
+                await set(ref(database, 'activities'), {});
+                await set(ref(database, 'notifications'), {});
+
+                showStatus(`
+                    ✅ <strong>تم تهيئة النظام بنجاح!</strong><br>
+                    <strong>بيانات الدخول:</strong><br>
+                    • اسم المستخدم: المهندس / محمود جميل<br>
+                    • كلمة المرور: 30010250202679<br>
+                    • رقم الهاتف: 01068865596
+                `, 'success');
+
+            } catch (error) {
+                console.error('Initialization error:', error);
+                showStatus(`❌ خطأ: ${error.message}`, 'error');
+            } finally {
+                btn.innerHTML = '<i class="fas fa-play"></i> تهيئة النظام';
+                btn.disabled = false;
+            }
+        };
+
+        window.resetSystem = async function() {
+            if (!confirm('⚠️ هل أنت متأكد؟ سيتم مسح كل البيانات!')) return;
+
+            const btn = event.target;
+            btn.innerHTML = 'جاري المسح <span class="loading"></span>';
+            btn.disabled = true;
+
+            try {
+                await remove(ref(database));
+                showStatus('✅ تم مسح كل البيانات بنجاح', 'success');
+            } catch (error) {
+                showStatus(`❌ خطأ: ${error.message}`, 'error');
+            } finally {
+                btn.innerHTML = '<i class="fas fa-trash"></i> مسح كل البيانات';
+                btn.disabled = false;
+            }
+        };
+    </script>
+</body>
+</html>
