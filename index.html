@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>نقابة تكنولوجيا المعلومات والبرمجيات - منصة إدارة النقابة</title>
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         * {
             margin: 0;
@@ -500,279 +505,6 @@
             max-height: 200px;
             overflow-y: auto;
         }
-
-        /* تنسيقات المساعد الذكي */
-        .itws-ai-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(102,126,234,0.4);
-            z-index: 9999;
-            transition: all 0.3s;
-            border: 2px solid white;
-        }
-
-        .itws-ai-button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 6px 20px rgba(102,126,234,0.6);
-        }
-
-        .itws-ai-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            margin-bottom: 10px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .itws-ai-button:hover .itws-ai-tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .itws-ai-chat {
-            position: fixed;
-            bottom: 90px;
-            left: 20px;
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 10000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            direction: rtl;
-            font-family: 'Cairo', sans-serif;
-            border: 2px solid #667eea;
-        }
-
-        .itws-ai-chat.open {
-            display: flex;
-            animation: slideUp 0.3s ease;
-        }
-
-        .itws-ai-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 12px 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .itws-ai-header h4 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .itws-ai-header h4 i {
-            font-size: 18px;
-        }
-
-        .itws-ai-user-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 3px 8px;
-            border-radius: 15px;
-            font-size: 11px;
-        }
-
-        .itws-ai-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-            padding: 0 5px;
-        }
-
-        .itws-ai-close:hover {
-            opacity: 0.8;
-        }
-
-        .itws-ai-body {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-
-        .itws-ai-message {
-            margin-bottom: 15px;
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-        }
-
-        .itws-ai-message.user {
-            flex-direction: row-reverse;
-        }
-
-        .itws-ai-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-            font-size: 14px;
-        }
-
-        .itws-ai-message.ai .itws-ai-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .itws-ai-message.user .itws-ai-avatar {
-            background: #ff6b6b;
-        }
-
-        .itws-ai-content {
-            padding: 8px 12px;
-            border-radius: 12px;
-            max-width: 85%;
-            word-wrap: break-word;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        .itws-ai-message.ai .itws-ai-content {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-top-right-radius: 0;
-        }
-
-        .itws-ai-message.user .itws-ai-content {
-            background: #667eea;
-            color: white;
-            border-top-left-radius: 0;
-        }
-
-        .itws-ai-footer {
-            padding: 12px;
-            border-top: 1px solid #eee;
-            background: white;
-            display: flex;
-            gap: 8px;
-        }
-
-        .itws-ai-footer input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            outline: none;
-            font-family: 'Cairo', sans-serif;
-            font-size: 13px;
-        }
-
-        .itws-ai-footer input:focus {
-            border-color: #667eea;
-        }
-
-        .itws-ai-footer button {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-        }
-
-        .itws-ai-footer button:hover {
-            transform: scale(1.05);
-        }
-
-        .itws-ai-typing {
-            display: flex;
-            gap: 4px;
-            padding: 10px;
-            background: white;
-            border-radius: 15px;
-            width: fit-content;
-        }
-
-        .itws-ai-typing span {
-            width: 6px;
-            height: 6px;
-            background: #667eea;
-            border-radius: 50%;
-            animation: typing 1s infinite ease-in-out;
-        }
-
-        .itws-ai-typing span:nth-child(2) { animation-delay: 0.2s; }
-        .itws-ai-typing span:nth-child(3) { animation-delay: 0.4s; }
-
-        @keyframes typing {
-            0%, 60%, 100% { transform: translateY(0); }
-            30% { transform: translateY(-6px); }
-        }
-
-        .itws-ai-suggestions {
-            padding: 8px;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            border-top: 1px solid #eee;
-            background: #f8f9fa;
-        }
-
-        .itws-ai-suggestion {
-            padding: 4px 10px;
-            background: white;
-            border: 1px solid #667eea;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-            color: #667eea;
-            transition: all 0.2s;
-        }
-
-        .itws-ai-suggestion:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
     </style>
 </head>
 <body>
@@ -842,13 +574,6 @@
                             <i class="fas fa-lock"></i>
                             <input type="password" id="loginPassword" placeholder="أدخل كلمة المرور" required>
                         </div>
-                    </div>
-
-                    <div class="form-group" id="biometricSection" style="display: none;">
-                        <label><i class="fas fa-face-smile"></i> المصادقة الحيوية</label>
-                        <button type="button" class="btn" id="biometricBtn" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);">
-                            <i class="fas fa-face-smile"></i> استخدام بصمة الوجه
-                        </button>
                     </div>
 
                     <button type="submit" class="btn">
@@ -1036,9 +761,10 @@
         <p>جاري التحميل...</p>
     </div>
 
-    <!-- تعريف المتغيرات والوظائف العامة -->
+    <!-- ============================================== -->
+    <!-- تعريف الدوال العامة -->
+    <!-- ============================================== -->
     <script>
-        // تعريف الدوال العامة قبل أي شيء
         window.showRegister = function() {
             document.getElementById('loginCard').style.display = 'none';
             document.getElementById('registerCard').style.display = 'block';
@@ -1050,41 +776,17 @@
         };
     </script>
 
-    <!-- ITWS AI Assistant Scripts - يتم تحميلها مباشرة -->
-    <script>
-        // تعريف بسيط للمساعد في حال فشل التحميل
-        window.aiInterface = {
-            toggleChat: function() {
-                alert('ITWS AI: جاري تحميل المساعد... يرجى المحاولة مرة أخرى');
-            }
-        };
-    </script>
+    <!-- ============================================== -->
+    <!-- تحميل ITWS AI - بالترتيب الصحيح -->
+    <!-- ============================================== -->
+    <script src="assets/js/itws-ai-core.js"></script>
+    <script src="assets/js/itws-ai-interface.js"></script>
+    <script src="assets/js/itws-ai-loader.js"></script>
 
-    <!-- تحميل مكتبات المساعد -->
-    <script src="assets/js/itws-ai-assistant.js"></script>
-    <script src="assets/js/ai-interface.js"></script>
-
-    <script>
-        // تهيئة المساعد بعد تحميل المكتبات
-        document.addEventListener('DOMContentLoaded', function() {
-            try {
-                if (typeof AIInterface !== 'undefined') {
-                    window.aiInterface = new AIInterface(null);
-                    console.log('✅ ITWS AI initialized successfully');
-                } else {
-                    console.error('❌ AIInterface not found');
-                }
-            } catch (error) {
-                console.error('❌ Failed to initialize ITWS AI:', error);
-            }
-        });
-    </script>
-
-    <!-- Firebase and Core Scripts -->
+    <!-- ============================================== -->
+    <!-- Firebase وكود الصفحة الرئيسي -->
+    <!-- ============================================== -->
     <script type="module">
-        // ============================================
-        // استيراد Firebase أولاً
-        // ============================================
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getDatabase, ref, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
