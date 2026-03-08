@@ -79,12 +79,6 @@
             overflow: hidden;
         }
 
-        .splash-logo img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
@@ -210,7 +204,6 @@
             padding: 40px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             border: 1px solid rgba(255,255,255,0.2);
-            display: block;
         }
 
         .header {
@@ -231,10 +224,9 @@
             overflow: hidden;
         }
 
-        .logo-small img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .logo-small i {
+            font-size: 40px;
+            color: #667eea;
         }
 
         h1 {
@@ -323,24 +315,6 @@
             overflow: hidden;
         }
 
-        .btn:before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(255,255,255,0.3);
-            transform: translate(-50%, -50%);
-            transition: width 0.6s, height 0.6s;
-        }
-
-        .btn:hover:before {
-            width: 300px;
-            height: 300px;
-        }
-
         .btn:hover {
             transform: translateY(-2px);
             box-shadow: 0 10px 20px rgba(102,126,234,0.3);
@@ -388,6 +362,17 @@
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
         }
 
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -20px);
+            }
+            to {
+                opacity: 1;
+                transform: translate(-50%, 0);
+            }
+        }
+
         .loading-spinner {
             position: fixed;
             top: 0;
@@ -421,17 +406,6 @@
         @keyframes spin {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
-        }
-
-        @keyframes slideDown {
-            from {
-                opacity: 0;
-                transform: translate(-50%, -20px);
-            }
-            to {
-                opacity: 1;
-                transform: translate(-50%, 0);
-            }
         }
 
         .file-upload {
@@ -477,11 +451,11 @@
     </style>
 </head>
 <body>
-    <!-- شاشة البداية (Splash Screen) -->
+    <!-- شاشة البداية -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-content">
-            <div class="splash-logo" id="splashLogo">
-                <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="شعار النقابة" id="splashLogoImg">
+            <div class="splash-logo">
+                <i class="fas fa-users-cog"></i>
             </div>
             <h1 class="splash-title">نقابة تكنولوجيا المعلومات</h1>
             <div class="splash-subtitle">والبرمجيات - منصة إدارة النقابة</div>
@@ -511,8 +485,8 @@
             <!-- بطاقة تسجيل الدخول -->
             <div class="card" id="loginCard">
                 <div class="header">
-                    <div class="logo-small" id="loginLogo">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="شعار النقابة" id="loginLogoImg">
+                    <div class="logo-small">
+                        <i class="fas fa-users-cog"></i>
                     </div>
                     <h1>نقابة تكنولوجيا المعلومات والبرمجيات</h1>
                     <p class="subtitle">منصة إدارة النقابة المصممة باستخدام</p>
@@ -528,7 +502,7 @@
                         <label><i class="fas fa-user"></i> اسم المستخدم</label>
                         <div class="input-wrapper">
                             <i class="fas fa-user"></i>
-                            <input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم" required autocomplete="off">
+                            <input type="text" id="loginUsername" placeholder="أدخل اسم المستخدم" required>
                         </div>
                     </div>
 
@@ -556,7 +530,7 @@
             <div class="card" id="registerCard" style="display: none;">
                 <div class="header">
                     <div class="logo-small">
-                        <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="شعار النقابة">
+                        <i class="fas fa-user-plus"></i>
                     </div>
                     <h1>تسجيل بيانات مسؤول بالنقابة</h1>
                     <p class="subtitle">املأ البيانات للتسجيل في النظام</p>
@@ -617,9 +591,9 @@
                         <label><i class="fas fa-users"></i> اختر اللجنة *</label>
                         <select id="committeeSelect" class="governorate-select">
                             <option value="">اختر اللجنة</option>
-                            <option value="committee1">لجنة التدريب</option>
-                            <option value="committee2">لجنة العلاقات</option>
-                            <option value="committee3">لجنة المالية</option>
+                            <option value="committee1">لجنة التدريب والتطوير</option>
+                            <option value="committee2">لجنة العلاقات العامة</option>
+                            <option value="committee3">لجنة الشؤون المالية</option>
                         </select>
                     </div>
 
@@ -643,17 +617,6 @@
                             <div class="file-upload-label">
                                 <i class="fas fa-cloud-upload-alt"></i>
                                 اختر صورة
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label><i class="fas fa-file-pdf"></i> صورة قرار التعيين (اختياري)</label>
-                        <div class="file-upload">
-                            <input type="file" id="appointmentDoc" accept="image/*,.pdf">
-                            <div class="file-upload-label">
-                                <i class="fas fa-cloud-upload-alt"></i>
-                                رفع القرار
                             </div>
                         </div>
                     </div>
@@ -718,10 +681,10 @@
             }
         };
 
-        // بعد 3.5 ثواني، أخفي شاشة البداية وأظهر شاشة تسجيل الدخول
+        // بعد 3.5 ثواني، أخفي شاشة البداية
         setTimeout(function() {
             document.getElementById('splashScreen').style.display = 'none';
-            document.getElementById('loginWrapper').style.display = 'block';
+            document.getElementById('loginWrapper').style.display = 'flex';
         }, 3500);
 
         // تسجيل الدخول
@@ -761,10 +724,6 @@
             setTimeout(function() {
                 msgBox.style.display = 'none';
             }, 3000);
-        }
-
-        function showLoading(show) {
-            document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
         }
     </script>
 </body>
