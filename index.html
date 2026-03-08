@@ -24,7 +24,7 @@
             overflow: hidden;
         }
 
-        /* ===== شاشة البداية ===== */
+        /* شاشة البداية (Splash Screen) */
         .splash-screen {
             position: fixed;
             top: 0;
@@ -104,23 +104,6 @@
             margin-bottom: 30px;
         }
 
-        .itws-badge {
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(5px);
-            padding: 8px 20px;
-            border-radius: 30px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 14px;
-            border: 1px solid rgba(255,255,255,0.3);
-            margin-top: 20px;
-        }
-
-        .itws-badge i {
-            color: #ffd700;
-        }
-
         .loading-bar {
             width: 300px;
             height: 4px;
@@ -152,7 +135,7 @@
             font-size: 14px;
         }
 
-        /* ===== شاشة تسجيل الدخول ===== */
+        /* شاشة تسجيل الدخول */
         .login-wrapper {
             height: 100vh;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -393,7 +376,7 @@
             text-decoration: underline;
         }
 
-        /* ===== نظام الأمان - منع الكليك اليمين ===== */
+        /* ===== نظام الأمان ===== */
         .security-alert {
             position: fixed;
             top: 20px;
@@ -427,270 +410,6 @@
             white-space: nowrap;
             user-select: none;
             font-family: monospace;
-        }
-
-        /* ===== أيقونة ITWS AI ===== */
-        .itws-ai-button {
-            position: fixed;
-            bottom: 20px;
-            left: 20px;
-            width: 55px;
-            height: 55px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e8e 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
-            z-index: 9999;
-            transition: all 0.3s;
-            border: 2px solid white;
-            animation: aiPulse 2s infinite;
-        }
-
-        .itws-ai-button:hover {
-            transform: scale(1.1) rotate(360deg);
-            box-shadow: 0 6px 20px rgba(255,107,107,0.6);
-        }
-
-        .itws-ai-tooltip {
-            position: absolute;
-            bottom: 100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(0,0,0,0.8);
-            color: white;
-            padding: 5px 10px;
-            border-radius: 5px;
-            font-size: 12px;
-            white-space: nowrap;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s;
-            margin-bottom: 10px;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .itws-ai-button:hover .itws-ai-tooltip {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* ===== نافذة ITWS AI ===== */
-        .itws-ai-chat {
-            position: fixed;
-            bottom: 90px;
-            left: 20px;
-            width: 350px;
-            height: 450px;
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-            z-index: 10000;
-            display: none;
-            flex-direction: column;
-            overflow: hidden;
-            direction: rtl;
-            font-family: 'Cairo', sans-serif;
-            border: 2px solid #667eea;
-        }
-
-        .itws-ai-chat.open {
-            display: flex;
-            animation: slideUp 0.3s ease;
-        }
-
-        .itws-ai-header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .itws-ai-header h4 {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin: 0;
-            font-size: 14px;
-        }
-
-        .itws-ai-user-badge {
-            background: rgba(255,255,255,0.2);
-            padding: 3px 8px;
-            border-radius: 15px;
-            font-size: 11px;
-        }
-
-        .itws-ai-close {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 18px;
-            cursor: pointer;
-        }
-
-        .itws-ai-body {
-            flex: 1;
-            padding: 15px;
-            overflow-y: auto;
-            background: #f8f9fa;
-        }
-
-        .itws-ai-message, .user-message {
-            display: flex;
-            align-items: flex-start;
-            gap: 8px;
-            margin-bottom: 15px;
-            animation: slideRight 0.3s ease;
-        }
-
-        .user-message {
-            flex-direction: row-reverse;
-        }
-
-        .ai-avatar, .user-avatar {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            flex-shrink: 0;
-        }
-
-        .ai-avatar {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-        }
-
-        .user-avatar {
-            background: #ff6b6b;
-        }
-
-        .ai-content, .user-content {
-            padding: 8px 12px;
-            border-radius: 12px;
-            max-width: 80%;
-            font-size: 13px;
-        }
-
-        .ai-content {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-top-right-radius: 0;
-        }
-
-        .user-content {
-            background: #667eea;
-            color: white;
-            border-top-left-radius: 0;
-        }
-
-        .itws-ai-footer {
-            padding: 15px;
-            border-top: 1px solid #eee;
-            background: white;
-            display: flex;
-            gap: 8px;
-        }
-
-        .itws-ai-footer input {
-            flex: 1;
-            padding: 10px;
-            border: 2px solid #e0e0e0;
-            border-radius: 20px;
-            outline: none;
-            font-family: 'Cairo', sans-serif;
-        }
-
-        .itws-ai-footer input:focus {
-            border-color: #667eea;
-        }
-
-        .itws-ai-footer button {
-            width: 38px;
-            height: 38px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border: none;
-            border-radius: 50%;
-            color: white;
-            cursor: pointer;
-        }
-
-        .itws-ai-suggestions {
-            padding: 8px;
-            display: flex;
-            gap: 6px;
-            flex-wrap: wrap;
-            border-top: 1px solid #eee;
-            background: #f8f9fa;
-        }
-
-        .itws-ai-suggestion {
-            padding: 4px 10px;
-            background: white;
-            border: 1px solid #667eea;
-            border-radius: 15px;
-            font-size: 11px;
-            cursor: pointer;
-            color: #667eea;
-            transition: all 0.2s;
-        }
-
-        .itws-ai-suggestion:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        /* ===== ملفات الرفع ===== */
-        .file-upload {
-            position: relative;
-            display: inline-block;
-            width: 100%;
-        }
-
-        .file-upload input[type="file"] {
-            opacity: 0;
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        .file-upload-label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 12px;
-            background: #f8f9fa;
-            border: 2px dashed #667eea;
-            border-radius: 10px;
-            color: #667eea;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .file-upload-label:hover {
-            background: #667eea;
-            color: white;
-        }
-
-        .file-upload-label i {
-            transition: all 0.3s;
-        }
-
-        .file-upload-label:hover i {
-            transform: scale(1.2);
         }
 
         /* ===== رسائل النظام ===== */
@@ -766,34 +485,6 @@
             }
         }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes slideRight {
-            from {
-                opacity: 0;
-                transform: translateX(-20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        @keyframes aiPulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-
         .governorate-select {
             max-height: 200px;
             overflow-y: auto;
@@ -801,7 +492,7 @@
     </style>
 </head>
 <body>
-    <!-- ===== شاشة البداية ===== -->
+    <!-- شاشة البداية -->
     <div class="splash-screen" id="splashScreen">
         <div class="splash-content">
             <div class="splash-logo" id="splashLogo">
@@ -809,21 +500,16 @@
             </div>
             <h1 class="splash-title">نقابة تكنولوجيا المعلومات</h1>
             <div class="splash-subtitle">والبرمجيات - منصة إدارة النقابة</div>
-            <div class="itws-badge">
-                <i class="fas fa-robot"></i>
-                <span>مدعوم بـ ITWS AI - المساعد الذكي</span>
-                <i class="fas fa-bolt"></i>
-            </div>
             <div class="loading-bar">
                 <div class="loading-progress"></div>
             </div>
         </div>
         <div class="splash-footer">
-            جميع الحقوق محفوظة © 2024 | تصميم وبرمجة ITWS AI
+            جميع الحقوق محفوظة © 2024
         </div>
     </div>
 
-    <!-- ===== شاشة تسجيل الدخول ===== -->
+    <!-- شاشة تسجيل الدخول -->
     <div class="login-wrapper" id="loginWrapper" style="display: none;">
         <div class="animated-bg">
             <span></span><span></span><span></span><span></span><span></span>
@@ -837,19 +523,14 @@
                 <p>جاري التحميل...</p>
             </div>
 
-            <!-- ===== بطاقة تسجيل الدخول ===== -->
+            <!-- بطاقة تسجيل الدخول -->
             <div class="card" id="loginCard">
                 <div class="header">
                     <div class="logo-small" id="loginLogo">
                         <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="شعار النقابة" id="loginLogoImg">
                     </div>
                     <h1>نقابة تكنولوجيا المعلومات والبرمجيات</h1>
-                    <p class="subtitle">منصة إدارة النقابة المصممة باستخدام</p>
-                    <div class="itws-ai-badge">
-                        <i class="fas fa-robot"></i>
-                        <span>ITWS AI - المساعد الذكي</span>
-                        <i class="fas fa-bolt"></i>
-                    </div>
+                    <p class="subtitle">منصة إدارة النقابة</p>
                 </div>
 
                 <form id="loginForm">
@@ -881,7 +562,7 @@
                 </div>
             </div>
 
-            <!-- ===== بطاقة التسجيل ===== -->
+            <!-- بطاقة التسجيل -->
             <div class="card" id="registerCard" style="display: none;">
                 <div class="header">
                     <div class="logo-small">
@@ -1007,7 +688,7 @@
                         </select>
                     </div>
 
-                    <!-- الصورة الشخصية -->
+                    <!-- الصورة الشخصية (إجبارية) -->
                     <div class="form-group">
                         <label><i class="fas fa-camera"></i> الصورة الشخصية *</label>
                         <div class="file-upload">
@@ -1019,14 +700,14 @@
                         </div>
                     </div>
 
-                    <!-- قرار التعيين (إجباري الآن) -->
+                    <!-- قرار التعيين (اختياري) -->
                     <div class="form-group">
-                        <label><i class="fas fa-file-pdf"></i> صورة قرار التعيين *</label>
+                        <label><i class="fas fa-file-pdf"></i> صورة قرار التعيين (اختياري)</label>
                         <div class="file-upload">
-                            <input type="file" id="appointmentDoc" accept="image/*,.pdf" required>
+                            <input type="file" id="appointmentDoc" accept="image/*,.pdf">
                             <div class="file-upload-label">
                                 <i class="fas fa-cloud-upload-alt"></i>
-                                رفع القرار
+                                رفع القرار (اختياري)
                             </div>
                         </div>
                     </div>
@@ -1045,46 +726,10 @@
         </div>
     </div>
 
-    <!-- ===== أيقونة ITWS AI ===== -->
-    <div class="itws-ai-button" id="itwsAIButton" onclick="toggleAIChat()">
-        <i class="fas fa-robot"></i>
-        <span class="itws-ai-tooltip">ITWS AI - المساعد الذكي</span>
-    </div>
-
-    <!-- ===== نافذة ITWS AI ===== -->
-    <div class="itws-ai-chat" id="itwsAIChat">
-        <div class="itws-ai-header">
-            <h4>
-                <i class="fas fa-robot"></i>
-                ITWS AI - مساعد
-            </h4>
-            <div class="itws-ai-user-badge" id="aiUserBadge">زائر</div>
-            <button class="itws-ai-close" onclick="toggleAIChat()">×</button>
-        </div>
-        <div class="itws-ai-body" id="aiChatBody">
-            <div class="itws-ai-message">
-                <div class="ai-avatar"><i class="fas fa-robot"></i></div>
-                <div class="ai-content" id="aiWelcomeMessage">
-                    مرحباً! أنا ITWS AI المساعد الذكي. كيف يمكنني مساعدتك؟
-                </div>
-            </div>
-        </div>
-        <div class="itws-ai-suggestions" id="aiSuggestions">
-            <span class="itws-ai-suggestion" onclick="sendAIMessage('كيف أسجل دخول؟')">كيف أسجل دخول؟</span>
-            <span class="itws-ai-suggestion" onclick="sendAIMessage('نسيت كلمة المرور')">نسيت كلمة المرور</span>
-            <span class="itws-ai-suggestion" onclick="sendAIMessage('ليس لدي حساب')">ليس لدي حساب</span>
-            <span class="itws-ai-suggestion" onclick="sendAIMessage('مساعدة')">مساعدة</span>
-        </div>
-        <div class="itws-ai-footer">
-            <input type="text" id="aiMessageInput" placeholder="اكتب سؤالك..." onkeypress="if(event.key === 'Enter') sendAIMessage()">
-            <button onclick="sendAIMessage()"><i class="fas fa-paper-plane"></i></button>
-        </div>
-    </div>
-
-    <!-- ===== رسائل النظام ===== -->
+    <!-- رسائل النظام -->
     <div id="messageBox" class="message-box"></div>
 
-    <!-- ===== شاشة التحميل ===== -->
+    <!-- شاشة التحميل -->
     <div id="loadingSpinner" class="loading-spinner">
         <div class="spinner"></div>
         <p>جاري التحميل...</p>
@@ -1170,35 +815,15 @@
             };
         })();
 
-        // ===== متغيرات عامة =====
-        let currentUser = null;
-        let aiMessages = [
-            { role: 'ai', content: 'مرحباً! أنا ITWS AI المساعد الذكي. كيف يمكنني مساعدتك؟' }
-        ];
-
         // ===== دوال التنقل =====
         window.showRegister = function() {
             document.getElementById('loginCard').style.display = 'none';
             document.getElementById('registerCard').style.display = 'block';
-            updateAIBadge('تسجيل جديد');
-            updateAISuggestions([
-                'ما هي البيانات المطلوبة؟',
-                'كم تستغرق الموافقة؟',
-                'ماذا بعد التسجيل؟',
-                'رسوم العضوية'
-            ]);
         };
 
         window.showLogin = function() {
             document.getElementById('registerCard').style.display = 'none';
             document.getElementById('loginCard').style.display = 'block';
-            updateAIBadge('تسجيل دخول');
-            updateAISuggestions([
-                'كيف أسجل دخول؟',
-                'نسيت كلمة المرور',
-                'مشكلة في الدخول',
-                'مساعدة'
-            ]);
         };
 
         // ===== دوال حقول الصفة =====
@@ -1218,98 +843,14 @@
             if (committeePositions.includes(position)) {
                 committeeField.style.display = 'block';
                 governorateField.style.display = 'none';
-                updateAISuggestions(['مهام رؤساء اللجان', 'صلاحيات أعضاء اللجان', 'اجتماعات اللجان']);
             } else if (governoratePositions.includes(position)) {
                 committeeField.style.display = 'none';
                 governorateField.style.display = 'block';
-                updateAISuggestions(['خدمات المحافظة', 'فروع المحافظة', 'أنشطة المحافظة']);
             } else {
                 committeeField.style.display = 'none';
                 governorateField.style.display = 'none';
-                updateAISuggestions([
-                    'كيف أسجل دخول؟',
-                    'نسيت كلمة المرور',
-                    'ليس لدي حساب',
-                    'مساعدة'
-                ]);
             }
         };
-
-        // ===== دوال ITWS AI =====
-        window.toggleAIChat = function() {
-            const chat = document.getElementById('itwsAIChat');
-            if (chat.classList.contains('open')) {
-                chat.classList.remove('open');
-            } else {
-                chat.classList.add('open');
-                document.getElementById('aiMessageInput').focus();
-            }
-        };
-
-        window.updateAIBadge = function(text) {
-            document.getElementById('aiUserBadge').textContent = text;
-        };
-
-        window.updateAISuggestions = function(suggestions) {
-            const container = document.getElementById('aiSuggestions');
-            container.innerHTML = suggestions.map(s => 
-                `<span class="itws-ai-suggestion" onclick="sendAIMessage('${s}')">${s}</span>`
-            ).join('');
-        };
-
-        window.sendAIMessage = function(message) {
-            const input = document.getElementById('aiMessageInput');
-            const msg = message || input.value.trim();
-            
-            if (!msg) return;
-
-            const chatBody = document.getElementById('aiChatBody');
-            
-            // إضافة رسالة المستخدم
-            chatBody.innerHTML += `
-                <div class="user-message">
-                    <div class="user-avatar"><i class="fas fa-user"></i></div>
-                    <div class="user-content">${escapeHtml(msg)}</div>
-                </div>
-            `;
-            
-            input.value = '';
-            chatBody.scrollTop = chatBody.scrollHeight;
-
-            // محاكاة رد AI
-            setTimeout(function() {
-                let response = '';
-                
-                if (msg.includes('دخول') || msg.includes('login')) {
-                    response = 'لتسجيل الدخول، أدخل اسم المستخدم وكلمة المرور الخاصة بك (الرقم القومي). إذا كنت مسؤولاً، يمكنك استخدام بياناتك الرسمية.';
-                } else if (msg.includes('نسيت') || msg.includes('password')) {
-                    response = 'إذا نسيت كلمة المرور، يرجى التواصل مع النقيب العام أو النائب الأول للمساعدة في استعادتها.';
-                } else if (msg.includes('حساب') || msg.includes('تسجيل')) {
-                    response = 'للتسجيل كمسؤول في النقابة، اضغط على "تسجيل بيانات مسؤول" واملأ جميع البيانات المطلوبة بما في ذلك الصورة الشخصية وصورة قرار التعيين.';
-                } else if (msg.includes('لجنة') || msg.includes('committee')) {
-                    response = 'اللجان في النقابة تشمل: لجنة التدريب، لجنة العلاقات العامة، لجنة الشؤون المالية، وغيرها. كل لجنة لها مهامها وصلاحياتها.';
-                } else if (msg.includes('محافظة') || msg.includes('governorate')) {
-                    response = 'لدينا فروع في جميع محافظات مصر. كل محافظة لها مجلسها الفرعي ووكلاؤها. يمكنك التواصل مع فرع محافظتك للاستفسار عن الخدمات المحلية.';
-                } else {
-                    response = 'شكراً لسؤالك. أنا هنا لمساعدتك في أي استفسار بخصوص النقابة. هل تريد معرفة المزيد عن خدماتنا أو إجراءات التسجيل؟';
-                }
-                
-                chatBody.innerHTML += `
-                    <div class="itws-ai-message">
-                        <div class="ai-avatar"><i class="fas fa-robot"></i></div>
-                        <div class="ai-content">${escapeHtml(response)}</div>
-                    </div>
-                `;
-                chatBody.scrollTop = chatBody.scrollHeight;
-            }, 1000);
-        };
-
-        // دالة escapeHtml
-        function escapeHtml(text) {
-            const div = document.createElement('div');
-            div.textContent = text;
-            return div.innerHTML;
-        }
 
         // ===== دوال عرض الرسائل =====
         function showMessage(text, type) {
@@ -1330,14 +871,6 @@
         setTimeout(function() {
             document.getElementById('splashScreen').style.display = 'none';
             document.getElementById('loginWrapper').style.display = 'flex';
-            
-            // تحديث رسالة AI حسب الصفحة
-            setTimeout(function() {
-                const aiContent = document.querySelector('.ai-content');
-                if (aiContent) {
-                    aiContent.innerHTML = 'مرحباً! أنا ITWS AI المساعد الذكي. كيف يمكنني مساعدتك في تسجيل الدخول أو استعادة كلمة المرور؟';
-                }
-            }, 500);
         }, 3500);
 
         // ===== تسجيل الدخول =====
@@ -1367,10 +900,10 @@
             e.preventDefault();
             
             const profileImage = document.getElementById('profileImage').files[0];
-            const appointmentDoc = document.getElementById('appointmentDoc').files[0];
-
-            if (!profileImage || !appointmentDoc) {
-                showMessage('يرجى رفع الصورة الشخصية وصورة قرار التعيين', 'error');
+            
+            // فقط الصورة الشخصية إجبارية
+            if (!profileImage) {
+                showMessage('يرجى رفع الصورة الشخصية', 'error');
                 return;
             }
 
