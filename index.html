@@ -496,38 +496,9 @@
             margin-left: 5px;
         }
 
-        /* قائمة المحافظات */
         .governorate-select {
             max-height: 200px;
             overflow-y: auto;
-        }
-
-        /* تلميح المساعد التقني */
-        .ai-tooltip {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(255,255,255,0.95);
-            padding: 10px 20px;
-            border-radius: 30px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-            font-size: 13px;
-            color: #333;
-            z-index: 9999;
-            backdrop-filter: blur(5px);
-            border: 1px solid #667eea;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        .ai-tooltip i {
-            color: #667eea;
-            margin-left: 8px;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
         }
     </style>
 </head>
@@ -542,7 +513,7 @@
             <div class="splash-subtitle">والبرمجيات - منصة إدارة النقابة</div>
             <div class="itws-badge">
                 <i class="fas fa-robot"></i>
-                <span>مدعوم بـ ITWS AI - المساعد التقني الذكي</span>
+                <span>مدعوم بـ ITWS AI - المساعد الذكي</span>
                 <i class="fas fa-bolt"></i>
             </div>
             <div class="loading-bar">
@@ -568,12 +539,6 @@
                 <p>جاري التحميل...</p>
             </div>
 
-            <!-- تلميح المساعد التقني -->
-            <div class="ai-tooltip">
-                <i class="fas fa-robot"></i>
-                <span>ITWS AI جاهز لمساعدتك</span>
-            </div>
-
             <!-- بطاقة تسجيل الدخول -->
             <div class="card" id="loginCard">
                 <div class="header">
@@ -584,7 +549,7 @@
                     <p class="subtitle">منصة إدارة النقابة المصممة باستخدام</p>
                     <div class="itws-ai-badge">
                         <i class="fas fa-robot"></i>
-                        <span>ITWS AI - المساعد التقني الذكي</span>
+                        <span>ITWS AI - المساعد الذكي</span>
                         <i class="fas fa-bolt"></i>
                     </div>
                 </div>
@@ -659,7 +624,7 @@
                         </div>
                     </div>
 
-                    <!-- الصفة والمنصب - مرتبة ترتيباً منطقياً -->
+                    <!-- الصفة والمنصب -->
                     <div class="form-group">
                         <label><i class="fas fa-briefcase"></i> الصفة *</label>
                         <select id="position" required onchange="togglePositionFields()">
@@ -782,9 +747,26 @@
         </div>
     </div>
 
+    <!-- رسائل النظام -->
+    <div id="messageBox" class="message-box"></div>
+
+    <!-- شاشة التحميل -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <!-- إضافة المساعد الذكي ITWS AI -->
+    <script type="module">
+        import AIInterface from './assets/js/ai-interface.js';
+        
+        // لا يوجد مستخدم حالي (زائر)
+        window.aiInterface = new AIInterface(null);
+    </script>
+
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, get, push, update, onValue } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, get, push, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
         import { getStorage, ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-storage.js";
 
         const firebaseConfig = {
@@ -987,10 +969,7 @@
                 let committeeId = null;
                 let governorate = null;
                 
-                // الصفات المرتبطة باللجان
                 const committeePositions = ['committee_head', 'committee_member'];
-                
-                // الصفات المرتبطة بالمحافظات
                 const governoratePositions = [
                     'governorate_president', 'governorate_vice_first', 'governorate_vice_second',
                     'governorate_secretary', 'governorate_secretary_assistant',
