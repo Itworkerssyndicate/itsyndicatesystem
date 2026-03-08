@@ -1,0 +1,1635 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الملف الشخصي - نقابة تكنولوجيا المعلومات والبرمجيات</title>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background: #f5f5f5;
+            min-height: 100vh;
+        }
+
+        /* ===== أنيميشنات ===== */
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* ===== الشريط الجانبي ===== */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: 280px;
+            height: 100%;
+            background: white;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+            z-index: 100;
+            overflow-y: auto;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header {
+            padding: 30px 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sidebar-header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+            animation: spin 20s linear infinite;
+        }
+
+        .sidebar-header .user-avatar {
+            width: 80px;
+            height: 80px;
+            background: white;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #667eea;
+            border: 3px solid rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .sidebar-header .user-avatar:hover {
+            transform: scale(1.1) rotate(360deg);
+        }
+
+        .sidebar-header .user-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .sidebar-header h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .sidebar-header p {
+            font-size: 14px;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .online-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-top: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .online-badge i {
+            font-size: 8px;
+            color: #4caf50;
+            animation: pulse 2s infinite;
+        }
+
+        .sidebar-menu {
+            padding: 20px;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 15px;
+            color: #666;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 5px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.1;
+            transition: width 0.3s ease;
+        }
+
+        .menu-item:hover::before {
+            width: 100%;
+        }
+
+        .menu-item i {
+            width: 25px;
+            margin-left: 10px;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .menu-item:hover {
+            color: #667eea;
+            transform: translateX(-5px);
+        }
+
+        .menu-item:hover i {
+            transform: scale(1.2);
+        }
+
+        .menu-item.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+        }
+
+        .menu-item.active i {
+            color: white;
+        }
+
+        .menu-item .badge {
+            background: #f56565;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 20px;
+            font-size: 12px;
+            margin-right: auto;
+            animation: pulse 2s infinite;
+        }
+
+        /* ===== المحتوى الرئيسي ===== */
+        .main-content {
+            margin-right: 280px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .top-bar {
+            background: white;
+            padding: 15px 25px;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            animation: slideDown 0.5s ease;
+        }
+
+        .page-title h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .top-actions {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .notification-icon {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            background: #f5f5f5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notification-icon:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            left: -5px;
+            background: #f56565;
+            color: white;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            font-size: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        .online-users {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: #f5f5f5;
+            padding: 8px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .online-users:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .online-users i {
+            color: #4caf50;
+            font-size: 10px;
+            animation: pulse 2s infinite;
+        }
+
+        /* ===== الملف الشخصي ===== */
+        .profile-container {
+            display: grid;
+            grid-template-columns: 350px 1fr;
+            gap: 20px;
+        }
+
+        /* البطاقة الجانبية */
+        .profile-sidebar {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            animation: slideUp 0.5s ease;
+            text-align: center;
+        }
+
+        .profile-avatar {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px;
+        }
+
+        .profile-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #667eea;
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        .change-avatar-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 50%;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+        }
+
+        .change-avatar-btn:hover {
+            transform: scale(1.1);
+        }
+
+        .profile-name {
+            color: #333;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .profile-title {
+            color: #667eea;
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .profile-badge {
+            display: inline-block;
+            padding: 5px 15px;
+            background: #e8f5e9;
+            color: #2e7d32;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-top: 2px solid #f5f5f5;
+            border-bottom: 2px solid #f5f5f5;
+            margin-bottom: 20px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-value {
+            color: #333;
+            font-size: 20px;
+            font-weight: 700;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .profile-contact {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .contact-item i {
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+        }
+
+        .contact-info h4 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .contact-info p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .profile-actions button {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .btn-message {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-message:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+        }
+
+        .btn-edit {
+            background: #f8f9fa;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-edit:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        /* المحتوى الرئيسي */
+        .profile-main {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #f0f0f0;
+            animation: slideUp 0.5s ease;
+        }
+
+        .profile-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 25px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 50px;
+        }
+
+        .profile-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .profile-tab i {
+            margin-left: 8px;
+        }
+
+        .profile-tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 10px rgba(102,126,234,0.3);
+        }
+
+        .profile-tab:hover:not(.active) {
+            background: #e0e0e0;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .info-group {
+            margin-bottom: 20px;
+        }
+
+        .info-group h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .info-group h4 i {
+            color: #667eea;
+        }
+
+        .info-row {
+            display: flex;
+            margin-bottom: 12px;
+            padding: 8px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .info-label {
+            width: 120px;
+            color: #666;
+            font-size: 13px;
+        }
+
+        .info-value {
+            flex: 1;
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .document-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .document-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .document-info h4 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .document-info p {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .document-actions {
+            margin-right: auto;
+            display: flex;
+            gap: 5px;
+        }
+
+        .document-actions button {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-view {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .btn-download {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .btn-view:hover, .btn-download:hover {
+            transform: scale(1.1);
+        }
+
+        .security-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+
+        .security-info h4 {
+            color: #333;
+            font-size: 14px;
+            margin-bottom: 2px;
+        }
+
+        .security-info p {
+            color: #666;
+            font-size: 12px;
+        }
+
+        .security-status {
+            padding: 5px 15px;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .status-enabled {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .status-disabled {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        /* ===== نافذة تعديل الملف ===== */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.active {
+            display: flex;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f5f5f5;
+        }
+
+        .modal-header h3 {
+            color: #333;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #666;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #f56565;
+            transform: rotate(90deg);
+        }
+
+        /* ===== نظام الأمان ===== */
+        .security-alert {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            z-index: 999999;
+            box-shadow: 0 4px 12px rgba(220,53,69,0.3);
+            animation: slideDown 0.3s ease;
+            direction: rtl;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .security-watermark {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            opacity: 0.15;
+            font-size: 12px;
+            color: #000;
+            pointer-events: none;
+            z-index: 9999;
+            transform: rotate(-45deg);
+            white-space: nowrap;
+            user-select: none;
+            font-family: monospace;
+        }
+
+        /* ===== رسائل النظام ===== */
+        .message-box {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 15px 30px;
+            border-radius: 10px;
+            color: white;
+            font-weight: 600;
+            z-index: 9999;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        .message-box.success {
+            background: linear-gradient(135deg, #84fab0 0%, #8fd3f4 100%);
+        }
+
+        .message-box.error {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
+        .message-box.info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        .loading-spinner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #667eea;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .loading-spinner p {
+            color: white;
+            font-size: 16px;
+        }
+
+        /* ===== تصميم متجاوب ===== */
+        @media (max-width: 768px) {
+            .sidebar {
+                right: -280px;
+            }
+            .sidebar.active {
+                right: 0;
+            }
+            .main-content {
+                margin-right: 0;
+            }
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- الشريط الجانبي -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header" id="userInfo">
+            <div class="user-avatar">
+                <i class="fas fa-user-circle"></i>
+            </div>
+            <h3>جاري التحميل...</h3>
+            <p>...</p>
+            <div class="online-badge">
+                <i class="fas fa-circle"></i>
+                متصل الآن
+            </div>
+        </div>
+
+        <div class="sidebar-menu">
+            <a href="#" class="menu-item" onclick="window.location.href='dashboard.html'">
+                <i class="fas fa-home"></i>
+                الرئيسية
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='committees.html'">
+                <i class="fas fa-users"></i>
+                اللجان
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='branches.html'">
+                <i class="fas fa-building"></i>
+                الفروع
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='members.html'">
+                <i class="fas fa-user-tie"></i>
+                الأعضاء
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='requests.html'">
+                <i class="fas fa-clipboard-list"></i>
+                طلبات التسجيل
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='tracking.html'">
+                <i class="fas fa-exchange-alt"></i>
+                نظام التتبع
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='finance.html'">
+                <i class="fas fa-coins"></i>
+                المالية
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='messages.html'">
+                <i class="fas fa-envelope"></i>
+                الرسائل
+            </a>
+            <a href="#" class="menu-item active" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user-circle"></i>
+                الملف الشخصي
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='settings.html'">
+                <i class="fas fa-cog"></i>
+                إعدادات النظام
+            </a>
+            
+            <div style="height: 20px;"></div>
+            
+            <a href="#" class="menu-item" onclick="logout()">
+                <i class="fas fa-sign-out-alt"></i>
+                تسجيل الخروج
+            </a>
+        </div>
+    </div>
+
+    <!-- المحتوى الرئيسي -->
+    <div class="main-content">
+        <!-- الشريط العلوي -->
+        <div class="top-bar">
+            <div class="page-title">
+                <h2><i class="fas fa-user-circle"></i> الملف الشخصي</h2>
+                <p id="currentDateTime"></p>
+            </div>
+            <div class="top-actions">
+                <div class="notification-icon" onclick="window.location.href='messages.html'">
+                    <i class="far fa-bell"></i>
+                    <span class="notification-badge" id="notificationCount">0</span>
+                </div>
+                <div class="online-users" onclick="showOnlineUsers()">
+                    <i class="fas fa-circle"></i>
+                    <span id="onlineCount">0</span> متصل
+                </div>
+            </div>
+        </div>
+
+        <!-- الملف الشخصي -->
+        <div class="profile-container">
+            <!-- البطاقة الجانبية -->
+            <div class="profile-sidebar">
+                <div class="profile-avatar">
+                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="الصورة الشخصية" id="profileAvatar">
+                    <button class="change-avatar-btn" onclick="document.getElementById('avatarUpload').click()">
+                        <i class="fas fa-camera"></i>
+                    </button>
+                    <input type="file" id="avatarUpload" accept="image/*" style="display: none;" onchange="changeAvatar(this)">
+                </div>
+
+                <h2 class="profile-name" id="profileFullName">جاري التحميل...</h2>
+                <p class="profile-title" id="profileTitle">...</p>
+                <span class="profile-badge" id="profileStatus">نشط</span>
+
+                <div class="profile-stats">
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileDays">0</div>
+                        <div class="stat-label">يوم</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileLogins">0</div>
+                        <div class="stat-label">دخول</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-value" id="profileActivities">0</div>
+                        <div class="stat-label">نشاط</div>
+                    </div>
+                </div>
+
+                <div class="profile-contact">
+                    <div class="contact-item">
+                        <i class="fas fa-phone"></i>
+                        <div class="contact-info">
+                            <h4>رقم الهاتف</h4>
+                            <p id="profilePhone">01068865596</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-envelope"></i>
+                        <div class="contact-info">
+                            <h4>البريد الإلكتروني</h4>
+                            <p id="profileEmail">president@itws.org</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <div class="contact-info">
+                            <h4>المحافظة</h4>
+                            <p id="profileGovernorate">القاهرة</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profile-actions">
+                    <button class="btn-message" onclick="sendMessage()">
+                        <i class="fas fa-envelope"></i>
+                        مراسلة
+                    </button>
+                    <button class="btn-edit" onclick="openEditModal()">
+                        <i class="fas fa-edit"></i>
+                        تعديل
+                    </button>
+                </div>
+            </div>
+
+            <!-- المحتوى الرئيسي -->
+            <div class="profile-main">
+                <div class="profile-tabs">
+                    <div class="profile-tab active" onclick="switchTab('info')">
+                        <i class="fas fa-info-circle"></i>
+                        المعلومات
+                    </div>
+                    <div class="profile-tab" onclick="switchTab('documents')">
+                        <i class="fas fa-file-alt"></i>
+                        المستندات
+                    </div>
+                    <div class="profile-tab" onclick="switchTab('security')">
+                        <i class="fas fa-shield-alt"></i>
+                        الأمان
+                    </div>
+                    <div class="profile-tab" onclick="switchTab('activity')">
+                        <i class="fas fa-history"></i>
+                        النشاط
+                    </div>
+                </div>
+
+                <!-- المعلومات الشخصية -->
+                <div class="tab-content active" id="infoTab">
+                    <div class="info-grid">
+                        <div class="info-group">
+                            <h4><i class="fas fa-user"></i> البيانات الأساسية</h4>
+                            <div class="info-row">
+                                <span class="info-label">الاسم الكامل</span>
+                                <span class="info-value" id="infoFullName">المهندس / محمود جميل</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الرقم القومي</span>
+                                <span class="info-value" id="infoNationalId">30010250202679</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">تاريخ الميلاد</span>
+                                <span class="info-value" id="infoBirthdate">01/01/1990</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الجنسية</span>
+                                <span class="info-value">مصري</span>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <h4><i class="fas fa-briefcase"></i> معلومات العمل</h4>
+                            <div class="info-row">
+                                <span class="info-label">الصفة</span>
+                                <span class="info-value" id="infoPosition">نقيب عام</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">الجهة</span>
+                                <span class="info-value" id="infoEntity">نقابة تكنولوجيا المعلومات</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">تاريخ التعيين</span>
+                                <span class="info-value" id="infoAppointment">15/01/2024</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">رقم القرار</span>
+                                <span class="info-value" id="infoDecision">124/2024</span>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <h4><i class="fas fa-address-card"></i> معلومات الاتصال</h4>
+                            <div class="info-row">
+                                <span class="info-label">الهاتف</span>
+                                <span class="info-value" id="infoPhone">01068865596</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">البريد</span>
+                                <span class="info-value" id="infoEmail">president@itws.org</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">العنوان</span>
+                                <span class="info-value" id="infoAddress">القاهرة - مصر الجديدة</span>
+                            </div>
+                        </div>
+
+                        <div class="info-group">
+                            <h4><i class="fas fa-calendar"></i> معلومات النظام</h4>
+                            <div class="info-row">
+                                <span class="info-label">تاريخ التسجيل</span>
+                                <span class="info-value" id="infoCreated">01/01/2024</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">آخر دخول</span>
+                                <span class="info-value" id="infoLastLogin">اليوم 10:30 ص</span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">آخر نشاط</span>
+                                <span class="info-value" id="infoLastActive">منذ 5 دقائق</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- المستندات -->
+                <div class="tab-content" id="documentsTab">
+                    <div class="info-group">
+                        <h4><i class="fas fa-file-pdf"></i> المستندات الرسمية</h4>
+                        
+                        <div class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-id-card"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>البطاقة الشخصية</h4>
+                                <p>الرقم القومي: 30010250202679</p>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-view" onclick="viewDocument('national')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-download" onclick="downloadDocument('national')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-gavel"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>قرار التعيين</h4>
+                                <p>رقم القرار: 124/2024 - بتاريخ 15/01/2024</p>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-view" onclick="viewDocument('appointment')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-download" onclick="downloadDocument('appointment')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="document-item">
+                            <div class="document-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>المؤهل الدراسي</h4>
+                                <p>بكالوريوس هندسة - جامعة القاهرة</p>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-view" onclick="viewDocument('degree')">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-download" onclick="downloadDocument('degree')">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- الأمان -->
+                <div class="tab-content" id="securityTab">
+                    <div class="info-group">
+                        <h4><i class="fas fa-shield-alt"></i> إعدادات الأمان</h4>
+
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4>التحقق بخطوتين (2FA)</h4>
+                                <p>حماية إضافية لحسابك عبر رمز تحقق</p>
+                            </div>
+                            <span class="security-status status-enabled">مفعل</span>
+                        </div>
+
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4>بصمة الوجه</h4>
+                                <p>تسجيل الدخول باستخدام بصمة الوجه</p>
+                            </div>
+                            <span class="security-status status-enabled">مفعل</span>
+                        </div>
+
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4>بصمة الإصبع</h4>
+                                <p>تسجيل الدخول باستخدام بصمة الإصبع</p>
+                            </div>
+                            <span class="security-status status-enabled">مفعل</span>
+                        </div>
+
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4>كلمة المرور</h4>
+                                <p>آخر تغيير: 15/01/2024</p>
+                            </div>
+                            <button class="btn-edit" style="padding: 8px 20px;" onclick="changePassword()">
+                                <i class="fas fa-key"></i>
+                                تغيير
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="info-group" style="margin-top: 20px;">
+                        <h4><i class="fas fa-history"></i> سجل الدخول</h4>
+                        <div class="activity-list">
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-check-circle" style="color: #4caf50;"></i></div>
+                                <div class="activity-content">
+                                    <h4>تسجيل دخول ناجح</h4>
+                                    <p>القاهرة - جهاز جديد</p>
+                                    <div class="activity-time">منذ ساعة</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-check-circle" style="color: #4caf50;"></i></div>
+                                <div class="activity-content">
+                                    <h4>تسجيل دخول ناجح</h4>
+                                    <p>الجيزة - جهاز معتاد</p>
+                                    <div class="activity-time">منذ 3 ساعات</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-exclamation-circle" style="color: #f56565;"></i></div>
+                                <div class="activity-content">
+                                    <h4>محاولة فاشلة</h4>
+                                    <p>القاهرة - كلمة مرور خاطئة</p>
+                                    <div class="activity-time">منذ يوم</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- النشاط -->
+                <div class="tab-content" id="activityTab">
+                    <div class="info-group">
+                        <h4><i class="fas fa-history"></i> آخر الأنشطة</h4>
+                        <div class="activity-list" id="recentActivities">
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-file-alt"></i></div>
+                                <div class="activity-content">
+                                    <h4>تم إنشاء تقرير جديد</h4>
+                                    <p>تقرير أداء اللجان - 15/01/2024</p>
+                                    <div class="activity-time">منذ 2 ساعة</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-check-circle"></i></div>
+                                <div class="activity-content">
+                                    <h4>تم قبول طلب عضوية</h4>
+                                    <p>أحمد محمد - رئيس لجنة</p>
+                                    <div class="activity-time">منذ 5 ساعة</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-icon"><i class="fas fa-exchange-alt"></i></div>
+                                <div class="activity-content">
+                                    <h4>مراسلة جديدة</h4>
+                                    <p>من لجنة التدريب إلى فرع القاهرة</p>
+                                    <div class="activity-time">منذ يوم</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- نافذة تعديل الملف -->
+    <div class="modal" id="editProfileModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3><i class="fas fa-edit"></i> تعديل الملف الشخصي</h3>
+                <button class="close-modal" onclick="closeEditModal()">&times;</button>
+            </div>
+
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="editFullName" value="المهندس / محمود جميل">
+            </div>
+
+            <div class="form-group">
+                <label>رقم الهاتف</label>
+                <input type="tel" id="editPhone" value="01068865596">
+            </div>
+
+            <div class="form-group">
+                <label>البريد الإلكتروني</label>
+                <input type="email" id="editEmail" value="president@itws.org">
+            </div>
+
+            <div class="form-group">
+                <label>المحافظة</label>
+                <select id="editGovernorate">
+                    <option value="القاهرة" selected>القاهرة</option>
+                    <option value="الجيزة">الجيزة</option>
+                    <option value="الإسكندرية">الإسكندرية</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>العنوان</label>
+                <input type="text" id="editAddress" value="القاهرة - مصر الجديدة">
+            </div>
+
+            <div class="btn-group" style="margin-top: 20px;">
+                <button class="btn" onclick="saveProfile()">
+                    <i class="fas fa-save"></i>
+                    حفظ التغييرات
+                </button>
+                <button class="btn btn-secondary" onclick="closeEditModal()">
+                    <i class="fas fa-times"></i>
+                    إلغاء
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- رسائل النظام -->
+    <div id="messageBox" class="message-box"></div>
+
+    <!-- شاشة التحميل -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <div class="spinner"></div>
+        <p>جاري التحميل...</p>
+    </div>
+
+    <script type="module">
+        // ===== استيراد Firebase =====
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getDatabase, ref, get, onValue, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
+            authDomain: "itws-system.firebaseapp.com",
+            databaseURL: "https://itws-system-default-rtdb.firebaseio.com",
+            projectId: "itws-system",
+            storageBucket: "itws-system.firebasestorage.app",
+            messagingSenderId: "770452248691",
+            appId: "1:770452248691:web:0e94e65e01298b398bb206"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const database = getDatabase(app);
+
+        // ===== نظام الأمان =====
+        (function() {
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showSecurityAlert('🚫 القائمة محجوزة للنظام');
+                return false;
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                    (e.ctrlKey && e.key === 'U')) {
+                    e.preventDefault();
+                    showSecurityAlert('🚫 هذه الميزة غير متاحة');
+                    return false;
+                }
+            });
+
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                showSecurityAlert('📋 النسخ غير مسموح');
+            });
+
+            function showSecurityAlert(message) {
+                const alert = document.createElement('div');
+                alert.className = 'security-alert';
+                alert.textContent = message;
+                document.body.appendChild(alert);
+                setTimeout(() => alert.remove(), 3000);
+            }
+        })();
+
+        // ===== التحقق من تسجيل الدخول =====
+        const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
+        
+        if (!currentUser) {
+            window.location.href = 'index.html';
+        }
+
+        // ===== تحديث التاريخ والوقت =====
+        function updateDateTime() {
+            const now = new Date();
+            const options = { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            };
+            document.getElementById('currentDateTime').textContent = now.toLocaleDateString('ar-EG', options);
+        }
+        updateDateTime();
+        setInterval(updateDateTime, 60000);
+
+        // ===== عرض معلومات المستخدم =====
+        function displayUserInfo() {
+            const userInfo = document.getElementById('userInfo');
+            let title = '';
+            
+            switch(currentUser?.role) {
+                case 'president':
+                    title = 'النقيب العام';
+                    break;
+                case 'vice_president_first':
+                    title = 'النائب الأول';
+                    break;
+                default:
+                    title = currentUser?.positionName || 'عضو';
+            }
+
+            userInfo.innerHTML = `
+                <div class="user-avatar" onclick="window.location.href='profile.html'">
+                    ${currentUser?.profileImage ? 
+                        `<img src="${currentUser.profileImage}" alt="صورة المستخدم">` : 
+                        '<i class="fas fa-user-circle"></i>'}
+                </div>
+                <h3>${currentUser?.fullName || 'مستخدم'}</h3>
+                <p>${title}</p>
+                <div class="online-badge">
+                    <i class="fas fa-circle"></i>
+                    متصل الآن
+                </div>
+            `;
+        }
+        displayUserInfo();
+
+        // ===== إضافة علامة مائية =====
+        function addWatermark() {
+            const watermark = document.createElement('div');
+            watermark.className = 'security-watermark';
+            watermark.textContent = (currentUser?.fullName || 'زائر') + ' - ' + new Date().toLocaleDateString('ar-EG');
+            document.body.appendChild(watermark);
+        }
+        addWatermark();
+
+        // ===== تحميل بيانات المستخدم =====
+        async function loadUserData() {
+            try {
+                const userRef = ref(database, `users/${currentUser.userId}`);
+                const snapshot = await get(userRef);
+                
+                if (snapshot.exists()) {
+                    const user = snapshot.val();
+                    
+                    // تحديث الصفحة بالبيانات
+                    document.getElementById('profileFullName').textContent = user.fullName || 'مستخدم';
+                    document.getElementById('profileTitle').textContent = user.positionName || user.role || 'عضو';
+                    document.getElementById('profilePhone').textContent = user.phone || 'غير محدد';
+                    document.getElementById('profileEmail').textContent = user.email || 'غير محدد';
+                    document.getElementById('profileGovernorate').textContent = user.governorate || 'غير محدد';
+                    
+                    document.getElementById('infoFullName').textContent = user.fullName || 'مستخدم';
+                    document.getElementById('infoNationalId').textContent = user.nationalId || 'غير محدد';
+                    document.getElementById('infoPosition').textContent = user.positionName || user.role || 'عضو';
+                    document.getElementById('infoPhone').textContent = user.phone || 'غير محدد';
+                    document.getElementById('infoEmail').textContent = user.email || 'غير محدد';
+                    document.getElementById('infoAddress').textContent = user.address || 'غير محدد';
+                    
+                    // حساب عدد الأيام من تاريخ الإنشاء
+                    if (user.createdAt) {
+                        const created = new Date(user.createdAt);
+                        const now = new Date();
+                        const days = Math.floor((now - created) / (1000 * 60 * 60 * 24));
+                        document.getElementById('profileDays').textContent = days;
+                    }
+                    
+                    document.getElementById('profileLogins').textContent = user.loginCount || 0;
+                }
+            } catch (error) {
+                console.error('Error loading user data:', error);
+            }
+        }
+
+        // ===== تغيير الصورة الشخصية =====
+        window.changeAvatar = function(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileAvatar').src = e.target.result;
+                    showMessage('✅ تم تغيير الصورة بنجاح', 'success');
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        };
+
+        // ===== دوال التبويبات =====
+        window.switchTab = function(tab) {
+            document.querySelectorAll('.profile-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tab}Tab`).classList.add('active');
+        };
+
+        // ===== نافذة التعديل =====
+        window.openEditModal = function() {
+            document.getElementById('editFullName').value = document.getElementById('profileFullName').textContent;
+            document.getElementById('editPhone').value = document.getElementById('profilePhone').textContent;
+            document.getElementById('editEmail').value = document.getElementById('profileEmail').textContent;
+            document.getElementById('editGovernorate').value = document.getElementById('profileGovernorate').textContent;
+            document.getElementById('editAddress').value = document.getElementById('infoAddress').textContent;
+            
+            document.getElementById('editProfileModal').classList.add('active');
+        };
+
+        window.closeEditModal = function() {
+            document.getElementById('editProfileModal').classList.remove('active');
+        };
+
+        window.saveProfile = async function() {
+            showLoading(true);
+
+            try {
+                const updates = {
+                    fullName: document.getElementById('editFullName').value,
+                    phone: document.getElementById('editPhone').value,
+                    email: document.getElementById('editEmail').value,
+                    governorate: document.getElementById('editGovernorate').value,
+                    address: document.getElementById('editAddress').value,
+                    updatedAt: new Date().toISOString()
+                };
+
+                await update(ref(database, `users/${currentUser.userId}`), updates);
+
+                // تحديث الجلسة
+                const updatedUser = { ...currentUser, ...updates };
+                sessionStorage.setItem('currentUser', JSON.stringify(updatedUser));
+
+                // تحديث الصفحة
+                await loadUserData();
+                
+                showMessage('✅ تم حفظ التغييرات بنجاح', 'success');
+                closeEditModal();
+            } catch (error) {
+                console.error('Error saving profile:', error);
+                showMessage('❌ حدث خطأ في حفظ التغييرات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // ===== دوال إضافية =====
+        window.sendMessage = function() {
+            window.location.href = 'messages.html';
+        };
+
+        window.viewDocument = function(type) {
+            showMessage('📄 جاري فتح المستند...', 'info');
+        };
+
+        window.downloadDocument = function(type) {
+            showMessage('📥 جاري تحميل المستند...', 'info');
+        };
+
+        window.changePassword = function() {
+            showMessage('🔐 سيتم تحويلك إلى صفحة تغيير كلمة المرور', 'info');
+        };
+
+        window.showOnlineUsers = async function() {
+            const usersRef = ref(database, 'users');
+            const snapshot = await get(usersRef);
+            if (!snapshot.exists()) return;
+
+            const users = snapshot.val();
+            const online = Object.values(users).filter(u => u.online === true).length;
+            showMessage(`🟢 عدد المتصلين: ${online}`, 'info');
+        };
+
+        // ===== دوال مساعدة =====
+        function showMessage(text, type) {
+            const msgBox = document.getElementById('messageBox');
+            msgBox.textContent = text;
+            msgBox.className = `message-box ${type}`;
+            msgBox.style.display = 'block';
+            setTimeout(() => msgBox.style.display = 'none', 3000);
+        }
+
+        function showLoading(show) {
+            document.getElementById('loadingSpinner').style.display = show ? 'flex' : 'none';
+        }
+
+        window.logout = async function() {
+            try {
+                await update(ref(database, `users/${currentUser.userId}`), {
+                    online: false,
+                    lastSeen: new Date().toISOString()
+                });
+                sessionStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            } catch (error) {
+                console.error('Logout error:', error);
+            }
+        };
+
+        // ===== تحميل البيانات عند فتح الصفحة =====
+        loadUserData();
+    </script>
+</body>
+</html>
