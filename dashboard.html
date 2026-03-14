@@ -116,6 +116,7 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
+            overflow: hidden;
         }
 
         .sidebar-header .union-logo:hover {
@@ -144,6 +145,23 @@
             opacity: 0.9;
             position: relative;
             z-index: 1;
+        }
+
+        .user-info {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .user-name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .user-role {
+            font-size: 13px;
+            opacity: 0.9;
         }
 
         .online-badge {
@@ -523,7 +541,7 @@
             color: #721c24;
         }
 
-        /* ===== كروت المراسلات ===== */
+        /* ===== كروت التتبع ===== */
         .tracking-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -828,6 +846,36 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ===== تلميحات الصلاحيات ===== */
+        .role-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-right: 5px;
+        }
+
+        .role-president {
+            background: #fbbf24;
+            color: #78350f;
+        }
+
+        .role-vice {
+            background: #60a5fa;
+            color: #1e3a8a;
+        }
+
+        .role-manager {
+            background: #34d399;
+            color: #064e3b;
+        }
+
+        .role-member {
+            background: #9ca3af;
+            color: #1f2937;
+        }
     </style>
 </head>
 <body>
@@ -839,9 +887,8 @@
             </div>
             <h3 id="unionName">نقابة تكنولوجيا المعلومات</h3>
             <p id="unionSubtitle">منصة إدارة النقابة</p>
-            <div class="online-badge">
-                <i class="fas fa-circle"></i>
-                متصل الآن
+            <div class="user-info" id="userInfo">
+                <!-- يتم تعبئتها ديناميكياً -->
             </div>
         </div>
 
@@ -889,12 +936,15 @@
                 <i class="fas fa-user-circle"></i>
                 الملف الشخصي
             </a>
-            <a href="#" class="menu-item" onclick="window.location.href='settings.html'">
-                <i class="fas fa-cog"></i>
-                إعدادات النظام
-            </a>
             
-            <div style="height: 20px;"></div>
+            <!-- إعدادات النظام - تظهر فقط للنقيب العام -->
+            <div id="settingsMenuItem" style="display: none;">
+                <a href="#" class="menu-item" onclick="window.location.href='settings.html'">
+                    <i class="fas fa-cog"></i>
+                    إعدادات النظام
+                </a>
+                <div style="height: 20px;"></div>
+            </div>
             
             <a href="#" class="menu-item" onclick="logout()">
                 <i class="fas fa-sign-out-alt"></i>
@@ -963,8 +1013,8 @@
             </div>
         </div>
 
-        <!-- كروت التتبع -->
-        <div class="tracking-grid">
+        <!-- كروت التتبع - تظهر حسب الصلاحية -->
+        <div class="tracking-grid" id="trackingGrid">
             <!-- من لجنة إلى فرع -->
             <div class="tracking-card" onclick="window.location.href='tracking.html?filter=committee-to-branch'">
                 <div class="tracking-header">
@@ -999,8 +1049,8 @@
                 </div>
             </div>
 
-            <!-- طلبات الإدارة -->
-            <div class="tracking-card" onclick="window.location.href='admin-requests.html'">
+            <!-- طلبات الإدارة - تظهر للنقيب والنائب فقط -->
+            <div class="tracking-card" id="adminRequestsCard" onclick="window.location.href='admin-requests.html'">
                 <div class="tracking-header">
                     <h4><i class="fas fa-file-alt" style="color: #f59e0b;"></i> طلبات الإدارة</h4>
                     <span class="tracking-count" id="adminRequestsCount">0</span>
@@ -1019,7 +1069,7 @@
 
         <!-- الأقسام الرئيسية -->
         <div class="sections-grid">
-            <!-- آخر الأنشطة -->
+            <!-- آخر الأنشطة - تظهر للجميع -->
             <div class="section-card">
                 <div class="section-header">
                     <h3><i class="fas fa-history"></i> آخر الأنشطة</h3>
@@ -1037,8 +1087,8 @@
                 </div>
             </div>
 
-            <!-- الطلبات الواردة -->
-            <div class="section-card">
+            <!-- الطلبات الواردة - تظهر للنقيب والنائب فقط -->
+            <div class="section-card" id="incomingRequestsCard">
                 <div class="section-header">
                     <h3><i class="fas fa-inbox"></i> الطلبات الواردة</h3>
                     <a href="requests.html" style="color: #667eea; font-size: 13px;">عرض الكل</a>
@@ -1056,8 +1106,8 @@
             </div>
         </div>
 
-        <!-- آخر المراسلات -->
-        <div class="section-card" style="margin-top: 20px;">
+        <!-- آخر المراسلات - تظهر حسب الصلاحية -->
+        <div class="section-card" style="margin-top: 20px;" id="latestTrackingCard">
             <div class="section-header">
                 <h3><i class="fas fa-exchange-alt"></i> آخر المراسلات</h3>
                 <a href="tracking.html" style="color: #667eea; font-size: 13px;">عرض الكل</a>
@@ -1186,7 +1236,69 @@
         }
 
         // ===== متغيرات عامة =====
-        let unionSettings = {};
+        let unionSettings = {
+            general: {
+                nameAr: 'نقابة تكنولوجيا المعلومات والبرمجيات',
+                shortName: 'ITWS',
+                logoUrl: null
+            }
+        };
+
+        // ===== دوال الصلاحيات =====
+        function getUserRoleLevel(role) {
+            const roles = {
+                'president': 100,
+                'vice_president_first': 90,
+                'vice_president_second_manager': 80,
+                'secretary_assistant_manager': 80,
+                'secretary_general': 70,
+                'treasurer': 70,
+                'committee_head': 60,
+                'committee_member': 50,
+                'governorate_president': 60,
+                'governorate_council_member': 50,
+                'governorate_agent': 50
+            };
+            return roles[role] || 0;
+        }
+
+        function hasPermission(requiredLevel) {
+            return getUserRoleLevel(currentUser.role) >= requiredLevel;
+        }
+
+        // ===== تطبيق الصلاحيات على الواجهة =====
+        function applyPermissions() {
+            const userLevel = getUserRoleLevel(currentUser.role);
+            
+            // إعدادات النظام - فقط للنقيب العام
+            if (userLevel >= 100) {
+                document.getElementById('settingsMenuItem').style.display = 'block';
+            } else {
+                document.getElementById('settingsMenuItem').style.display = 'none';
+            }
+            
+            // طلبات الإدارة - للنقيب (100) والنائب (90)
+            if (userLevel >= 90) {
+                document.getElementById('adminRequestsCard').style.display = 'block';
+            } else {
+                document.getElementById('adminRequestsCard').style.display = 'none';
+            }
+            
+            // الطلبات الواردة - للنقيب والنائب فقط
+            if (userLevel >= 90) {
+                document.getElementById('incomingRequestsCard').style.display = 'block';
+            } else {
+                document.getElementById('incomingRequestsCard').style.display = 'none';
+            }
+            
+            // تعديل البطاقات الإحصائية حسب الصلاحية
+            adjustStatsByPermission(userLevel);
+        }
+
+        function adjustStatsByPermission(userLevel) {
+            // يمكن إضافة منطق لتعديل الإحصائيات حسب الصلاحية
+            // مثلاً مدير اللجان يشوف إحصائيات اللجان فقط
+        }
 
         // ===== تحميل إعدادات النظام =====
         async function loadSystemSettings() {
@@ -1209,6 +1321,60 @@
                 console.error('Error loading system settings:', error);
             }
         }
+
+        // ===== عرض معلومات المستخدم =====
+        function displayUserInfo() {
+            const userInfo = document.getElementById('userInfo');
+            let roleName = '';
+            let roleClass = 'role-member';
+            
+            switch(currentUser?.role) {
+                case 'president':
+                    roleName = 'النقيب العام';
+                    roleClass = 'role-president';
+                    break;
+                case 'vice_president_first':
+                    roleName = 'النائب الأول';
+                    roleClass = 'role-vice';
+                    break;
+                case 'vice_president_second_manager':
+                    roleName = 'نائب ثاني - مدير اللجان';
+                    roleClass = 'role-manager';
+                    break;
+                case 'secretary_assistant_manager':
+                    roleName = 'مساعد الأمين العام - مدير الفروع';
+                    roleClass = 'role-manager';
+                    break;
+                case 'secretary_general':
+                    roleName = 'أمين عام';
+                    roleClass = 'role-manager';
+                    break;
+                case 'treasurer':
+                    roleName = 'أمين صندوق';
+                    roleClass = 'role-manager';
+                    break;
+                case 'committee_head':
+                    roleName = 'رئيس لجنة';
+                    roleClass = 'role-manager';
+                    break;
+                case 'committee_member':
+                    roleName = 'عضو لجنة';
+                    roleClass = 'role-member';
+                    break;
+                default:
+                    roleName = currentUser?.positionName || 'عضو';
+            }
+
+            userInfo.innerHTML = `
+                <div class="user-name">${currentUser?.fullName || 'مستخدم'}</div>
+                <div class="user-role"><span class="role-badge ${roleClass}">${roleName}</span></div>
+                <div class="online-badge">
+                    <i class="fas fa-circle"></i>
+                    متصل الآن
+                </div>
+            `;
+        }
+        displayUserInfo();
 
         // ===== تحديث التاريخ والوقت =====
         function updateDateTime() {
@@ -1406,9 +1572,24 @@
                 const tracking = snapshot.val() || {};
                 const items = Object.values(tracking);
 
-                const c2b = items.filter(t => t.fromType === 'committee' && t.toType === 'branch');
-                const b2c = items.filter(t => t.fromType === 'branch' && t.toType === 'committee');
-                const admin = items.filter(t => t.fromType === 'president' || t.toType === 'president');
+                const userLevel = getUserRoleLevel(currentUser.role);
+                
+                // تصفية حسب الصلاحية
+                let visibleItems = items;
+                
+                if (userLevel < 90) {
+                    // للمديرين، يشوفوا فقط المراسلات الخاصة بهم
+                    visibleItems = items.filter(t => 
+                        t.fromId === currentUser.userId || 
+                        t.toId === currentUser.userId ||
+                        (t.fromType === 'committee' && currentUser.role === 'vice_president_second_manager') ||
+                        (t.fromType === 'branch' && currentUser.role === 'secretary_assistant_manager')
+                    );
+                }
+
+                const c2b = visibleItems.filter(t => t.fromType === 'committee' && t.toType === 'branch');
+                const b2c = visibleItems.filter(t => t.fromType === 'branch' && t.toType === 'committee');
+                const admin = visibleItems.filter(t => t.fromType === 'president' || t.toType === 'president');
 
                 document.getElementById('c2bCount').textContent = c2b.length;
                 document.getElementById('b2cCount').textContent = b2c.length;
@@ -1416,7 +1597,7 @@
 
                 // آخر 3 مراسلات من لجنة لفرع
                 document.getElementById('committeeToBranchPreview').innerHTML = c2b.slice(-3).map(t => `
-                    <div class="tracking-preview-item">
+                    <div class="tracking-preview-item" onclick="window.location.href='tracking.html?id=${t.id}'">
                         <i class="fas fa-arrow-right"></i>
                         <div class="tracking-preview-content">
                             <h5>${t.title || 'مراسلة'}</h5>
@@ -1427,7 +1608,7 @@
 
                 // آخر 3 مراسلات من فرع للجنة
                 document.getElementById('branchToCommitteePreview').innerHTML = b2c.slice(-3).map(t => `
-                    <div class="tracking-preview-item">
+                    <div class="tracking-preview-item" onclick="window.location.href='tracking.html?id=${t.id}'">
                         <i class="fas fa-arrow-left"></i>
                         <div class="tracking-preview-content">
                             <h5>${t.title || 'مراسلة'}</h5>
@@ -1438,7 +1619,7 @@
 
                 // آخر 3 طلبات إدارة
                 document.getElementById('adminRequestsPreview').innerHTML = admin.slice(-3).map(t => `
-                    <div class="tracking-preview-item">
+                    <div class="tracking-preview-item" onclick="window.location.href='tracking.html?id=${t.id}'">
                         <i class="fas fa-file-alt"></i>
                         <div class="tracking-preview-content">
                             <h5>${t.title || 'طلب'}</h5>
@@ -1448,7 +1629,7 @@
                 `).join('') || '<div class="tracking-preview-item"><i class="fas fa-info-circle"></i><div class="tracking-preview-content"><h5>لا توجد طلبات</h5></div></div>';
 
                 // آخر 5 مراسلات
-                document.getElementById('latestTracking').innerHTML = items.slice(-5).map(t => `
+                document.getElementById('latestTracking').innerHTML = visibleItems.slice(-5).map(t => `
                     <div class="activity-item" onclick="window.location.href='tracking.html?id=${t.id}'">
                         <div class="activity-icon"><i class="fas fa-exchange-alt"></i></div>
                         <div class="activity-content">
@@ -1506,28 +1687,45 @@
             const users = snapshot.val();
             const onlineList = document.getElementById('onlineUsersList');
             const now = Date.now();
+            const userLevel = getUserRoleLevel(currentUser.role);
 
-            onlineList.innerHTML = Object.entries(users)
-                .filter(([_, u]) => u.online === true)
-                .map(([id, user]) => {
-                    const lastLogin = user.lastLogin ? new Date(user.lastLogin).getTime() : now;
-                    const minutes = Math.floor((now - lastLogin) / 60000);
-                    const hours = Math.floor(minutes / 60);
-                    const duration = hours > 0 ? `${hours} ساعة و ${minutes % 60} دقيقة` : `${minutes} دقيقة`;
+            let onlineUsers = Object.entries(users)
+                .filter(([_, u]) => u.online === true);
+            
+            // تصفية حسب الصلاحية
+            if (userLevel < 90) {
+                // المديرين يشوفوا أعضاءهم فقط
+                if (currentUser.role === 'vice_president_second_manager') {
+                    // مدير اللجان يشوف أعضاء اللجان
+                    onlineUsers = onlineUsers.filter(([_, u]) => u.role?.includes('committee'));
+                } else if (currentUser.role === 'secretary_assistant_manager') {
+                    // مدير الفروع يشوف أعضاء الفروع
+                    onlineUsers = onlineUsers.filter(([_, u]) => u.role?.includes('branch') || u.role?.includes('governorate'));
+                } else {
+                    // الأعضاء العاديين ما يشوفوش حد
+                    onlineUsers = [];
+                }
+            }
 
-                    return `
-                        <div class="online-user-item">
-                            <div class="online-user-avatar">
-                                <i class="fas fa-user-circle"></i>
-                            </div>
-                            <div class="online-user-info">
-                                <h4>${user.fullName || 'مستخدم'}</h4>
-                                <p>${user.positionName || user.role || 'عضو'}</p>
-                                <span class="online-duration">🟢 متصل منذ ${duration}</span>
-                            </div>
+            onlineList.innerHTML = onlineUsers.map(([id, user]) => {
+                const lastLogin = user.lastLogin ? new Date(user.lastLogin).getTime() : now;
+                const minutes = Math.floor((now - lastLogin) / 60000);
+                const hours = Math.floor(minutes / 60);
+                const duration = hours > 0 ? `${hours} ساعة و ${minutes % 60} دقيقة` : `${minutes} دقيقة`;
+
+                return `
+                    <div class="online-user-item">
+                        <div class="online-user-avatar">
+                            <i class="fas fa-user-circle"></i>
                         </div>
-                    `;
-                }).join('') || '<p style="text-align: center; padding: 20px;">لا يوجد متصلين حالياً</p>';
+                        <div class="online-user-info">
+                            <h4>${user.fullName || 'مستخدم'}</h4>
+                            <p>${user.positionName || user.role || 'عضو'}</p>
+                            <span class="online-duration">🟢 متصل منذ ${duration}</span>
+                        </div>
+                    </div>
+                `;
+            }).join('') || '<p style="text-align: center; padding: 20px;">لا يوجد متصلين في نطاق صلاحياتك</p>';
 
             document.getElementById('onlineUsersModal').classList.add('active');
         };
@@ -1582,6 +1780,7 @@
 
         // ===== تشغيل كل الوظائف =====
         loadSystemSettings();
+        applyPermissions();
         loadStats();
         loadRecentActivities();
         loadIncomingRequests();
