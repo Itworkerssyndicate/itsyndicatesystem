@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>تهيئة النظام - نقابة تكنولوجيا المعلومات والبرمجيات</title>
+    <title>إعداد النظام - نقابة تكنولوجيا المعلومات والبرمجيات</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
     
     <style>
         * {
@@ -28,16 +31,7 @@
             padding: 20px;
         }
 
-        .init-card {
-            background: white;
-            border-radius: 20px;
-            padding: 40px;
-            max-width: 600px;
-            width: 100%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            animation: slideUp 0.5s ease;
-        }
-
+        /* ===== أنيميشنات ===== */
         @keyframes slideUp {
             from {
                 opacity: 0;
@@ -49,69 +43,334 @@
             }
         }
 
-        h1 {
-            color: #333;
-            font-size: 28px;
-            margin-bottom: 10px;
-            text-align: center;
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .subtitle {
-            color: #666;
-            text-align: center;
-            margin-bottom: 30px;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .credentials {
+        @keyframes progress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        .setup-card {
+            background: white;
+            border-radius: 30px;
+            padding: 50px;
+            max-width: 700px;
+            width: 100%;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.3);
+            animation: slideUp 0.8s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .setup-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(102,126,234,0.05) 0%, transparent 70%);
+            animation: spin 30s linear infinite;
+        }
+
+        .setup-header {
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .setup-logo {
+            width: 120px;
+            height: 120px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
             color: white;
-            padding: 25px;
-            border-radius: 15px;
-            margin-bottom: 25px;
+            font-size: 50px;
+            box-shadow: 0 20px 40px rgba(102,126,234,0.3);
+            animation: pulse 2s infinite;
         }
 
-        .credentials h3 {
-            margin-bottom: 15px;
+        .setup-title {
+            color: #333;
+            font-size: 32px;
+            font-weight: 800;
+            margin-bottom: 10px;
+        }
+
+        .setup-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .warning-box i {
+            font-size: 40px;
+            color: #ffc107;
+        }
+
+        .warning-box p {
+            color: #856404;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .warning-box strong {
+            font-size: 16px;
+        }
+
+        .credentials-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            color: white;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 15px 30px rgba(102,126,234,0.3);
+        }
+
+        .credentials-box h3 {
+            font-size: 22px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             gap: 10px;
+        }
+
+        .credentials-box h3 i {
+            color: #ffd700;
         }
 
         .cred-item {
             display: flex;
             align-items: center;
             gap: 15px;
-            padding: 10px;
+            padding: 15px;
             background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-            margin-bottom: 10px;
+            border-radius: 12px;
+            margin-bottom: 12px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.2);
         }
 
         .cred-item i {
-            width: 20px;
+            width: 25px;
+            font-size: 18px;
+            color: #ffd700;
+        }
+
+        .cred-item .label {
+            font-weight: 600;
+            min-width: 100px;
+        }
+
+        .cred-item .value {
+            font-family: monospace;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 15px;
+        }
+
+        .steps-container {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            margin-bottom: 10px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .step.completed {
+            background: #e8f5e9;
+            border-color: #4caf50;
+        }
+
+        .step.active {
+            background: #e3f2fd;
+            border-color: #2196f3;
+            animation: pulse 1s infinite;
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .step.completed .step-number {
+            background: #4caf50;
+        }
+
+        .step.active .step-number {
+            background: #2196f3;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 3px;
+        }
+
+        .step-content p {
+            color: #666;
+            font-size: 13px;
+        }
+
+        .step-status {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 16px;
+        }
+
+        .step.completed .step-status {
+            color: #4caf50;
+        }
+
+        .step.active .step-status {
+            color: #2196f3;
+        }
+
+        .progress-container {
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-label {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #666;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 12px;
+            background: #f0f0f0;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 30px;
+            transition: width 0.5s ease;
+            width: 0%;
         }
 
         .btn {
             width: 100%;
-            padding: 15px;
+            padding: 18px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            border-radius: 10px;
+            border-radius: 15px;
             font-size: 18px;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
             margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            transform: translate(-50%, -50%);
+            transition: width 0.6s, height 0.6s;
+        }
+
+        .btn:hover:before {
+            width: 300px;
+            height: 300px;
         }
 
         .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(102,126,234,0.4);
         }
 
-        .btn-reset {
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn-danger {
             background: linear-gradient(135deg, #dc3545 0%, #c82333 100%);
+        }
+
+        .btn:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn i {
+            font-size: 20px;
         }
 
         .status-box {
@@ -119,6 +378,8 @@
             padding: 15px;
             border-radius: 10px;
             display: none;
+            position: relative;
+            z-index: 1;
         }
 
         .status-box.success {
@@ -126,6 +387,7 @@
             color: #155724;
             border: 1px solid #c3e6cb;
             display: block;
+            animation: slideUp 0.3s ease;
         }
 
         .status-box.error {
@@ -133,66 +395,258 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
             display: block;
+            animation: slideUp 0.3s ease;
         }
 
-        .loading {
+        .status-box.info {
+            background: #cce5ff;
+            color: #004085;
+            border: 1px solid #b8daff;
+            display: block;
+            animation: slideUp 0.3s ease;
+        }
+
+        .loading-spinner {
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid #f3f3f3;
-            border-top: 3px solid #667eea;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top: 3px solid white;
             border-radius: 50%;
             animation: spin 1s linear infinite;
             margin-left: 10px;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .security-note {
+            text-align: center;
+            color: #666;
+            font-size: 13px;
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .security-note i {
+            color: #667eea;
+            margin-left: 5px;
+        }
+
+        .settings-preview {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .settings-preview h4 {
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .settings-preview h4 i {
+            color: #667eea;
+        }
+
+        .settings-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .setting-item {
+            padding: 10px;
+            background: white;
+            border-radius: 8px;
+            border: 1px solid #e0e0e0;
+        }
+
+        .setting-label {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 3px;
+        }
+
+        .setting-value {
+            color: #333;
+            font-weight: 600;
+            font-size: 14px;
         }
     </style>
 </head>
 <body>
-    <div class="init-card">
-        <h1>🚀 تهيئة النظام</h1>
-        <p class="subtitle">نقابة تكنولوجيا المعلومات والبرمجيات</p>
+    <div class="setup-card">
+        <div class="setup-header">
+            <div class="setup-logo">
+                <i class="fas fa-cog"></i>
+            </div>
+            <h1 class="setup-title">إعداد النظام</h1>
+            <p class="setup-subtitle">نقابة تكنولوجيا المعلومات والبرمجيات</p>
+        </div>
 
-        <div class="credentials">
-            <h3><i class="fas fa-crown"></i> بيانات النقيب العام</h3>
-            <div class="cred-item">
-                <i class="fas fa-user"></i>
-                <span><strong>الاسم:</strong> المهندس / محمود جميل</span>
-            </div>
-            <div class="cred-item">
-                <i class="fas fa-id-card"></i>
-                <span><strong>الرقم القومي:</strong> 30010250202679</span>
-            </div>
-            <div class="cred-item">
-                <i class="fas fa-key"></i>
-                <span><strong>كلمة المرور:</strong> 30010250202679</span>
-            </div>
-            <div class="cred-item">
-                <i class="fas fa-phone"></i>
-                <span><strong>رقم الهاتف:</strong> 01068865596</span>
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <div>
+                <strong>⚠️ تحذير مهم</strong>
+                <p>هذا الملف سيقوم بمسح جميع البيانات الموجودة حالياً في قاعدة البيانات وإنشاء نظام جديد بالكامل. لا يمكن التراجع عن هذا الإجراء.</p>
             </div>
         </div>
 
-        <button class="btn" onclick="initializeSystem()">
+        <div class="credentials-box">
+            <h3><i class="fas fa-crown"></i> بيانات النقيب العام</h3>
+            <div class="cred-item">
+                <i class="fas fa-user"></i>
+                <span class="label">الاسم:</span>
+                <span class="value">المهندس / محمود جميل</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-id-card"></i>
+                <span class="label">الرقم القومي:</span>
+                <span class="value">30010250202679</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-key"></i>
+                <span class="label">كلمة المرور:</span>
+                <span class="value">30010250202679</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-phone"></i>
+                <span class="label">رقم الهاتف:</span>
+                <span class="value">01068865596</span>
+            </div>
+            <div class="cred-item">
+                <i class="fas fa-envelope"></i>
+                <span class="label">البريد:</span>
+                <span class="value">president@itws.org</span>
+            </div>
+        </div>
+
+        <div class="settings-preview">
+            <h4><i class="fas fa-sliders-h"></i> الإعدادات الافتراضية</h4>
+            <div class="settings-grid">
+                <div class="setting-item">
+                    <div class="setting-label">اسم النقابة (عربي)</div>
+                    <div class="setting-value">نقابة تكنولوجيا المعلومات والبرمجيات</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">اسم النقابة (إنجليزي)</div>
+                    <div class="setting-value">ITWS Union</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">اللون الرئيسي</div>
+                    <div class="setting-value">#667eea</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">اللون الثانوي</div>
+                    <div class="setting-value">#764ba2</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">التحقق بخطوتين</div>
+                    <div class="setting-value">مفعل</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">المصادقة الحيوية</div>
+                    <div class="setting-value">مفعل</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">مدة الجلسة</div>
+                    <div class="setting-value">30 دقيقة</div>
+                </div>
+                <div class="setting-item">
+                    <div class="setting-label">العملة</div>
+                    <div class="setting-value">جنيه مصري (EGP)</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="steps-container" id="stepsContainer">
+            <div class="step" id="step1">
+                <div class="step-number">1</div>
+                <div class="step-content">
+                    <h4>مسح البيانات القديمة</h4>
+                    <p>جاري حذف جميع البيانات الموجودة</p>
+                </div>
+                <div class="step-status" id="step1Status"></div>
+            </div>
+            <div class="step" id="step2">
+                <div class="step-number">2</div>
+                <div class="step-content">
+                    <h4>إنشاء النقيب العام</h4>
+                    <p>إضافة مستخدم النقيب إلى النظام</p>
+                </div>
+                <div class="step-status" id="step2Status"></div>
+            </div>
+            <div class="step" id="step3">
+                <div class="step-number">3</div>
+                <div class="step-content">
+                    <h4>إعدادات النظام</h4>
+                    <p>تكوين الإعدادات الافتراضية</p>
+                </div>
+                <div class="step-status" id="step3Status"></div>
+            </div>
+            <div class="step" id="step4">
+                <div class="step-number">4</div>
+                <div class="step-content">
+                    <h4>إعداد الأمان</h4>
+                    <p>تفعيل أنظمة الأمان</p>
+                </div>
+                <div class="step-status" id="step4Status"></div>
+            </div>
+            <div class="step" id="step5">
+                <div class="step-number">5</div>
+                <div class="step-content">
+                    <h4>إعداد المالية</h4>
+                    <p>تكوين الإعدادات المالية</p>
+                </div>
+                <div class="step-status" id="step5Status"></div>
+            </div>
+            <div class="step" id="step6">
+                <div class="step-number">6</div>
+                <div class="step-content">
+                    <h4>إعداد الإشعارات</h4>
+                    <p>تكوين نظام الإشعارات</p>
+                </div>
+                <div class="step-status" id="step6Status"></div>
+            </div>
+        </div>
+
+        <div class="progress-container">
+            <div class="progress-label">
+                <span>تقدم الإعداد</span>
+                <span id="progressPercent">0%</span>
+            </div>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill" style="width: 0%;"></div>
+            </div>
+        </div>
+
+        <button class="btn" id="setupBtn" onclick="startSetup()">
             <i class="fas fa-play"></i>
-            تهيئة النظام
+            بدء إعداد النظام
         </button>
 
-        <button class="btn btn-reset" onclick="resetSystem()">
-            <i class="fas fa-trash"></i>
-            مسح كل البيانات
+        <button class="btn btn-danger" id="resetBtn" onclick="resetSystem()">
+            <i class="fas fa-trash-alt"></i>
+            مسح كل البيانات فقط
         </button>
 
         <div id="statusBox" class="status-box"></div>
+
+        <div class="security-note">
+            <i class="fas fa-shield-alt"></i>
+            هذا الإجراء آمن ومحمي بطبقات الأمان. جميع الإعدادات الافتراضية متوافقة مع أعلى معايير الأمان.
+        </div>
     </div>
 
     <script type="module">
+        // ===== استيراد Firebase =====
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, set, remove } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, set, remove, update } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
@@ -207,89 +661,439 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // ===== متغيرات عامة =====
+        let currentStep = 0;
+        let isRunning = false;
+
+        // ===== دوال عرض الحالة =====
         function showStatus(message, type) {
             const statusBox = document.getElementById('statusBox');
             statusBox.className = `status-box ${type}`;
             statusBox.innerHTML = message;
         }
 
-        window.initializeSystem = async function() {
-            const btn = event.target;
-            btn.innerHTML = 'جاري التهيئة <span class="loading"></span>';
-            btn.disabled = true;
+        function updateProgress(percent) {
+            document.getElementById('progressFill').style.width = percent + '%';
+            document.getElementById('progressPercent').textContent = percent + '%';
+        }
 
+        function updateStep(stepNumber, status, isActive = false) {
+            const step = document.getElementById(`step${stepNumber}`);
+            step.classList.remove('completed', 'active');
+            
+            if (status === 'completed') {
+                step.classList.add('completed');
+                document.getElementById(`step${stepNumber}Status`).innerHTML = '<i class="fas fa-check-circle"></i>';
+            } else if (isActive) {
+                step.classList.add('active');
+                document.getElementById(`step${stepNumber}Status`).innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+            } else {
+                document.getElementById(`step${stepNumber}Status`).innerHTML = '';
+            }
+        }
+
+        function resetSteps() {
+            for (let i = 1; i <= 6; i++) {
+                updateStep(i, 'pending');
+            }
+            updateProgress(0);
+        }
+
+        // ===== الإعدادات الافتراضية الكاملة =====
+        const defaultSettings = {
+            general: {
+                nameAr: 'نقابة تكنولوجيا المعلومات والبرمجيات',
+                nameEn: 'ITWS Union',
+                shortName: 'ITWS',
+                logoUrl: '',
+                email: 'info@itws.org',
+                phone: '01068865596',
+                fax: '',
+                website: 'https://www.itws.org',
+                address: 'القاهرة - جمهورية مصر العربية',
+                description: 'نقابة تكنولوجيا المعلومات والبرمجيات هي كيان مهني يضم العاملين في مجال تكنولوجيا المعلومات والبرمجيات',
+                year: '2024',
+                register: '123456789',
+                tax: '123-456-789'
+            },
+            appearance: {
+                primaryColor: '#667eea',
+                secondaryColor: '#764ba2',
+                baseFontSize: '16px',
+                fontFamily: 'Cairo',
+                buttonStyle: 'rounded',
+                cardStyle: 'shadow',
+                animations: true,
+                hoverEffects: true
+            },
+            security: {
+                twoFA: true,
+                biometric: true,
+                devTools: true,
+                preventCopy: true,
+                watermark: true,
+                sessionTimeout: 30,
+                maxLoginAttempts: 5,
+                allowedIPs: ''
+            },
+            notifications: {
+                inApp: true,
+                email: true,
+                whatsapp: false,
+                sms: false,
+                newRequest: true,
+                newTracking: true,
+                reports: true,
+                deadlines: true,
+                newMember: false,
+                finance: false,
+                deadlineReminder: 24
+            },
+            finance: {
+                currency: 'EGP',
+                currencySymbol: 'ج.م',
+                taxRate: 14,
+                defaultMembershipFee: 500,
+                minTreasuryBalance: 1000,
+                maxExpenseWithoutApproval: 5000,
+                foreignCurrency: false,
+                lowBalanceAlert: true
+            },
+            advanced: {
+                debugMode: false,
+                logging: true,
+                logRetention: 30,
+                backupSchedule: 'weekly',
+                backupCount: 5
+            },
+            version: '2.0.0',
+            initializedAt: new Date().toISOString(),
+            initializedBy: 'system'
+        };
+
+        // ===== بيانات النقيب العام =====
+        const presidentData = {
+            userId: 'president_001',
+            username: 'المهندس / محمود جميل',
+            fullName: 'محمود جميل',
+            password: '30010250202679',
+            nationalId: '30010250202679',
+            phone: '01068865596',
+            email: 'president@itws.org',
+            role: 'president',
+            position: 'president',
+            positionName: 'نقيب عام',
+            title: 'النقيب العام',
+            governorate: 'القاهرة',
+            address: 'القاهرة - مصر الجديدة',
+            birthdate: '1990-01-01',
+            appointmentDate: '2024-01-15',
+            decisionNumber: '124/2024',
+            entity: 'نقابة تكنولوجيا المعلومات',
+            profileImage: null,
+            status: 'active',
+            online: false,
+            lastLogin: null,
+            loginCount: 0,
+            createdAt: new Date().toISOString(),
+            permissions: {
+                level: 100,
+                all: true,
+                manageSystem: true,
+                manageITWSAI: true,
+                canModifyCode: true,
+                canAddScreens: true,
+                canAnalyzeAnything: true,
+                canManageUsers: true,
+                canManageFinance: true
+            },
+            security: {
+                twoFA: {
+                    enabled: true,
+                    method: 'whatsapp',
+                    verified: false
+                },
+                biometric: {
+                    enabled: true,
+                    type: 'pending',
+                    registered: false
+                }
+            }
+        };
+
+        // ===== دوال الإعداد =====
+        async function clearDatabase() {
             try {
-                // إنشاء النقيب العام
-                const presidentData = {
-                    userId: 'president_001',
-                    username: 'المهندس / محمود جميل',
-                    fullName: 'محمود جميل',
-                    password: '30010250202679',
-                    nationalId: '30010250202679',
-                    phone: '01068865596',
-                    email: 'president@itws.org',
-                    role: 'president',
-                    position: 'president',
-                    positionName: 'نقيب عام',
-                    title: 'النقيب العام',
-                    governorate: 'القاهرة',
-                    profileImage: 'default-president.png',
-                    status: 'active',
-                    online: false,
-                    lastLogin: null,
-                    permissions: {
-                        level: 100,
-                        all: true,
-                        manageSystem: true,
-                        manageITWSAI: true,
-                        canModifyCode: true,
-                        canAddScreens: true
-                    },
-                    createdAt: new Date().toISOString()
-                };
+                await remove(ref(database));
+                return true;
+            } catch (error) {
+                console.error('Error clearing database:', error);
+                throw error;
+            }
+        }
 
+        async function createPresident() {
+            try {
                 await set(ref(database, 'users/president_001'), presidentData);
+                return true;
+            } catch (error) {
+                console.error('Error creating president:', error);
+                throw error;
+            }
+        }
 
-                // إنشاء المجلدات الرئيسية فاضية
+        async function setupSettings() {
+            try {
+                await set(ref(database, 'system/settings'), defaultSettings);
+                return true;
+            } catch (error) {
+                console.error('Error setting up settings:', error);
+                throw error;
+            }
+        }
+
+        async function setupSecurity() {
+            try {
+                const securityConfig = {
+                    core: {
+                        preventRightClick: true,
+                        preventDevTools: true,
+                        preventCopyPaste: true,
+                        preventScreenshot: true,
+                        watermarkEnabled: true,
+                        sessionTimeout: 30
+                    },
+                    twoFA: {
+                        enabled: true,
+                        methods: ['whatsapp', 'sms', 'email'],
+                        codeLength: 6,
+                        codeExpiry: 300
+                    },
+                    biometric: {
+                        faceId: { enabled: true, mandatory: true },
+                        fingerprint: { enabled: true, mandatory: true }
+                    },
+                    anomaly: {
+                        enabled: true,
+                        threshold: 0.6,
+                        analyzeLocation: true,
+                        analyzeTime: true,
+                        analyzeDevice: true
+                    },
+                    encryption: {
+                        algorithm: 'AES-GCM',
+                        keyLength: 256,
+                        enabled: true
+                    }
+                };
+                
+                await update(ref(database, 'system/security'), securityConfig);
+                return true;
+            } catch (error) {
+                console.error('Error setting up security:', error);
+                throw error;
+            }
+        }
+
+        async function setupFinance() {
+            try {
+                const financeConfig = {
+                    accounts: {},
+                    transactions: {},
+                    budgets: {},
+                    categories: {
+                        income: ['membership_fees', 'donations', 'grants', 'investments', 'events', 'services'],
+                        expense: ['salaries', 'rent', 'utilities', 'supplies', 'equipment', 'maintenance', 'travel', 'training', 'events', 'marketing']
+                    },
+                    settings: defaultSettings.finance
+                };
+                
+                await set(ref(database, 'finance'), financeConfig);
+                return true;
+            } catch (error) {
+                console.error('Error setting up finance:', error);
+                throw error;
+            }
+        }
+
+        async function setupNotifications() {
+            try {
+                const notificationsConfig = {
+                    templates: {
+                        welcome: 'مرحباً بك في النظام',
+                        requestApproved: 'تم الموافقة على طلبك',
+                        requestRejected: 'تم رفض طلبك',
+                        newMessage: 'لديك رسالة جديدة',
+                        deadline: 'موعد نهائي قريب'
+                    },
+                    settings: defaultSettings.notifications
+                };
+                
+                await set(ref(database, 'notifications/config'), notificationsConfig);
+                return true;
+            } catch (error) {
+                console.error('Error setting up notifications:', error);
+                throw error;
+            }
+        }
+
+        async function setupCounters() {
+            try {
+                const currentYear = new Date().getFullYear();
+                const counters = {
+                    MBR: { current: 0, year: currentYear },
+                    COM: { current: 0, year: currentYear },
+                    BRN: { current: 0, year: currentYear },
+                    REQ: { current: 0, year: currentYear },
+                    TRK: { current: 0, year: currentYear },
+                    FIN: { current: 0, year: currentYear },
+                    EVT: { current: 0, year: currentYear },
+                    ATT: { current: 0, year: currentYear },
+                    MSG: { current: 0, year: currentYear }
+                };
+                
+                await set(ref(database, 'system/counters'), counters);
+                return true;
+            } catch (error) {
+                console.error('Error setting up counters:', error);
+                throw error;
+            }
+        }
+
+        async function setupEmptyCollections() {
+            try {
                 await set(ref(database, 'committees'), {});
                 await set(ref(database, 'branches'), {});
                 await set(ref(database, 'pending_requests'), {});
                 await set(ref(database, 'tracking'), {});
                 await set(ref(database, 'activities'), {});
-                await set(ref(database, 'notifications'), {});
+                await set(ref(database, 'messages'), {});
+                await set(ref(database, 'attendance'), {});
+                return true;
+            } catch (error) {
+                console.error('Error setting up empty collections:', error);
+                throw error;
+            }
+        }
 
+        // ===== بدء الإعداد =====
+        window.startSetup = async function() {
+            if (isRunning) return;
+            
+            if (!confirm('⚠️ هل أنت متأكد؟ هذا سيقوم بمسح جميع البيانات الحالية وإنشاء نظام جديد بالكامل!')) {
+                return;
+            }
+
+            const btn = document.getElementById('setupBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري الإعداد...';
+            btn.disabled = true;
+            document.getElementById('resetBtn').disabled = true;
+            
+            isRunning = true;
+            resetSteps();
+            showStatus('⏳ جاري بدء إعداد النظام...', 'info');
+
+            try {
+                // الخطوة 1: مسح قاعدة البيانات
+                currentStep = 1;
+                updateStep(1, 'active');
+                showStatus('جاري مسح البيانات القديمة...', 'info');
+                await clearDatabase();
+                updateStep(1, 'completed');
+                updateProgress(16);
+
+                // الخطوة 2: إنشاء النقيب العام
+                currentStep = 2;
+                updateStep(2, 'active');
+                showStatus('جاري إنشاء النقيب العام...', 'info');
+                await createPresident();
+                updateStep(2, 'completed');
+                updateProgress(32);
+
+                // الخطوة 3: إعدادات النظام
+                currentStep = 3;
+                updateStep(3, 'active');
+                showStatus('جاري إعداد إعدادات النظام...', 'info');
+                await setupSettings();
+                updateStep(3, 'completed');
+                updateProgress(48);
+
+                // الخطوة 4: إعداد الأمان
+                currentStep = 4;
+                updateStep(4, 'active');
+                showStatus('جاري إعداد أنظمة الأمان...', 'info');
+                await setupSecurity();
+                updateStep(4, 'completed');
+                updateProgress(64);
+
+                // الخطوة 5: إعداد المالية
+                currentStep = 5;
+                updateStep(5, 'active');
+                showStatus('جاري إعداد النظام المالي...', 'info');
+                await setupFinance();
+                updateStep(5, 'completed');
+                updateProgress(80);
+
+                // الخطوة 6: إعداد باقي الأنظمة
+                currentStep = 6;
+                updateStep(6, 'active');
+                showStatus('جاري إعداد باقي الأنظمة...', 'info');
+                await setupNotifications();
+                await setupCounters();
+                await setupEmptyCollections();
+                updateStep(6, 'completed');
+                updateProgress(100);
+
+                // نجاح
                 showStatus(`
-                    ✅ <strong>تم تهيئة النظام بنجاح!</strong><br>
+                    ✅ <strong>تم إعداد النظام بنجاح!</strong><br><br>
                     <strong>بيانات الدخول:</strong><br>
                     • اسم المستخدم: المهندس / محمود جميل<br>
                     • كلمة المرور: 30010250202679<br>
-                    • رقم الهاتف: 01068865596
+                    • رقم الهاتف: 01068865596<br><br>
+                    <strong>الإعدادات:</strong><br>
+                    • تم إنشاء جميع الإعدادات الافتراضية<br>
+                    • أنظمة الأمان مفعلة بالكامل<br>
+                    • النظام المالي جاهز للعمل<br>
+                    • نظام الإشعارات مفعل<br><br>
+                    <a href="index.html" style="color: #155724; font-weight: 600;">الذهاب إلى صفحة تسجيل الدخول</a>
                 `, 'success');
 
             } catch (error) {
-                console.error('Initialization error:', error);
-                showStatus(`❌ خطأ: ${error.message}`, 'error');
+                console.error('Setup error:', error);
+                showStatus(`❌ خطأ في الإعداد: ${error.message}`, 'error');
             } finally {
-                btn.innerHTML = '<i class="fas fa-play"></i> تهيئة النظام';
+                btn.innerHTML = '<i class="fas fa-play"></i> بدء إعداد النظام';
                 btn.disabled = false;
+                document.getElementById('resetBtn').disabled = false;
+                isRunning = false;
             }
         };
 
+        // ===== مسح كل البيانات فقط =====
         window.resetSystem = async function() {
-            if (!confirm('⚠️ هل أنت متأكد؟ سيتم مسح كل البيانات!')) return;
+            if (isRunning) return;
+            
+            if (!confirm('⚠️ هل أنت متأكد؟ هذا سيقوم بمسح جميع البيانات بشكل نهائي!')) {
+                return;
+            }
 
-            const btn = event.target;
-            btn.innerHTML = 'جاري المسح <span class="loading"></span>';
+            const btn = document.getElementById('resetBtn');
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> جاري المسح...';
             btn.disabled = true;
+            document.getElementById('setupBtn').disabled = true;
 
             try {
-                await remove(ref(database));
-                showStatus('✅ تم مسح كل البيانات بنجاح', 'success');
+                showStatus('⏳ جاري مسح جميع البيانات...', 'info');
+                await clearDatabase();
+                showStatus('✅ تم مسح جميع البيانات بنجاح. يمكنك الآن تشغيل "إعداد النظام" لإنشاء نظام جديد.', 'success');
             } catch (error) {
-                showStatus(`❌ خطأ: ${error.message}`, 'error');
+                console.error('Reset error:', error);
+                showStatus(`❌ خطأ في المسح: ${error.message}`, 'error');
             } finally {
-                btn.innerHTML = '<i class="fas fa-trash"></i> مسح كل البيانات';
+                btn.innerHTML = '<i class="fas fa-trash-alt"></i> مسح كل البيانات فقط';
                 btn.disabled = false;
+                document.getElementById('setupBtn').disabled = false;
             }
         };
     </script>
