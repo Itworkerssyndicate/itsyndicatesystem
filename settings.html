@@ -97,7 +97,7 @@
             animation: spin 20s linear infinite;
         }
 
-        .sidebar-header .user-avatar {
+        .sidebar-header .union-logo {
             width: 80px;
             height: 80px;
             background: white;
@@ -113,17 +113,20 @@
             transition: all 0.3s ease;
             position: relative;
             z-index: 1;
-            overflow: hidden;
         }
 
-        .sidebar-header .user-avatar:hover {
+        .sidebar-header .union-logo:hover {
             transform: scale(1.1) rotate(360deg);
         }
 
-        .sidebar-header .user-avatar img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
+        .sidebar-header .union-logo i {
+            font-size: 40px;
+            color: #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .sidebar-header .union-logo:hover i {
+            color: #764ba2;
         }
 
         .sidebar-header h3 {
@@ -364,7 +367,7 @@
         .settings-card {
             background: white;
             border-radius: 15px;
-            padding: 25px;
+            padding: 30px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
             margin-bottom: 20px;
             border: 1px solid #f0f0f0;
@@ -397,6 +400,21 @@
             color: #667eea;
         }
 
+        .settings-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            border-right: 4px solid #667eea;
+        }
+
+        .settings-description i {
+            color: #667eea;
+            margin-left: 10px;
+        }
+
         /* ===== النماذج ===== */
         .form-group {
             margin-bottom: 20px;
@@ -406,6 +424,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
+            margin-bottom: 10px;
         }
 
         label {
@@ -476,48 +495,57 @@
             display: flex;
             gap: 10px;
             justify-content: flex-end;
-            margin-top: 20px;
+            margin-top: 25px;
+            padding-top: 20px;
+            border-top: 2px solid #f5f5f5;
         }
 
-        /* ===== رفع الصور ===== */
+        /* ===== رفع الشعار ===== */
         .logo-upload {
             display: flex;
             align-items: center;
-            gap: 20px;
+            gap: 30px;
             flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .logo-preview {
-            width: 150px;
-            height: 150px;
-            border-radius: 15px;
-            border: 3px solid #f0f0f0;
+            width: 120px;
+            height: 120px;
+            border-radius: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
-            background: #f8f9fa;
+            color: white;
+            font-size: 50px;
+            border: 4px solid white;
+            box-shadow: 0 10px 20px rgba(102,126,234,0.3);
         }
 
-        .logo-preview img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .logo-preview i {
+            font-size: 60px;
+        }
+
+        .logo-upload-btn {
+            flex: 1;
+            min-width: 250px;
         }
 
         .upload-area {
             border: 2px dashed #667eea;
             border-radius: 10px;
-            padding: 20px;
+            padding: 25px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            flex: 1;
+            background: #f8f9fa;
         }
 
         .upload-area:hover {
-            background: #f0f2f5;
+            background: #e8f0fe;
             border-color: #764ba2;
+            transform: translateY(-2px);
         }
 
         .upload-area i {
@@ -526,13 +554,28 @@
             margin-bottom: 10px;
         }
 
+        .upload-area h4 {
+            color: #333;
+            font-size: 16px;
+            margin-bottom: 5px;
+        }
+
         .upload-area p {
             color: #666;
-            font-size: 14px;
+            font-size: 13px;
         }
 
         .upload-area input {
             display: none;
+        }
+
+        .logo-url-input {
+            margin-top: 15px;
+        }
+
+        .logo-url-input input {
+            direction: ltr;
+            text-align: left;
         }
 
         /* ===== خيارات التبديل ===== */
@@ -574,11 +617,21 @@
             background: #f8f9fa;
             border-radius: 10px;
             margin-bottom: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .option-row:hover {
+            background: #e8f0fe;
+        }
+
+        .option-info {
+            flex: 1;
         }
 
         .option-info h4 {
             color: #333;
             margin-bottom: 5px;
+            font-size: 15px;
         }
 
         .option-info p {
@@ -589,8 +642,9 @@
         /* ===== قائمة الألوان ===== */
         .color-picker {
             display: flex;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
+            margin-bottom: 15px;
         }
 
         .color-option {
@@ -608,6 +662,93 @@
 
         .color-option.active {
             border-color: #333;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.3);
+        }
+
+        .color-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .color-input input[type="color"] {
+            width: 60px;
+            height: 50px;
+            padding: 5px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .color-input input[type="text"] {
+            flex: 1;
+        }
+
+        /* ===== إشعارات التغيير ===== */
+        .unsaved-changes {
+            position: sticky;
+            bottom: 20px;
+            left: 300px;
+            right: 20px;
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            padding: 15px 25px;
+            display: none;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            z-index: 1000;
+            backdrop-filter: blur(5px);
+        }
+
+        .unsaved-changes.show {
+            display: flex;
+            animation: slideUp 0.3s ease;
+        }
+
+        .unsaved-changes p {
+            color: #856404;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .unsaved-changes p i {
+            color: #ffc107;
+            font-size: 20px;
+        }
+
+        .unsaved-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .unsaved-actions button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-save {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-save:hover {
+            background: #218838;
+        }
+
+        .btn-reset {
+            background: #dc3545;
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background: #c82333;
         }
 
         /* ===== نظام الأمان ===== */
@@ -721,19 +862,58 @@
             }
             .logo-upload {
                 flex-direction: column;
+                align-items: flex-start;
             }
+            .logo-preview {
+                margin: 0 auto;
+            }
+            .unsaved-changes {
+                left: 20px;
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+
+        /* ===== قائمة المحافظات كاملة ===== */
+        .governorate-select {
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        /* ===== تأثيرات إضافية ===== */
+        .glass-effect {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        .hover-scale {
+            transition: all 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: scale(1.02);
+        }
+
+        .border-glow {
+            transition: all 0.3s ease;
+        }
+
+        .border-glow:focus {
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102,126,234,0.2);
         }
     </style>
 </head>
 <body>
     <!-- الشريط الجانبي -->
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header" id="userInfo">
-            <div class="user-avatar">
-                <i class="fas fa-user-circle"></i>
+        <div class="sidebar-header" id="unionInfo">
+            <div class="union-logo" id="unionLogo">
+                <i class="fas fa-users-cog"></i>
             </div>
-            <h3>جاري التحميل...</h3>
-            <p>...</p>
+            <h3 id="unionName">نقابة تكنولوجيا المعلومات</h3>
+            <p id="unionSubtitle">منصة إدارة النقابة</p>
             <div class="online-badge">
                 <i class="fas fa-circle"></i>
                 متصل الآن
@@ -772,6 +952,10 @@
             <a href="#" class="menu-item" onclick="window.location.href='messages.html'">
                 <i class="fas fa-envelope"></i>
                 الرسائل
+            </a>
+            <a href="#" class="menu-item" onclick="window.location.href='profile.html'">
+                <i class="fas fa-user-circle"></i>
+                الملف الشخصي
             </a>
             <a href="#" class="menu-item active" onclick="window.location.href='settings.html'">
                 <i class="fas fa-cog"></i>
@@ -835,59 +1019,122 @@
             </div>
         </div>
 
+        <!-- شريط التغييرات غير المحفوظة -->
+        <div class="unsaved-changes" id="unsavedChanges">
+            <p>
+                <i class="fas fa-exclamation-triangle"></i>
+                لديك تغييرات غير محفوظة
+            </p>
+            <div class="unsaved-actions">
+                <button class="btn-save" onclick="saveAllSettings()">
+                    <i class="fas fa-save"></i>
+                    حفظ الكل
+                </button>
+                <button class="btn-reset" onclick="resetUnsavedChanges()">
+                    <i class="fas fa-undo"></i>
+                    تراجع
+                </button>
+            </div>
+        </div>
+
         <!-- الإعدادات العامة -->
         <div class="settings-card active" id="generalTab">
             <div class="settings-header">
                 <h3><i class="fas fa-globe"></i> الإعدادات العامة</h3>
             </div>
 
+            <div class="settings-description">
+                <i class="fas fa-info-circle"></i>
+                هذه الإعدادات ستظهر في جميع أنحاء النظام وفي المستندات المطبوعة
+            </div>
+
             <div class="logo-upload">
                 <div class="logo-preview" id="logoPreview">
-                    <img src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23667eea'/%3E%3Ctext x='50' y='70' font-size='50' text-anchor='middle' fill='white' font-family='Arial'%3EIT%3C/text%3E%3C/svg%3E" alt="شعار النقابة" id="logoPreviewImg">
+                    <i class="fas fa-users-cog"></i>
                 </div>
-                <div class="upload-area" onclick="document.getElementById('logoUpload').click()">
-                    <i class="fas fa-cloud-upload-alt"></i>
-                    <p>اضغط لرفع شعار جديد</p>
-                    <input type="file" id="logoUpload" accept="image/*" onchange="previewLogo(this)">
+                <div class="logo-upload-btn">
+                    <div class="upload-area" onclick="document.getElementById('logoUpload').click()">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                        <h4>تغيير شعار النقابة</h4>
+                        <p>اضغط لرفع شعار جديد</p>
+                        <input type="file" id="logoUpload" accept="image/*" onchange="handleLogoUpload(this)">
+                    </div>
+                    <div class="logo-url-input">
+                        <label><i class="fas fa-link"></i> أو أدخل رابط الشعار</label>
+                        <input type="url" id="logoUrl" placeholder="https://example.com/logo.png" onchange="markAsUnsaved()">
+                    </div>
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
                     <label><i class="fas fa-font"></i> اسم النقابة (عربي)</label>
-                    <input type="text" id="unionNameAr" value="نقابة تكنولوجيا المعلومات والبرمجيات">
+                    <input type="text" id="unionNameAr" placeholder="أدخل اسم النقابة بالعربية" onchange="markAsUnsaved()">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-font"></i> اسم النقابة (إنجليزي)</label>
-                    <input type="text" id="unionNameEn" value="ITWS Union">
+                    <input type="text" id="unionNameEn" placeholder="Union Name in English" onchange="markAsUnsaved()">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني</label>
-                    <input type="email" id="unionEmail" value="info@itws.org">
+                    <label><i class="fas fa-tag"></i> الاسم المختصر</label>
+                    <input type="text" id="unionShortName" placeholder="ITWS" onchange="markAsUnsaved()">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-calendar"></i> سنة التأسيس</label>
+                    <input type="number" id="unionYear" placeholder="2024" min="1900" max="2100" onchange="markAsUnsaved()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-envelope"></i> البريد الإلكتروني الرسمي</label>
+                    <input type="email" id="unionEmail" placeholder="info@itws.org" onchange="markAsUnsaved()">
                 </div>
                 <div class="form-group">
                     <label><i class="fas fa-phone"></i> رقم الهاتف</label>
-                    <input type="tel" id="unionPhone" value="01068865596">
+                    <input type="tel" id="unionPhone" placeholder="01068865596" onchange="markAsUnsaved()">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-fax"></i> رقم الفاكس (اختياري)</label>
+                    <input type="tel" id="unionFax" placeholder="02-12345678" onchange="markAsUnsaved()">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-globe"></i> الموقع الإلكتروني</label>
+                    <input type="url" id="unionWebsite" placeholder="https://www.itws.org" onchange="markAsUnsaved()">
                 </div>
             </div>
 
             <div class="form-group">
-                <label><i class="fas fa-map-marker-alt"></i> العنوان</label>
-                <input type="text" id="unionAddress" value="القاهرة - جمهورية مصر العربية">
+                <label><i class="fas fa-map-marker-alt"></i> العنوان الرئيسي</label>
+                <input type="text" id="unionAddress" placeholder="القاهرة - جمهورية مصر العربية" onchange="markAsUnsaved()">
             </div>
 
             <div class="form-group">
-                <label><i class="fas fa-link"></i> رابط شعار النقابة</label>
-                <input type="url" id="logoUrl" placeholder="https://example.com/logo.png">
+                <label><i class="fas fa-align-left"></i> وصف النقابة</label>
+                <textarea id="unionDescription" rows="3" placeholder="وصف مختصر عن النقابة..." onchange="markAsUnsaved()"></textarea>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fas fa-file-contract"></i> رقم السجل التجاري</label>
+                    <input type="text" id="unionRegister" placeholder="123456789" onchange="markAsUnsaved()">
+                </div>
+                <div class="form-group">
+                    <label><i class="fas fa-file-invoice"></i> الرقم الضريبي</label>
+                    <input type="text" id="unionTax" placeholder="123-456-789" onchange="markAsUnsaved()">
+                </div>
             </div>
 
             <div class="btn-group">
                 <button class="btn" onclick="saveGeneralSettings()">
                     <i class="fas fa-save"></i>
-                    حفظ الإعدادات
+                    حفظ الإعدادات العامة
                 </button>
             </div>
         </div>
@@ -898,6 +1145,11 @@
                 <h3><i class="fas fa-paint-brush"></i> إعدادات المظهر</h3>
             </div>
 
+            <div class="settings-description">
+                <i class="fas fa-info-circle"></i>
+                تخصيص ألوان وشكل النظام حسب رغبتك
+            </div>
+
             <div class="form-group">
                 <label>اللون الرئيسي</label>
                 <div class="color-picker">
@@ -906,6 +1158,11 @@
                     <div class="color-option" style="background: #f56565;" onclick="setPrimaryColor('#f56565')"></div>
                     <div class="color-option" style="background: #48bb78;" onclick="setPrimaryColor('#48bb78')"></div>
                     <div class="color-option" style="background: #ed8936;" onclick="setPrimaryColor('#ed8936')"></div>
+                    <div class="color-option" style="background: #4299e1;" onclick="setPrimaryColor('#4299e1')"></div>
+                </div>
+                <div class="color-input">
+                    <input type="color" id="primaryColorPicker" value="#667eea" onchange="setPrimaryColor(this.value)">
+                    <input type="text" id="primaryColorValue" value="#667eea" placeholder="#667eea" onchange="setPrimaryColor(this.value)">
                 </div>
             </div>
 
@@ -917,40 +1174,74 @@
                     <div class="color-option" style="background: #f56565;" onclick="setSecondaryColor('#f56565')"></div>
                     <div class="color-option" style="background: #48bb78;" onclick="setSecondaryColor('#48bb78')"></div>
                     <div class="color-option" style="background: #ed8936;" onclick="setSecondaryColor('#ed8936')"></div>
+                    <div class="color-option" style="background: #9f7aea;" onclick="setSecondaryColor('#9f7aea')"></div>
+                </div>
+                <div class="color-input">
+                    <input type="color" id="secondaryColorPicker" value="#764ba2" onchange="setSecondaryColor(this.value)">
+                    <input type="text" id="secondaryColorValue" value="#764ba2" placeholder="#764ba2" onchange="setSecondaryColor(this.value)">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>الخط الرئيسي</label>
-                    <select id="primaryFont">
-                        <option value="Cairo">Cairo</option>
-                        <option value="Tajawal">Tajawal</option>
-                        <option value="Amiri">Amiri</option>
+                    <label>حجم الخط الأساسي</label>
+                    <select id="baseFontSize" onchange="markAsUnsaved()">
+                        <option value="14px">صغير (14px)</option>
+                        <option value="16px" selected>متوسط (16px)</option>
+                        <option value="18px">كبير (18px)</option>
+                        <option value="20px">كبير جداً (20px)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>حجم الخط</label>
-                    <select id="fontSize">
-                        <option value="14px">صغير</option>
-                        <option value="16px" selected>متوسط</option>
-                        <option value="18px">كبير</option>
+                    <label>نوع الخط</label>
+                    <select id="fontFamily" onchange="markAsUnsaved()">
+                        <option value="Cairo" selected>Cairo</option>
+                        <option value="Tajawal">Tajawal</option>
+                        <option value="Almarai">Almarai</option>
+                        <option value="Amiri">Amiri</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>شكل الأزرار</label>
+                    <select id="buttonStyle" onchange="markAsUnsaved()">
+                        <option value="rounded">دائرية (border-radius: 10px)</option>
+                        <option value="pill">بيضاوية (border-radius: 50px)</option>
+                        <option value="square">مربعة (border-radius: 0)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>شكل البطاقات</label>
+                    <select id="cardStyle" onchange="markAsUnsaved()">
+                        <option value="shadow">مع ظل</option>
+                        <option value="border">مع إطار</option>
+                        <option value="flat">مسطح</option>
                     </select>
                 </div>
             </div>
 
             <div class="option-row">
                 <div class="option-info">
-                    <h4>الوضع الداكن</h4>
-                    <p>تفعيل الوضع الداكن للنظام</p>
+                    <h4>الرسوم المتحركة</h4>
+                    <p>تفعيل تأثيرات الحركة في النظام</p>
                 </div>
-                <div class="toggle-switch" id="darkModeToggle" onclick="toggleDarkMode()"></div>
+                <div class="toggle-switch active" id="animationsToggle" onclick="toggleSetting('animations')"></div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>تأثيرات التمرير</h4>
+                    <p>إضافة تأثيرات عند تمرير الماوس على العناصر</p>
+                </div>
+                <div class="toggle-switch active" id="hoverEffectsToggle" onclick="toggleSetting('hoverEffects')"></div>
             </div>
 
             <div class="btn-group">
                 <button class="btn" onclick="saveAppearanceSettings()">
                     <i class="fas fa-save"></i>
-                    حفظ التغييرات
+                    حفظ إعدادات المظهر
                 </button>
             </div>
         </div>
@@ -959,6 +1250,11 @@
         <div class="settings-card" id="securityTab">
             <div class="settings-header">
                 <h3><i class="fas fa-shield-alt"></i> إعدادات الأمان</h3>
+            </div>
+
+            <div class="settings-description">
+                <i class="fas fa-info-circle"></i>
+                تحكم في مستوى أمان النظام وحماية البيانات
             </div>
 
             <div class="option-row">
@@ -1004,18 +1300,24 @@
             <div class="form-row">
                 <div class="form-group">
                     <label>مدة الجلسة (بالدقائق)</label>
-                    <input type="number" id="sessionTimeout" value="30" min="5" max="480">
+                    <input type="number" id="sessionTimeout" value="30" min="5" max="480" onchange="markAsUnsaved()">
                 </div>
                 <div class="form-group">
                     <label>عدد محاولات الدخول</label>
-                    <input type="number" id="maxAttempts" value="5" min="3" max="10">
+                    <input type="number" id="maxLoginAttempts" value="5" min="3" max="10" onchange="markAsUnsaved()">
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>عنوان IP المسموح بها (اختياري)</label>
+                <textarea id="allowedIPs" rows="3" placeholder="192.168.1.1, 10.0.0.1" onchange="markAsUnsaved()"></textarea>
+                <small style="color: #666;">افصل بين العناوين بفاصلة</small>
             </div>
 
             <div class="btn-group">
                 <button class="btn" onclick="saveSecuritySettings()">
                     <i class="fas fa-save"></i>
-                    حفظ الإعدادات
+                    حفظ إعدادات الأمان
                 </button>
             </div>
         </div>
@@ -1026,12 +1328,25 @@
                 <h3><i class="fas fa-bell"></i> إعدادات الإشعارات</h3>
             </div>
 
+            <div class="settings-description">
+                <i class="fas fa-info-circle"></i>
+                تحكم في كيفية إرسال واستقبال الإشعارات
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>إشعارات داخل النظام</h4>
+                    <p>عرض الإشعارات داخل التطبيق</p>
+                </div>
+                <div class="toggle-switch active" id="inAppNotificationsToggle" onclick="toggleSetting('inAppNotifications')"></div>
+            </div>
+
             <div class="option-row">
                 <div class="option-info">
                     <h4>إشعارات البريد الإلكتروني</h4>
                     <p>استلام الإشعارات عبر البريد</p>
                 </div>
-                <div class="toggle-switch active" id="emailNotifToggle" onclick="toggleSetting('emailNotif')"></div>
+                <div class="toggle-switch active" id="emailNotificationsToggle" onclick="toggleSetting('emailNotifications')"></div>
             </div>
 
             <div class="option-row">
@@ -1039,31 +1354,50 @@
                     <h4>إشعارات واتساب</h4>
                     <p>استلام الإشعارات عبر واتساب</p>
                 </div>
-                <div class="toggle-switch" id="whatsappNotifToggle" onclick="toggleSetting('whatsappNotif')"></div>
+                <div class="toggle-switch" id="whatsappNotificationsToggle" onclick="toggleSetting('whatsappNotifications')"></div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>إشعارات SMS</h4>
+                    <p>إرسال رسائل نصية (قد تطبق رسوم)</p>
+                </div>
+                <div class="toggle-switch" id="smsNotificationsToggle" onclick="toggleSetting('smsNotifications')"></div>
             </div>
 
             <div class="form-group">
                 <label>أحداث الإشعارات</label>
-                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px;">
+                <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px;">
                     <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" checked> طلبات تسجيل جديدة
+                        <input type="checkbox" id="notifyNewRequest" checked onchange="markAsUnsaved()"> طلبات تسجيل جديدة
                     </label>
                     <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" checked> مراسلات واردة
+                        <input type="checkbox" id="notifyNewTracking" checked onchange="markAsUnsaved()"> مراسلات واردة
                     </label>
                     <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" checked> تقارير مكتملة
+                        <input type="checkbox" id="notifyReports" checked onchange="markAsUnsaved()"> تقارير مكتملة
                     </label>
                     <label style="display: flex; align-items: center; gap: 5px;">
-                        <input type="checkbox" checked> مواعيد نهائية
+                        <input type="checkbox" id="notifyDeadlines" checked onchange="markAsUnsaved()"> مواعيد نهائية
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="notifyNewMember" onchange="markAsUnsaved()"> أعضاء جدد
+                    </label>
+                    <label style="display: flex; align-items: center; gap: 5px;">
+                        <input type="checkbox" id="notifyFinance" onchange="markAsUnsaved()"> معاملات مالية
                     </label>
                 </div>
+            </div>
+
+            <div class="form-group">
+                <label>وقت التذكير قبل الموعد النهائي (بالساعات)</label>
+                <input type="number" id="deadlineReminder" value="24" min="1" max="168" onchange="markAsUnsaved()">
             </div>
 
             <div class="btn-group">
                 <button class="btn" onclick="saveNotificationSettings()">
                     <i class="fas fa-save"></i>
-                    حفظ الإعدادات
+                    حفظ إعدادات الإشعارات
                 </button>
             </div>
         </div>
@@ -1074,35 +1408,69 @@
                 <h3><i class="fas fa-coins"></i> الإعدادات المالية</h3>
             </div>
 
+            <div class="settings-description">
+                <i class="fas fa-info-circle"></i>
+                إعدادات النظام المالي والعملات
+            </div>
+
             <div class="form-row">
                 <div class="form-group">
                     <label>العملة الأساسية</label>
-                    <select id="currency">
+                    <select id="currency" onchange="markAsUnsaved()">
                         <option value="EGP">جنيه مصري (EGP)</option>
                         <option value="USD">دولار أمريكي (USD)</option>
+                        <option value="EUR">يورو (EUR)</option>
+                        <option value="SAR">ريال سعودي (SAR)</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>الضريبة (%)</label>
-                    <input type="number" id="taxRate" value="14" step="0.1">
+                    <label>رمز العملة</label>
+                    <input type="text" id="currencySymbol" value="ج.م" maxlength="5" onchange="markAsUnsaved()">
                 </div>
             </div>
 
             <div class="form-row">
                 <div class="form-group">
-                    <label>رسوم العضوية</label>
-                    <input type="number" id="membershipFee" value="500">
+                    <label>الضريبة (%)</label>
+                    <input type="number" id="taxRate" value="14" step="0.1" min="0" max="100" onchange="markAsUnsaved()">
                 </div>
                 <div class="form-group">
-                    <label>الحد الأدنى للخزنة</label>
-                    <input type="number" id="minBalance" value="1000">
+                    <label>رسوم العضوية الافتراضية</label>
+                    <input type="number" id="defaultMembershipFee" value="500" step="10" min="0" onchange="markAsUnsaved()">
                 </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>الحد الأدنى للخزنة</label>
+                    <input type="number" id="minTreasuryBalance" value="1000" step="100" min="0" onchange="markAsUnsaved()">
+                </div>
+                <div class="form-group">
+                    <label>الحد الأقصى للمصروفات بدون موافقة</label>
+                    <input type="number" id="maxExpenseWithoutApproval" value="5000" step="100" min="0" onchange="markAsUnsaved()">
+                </div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>السماح بالمعاملات بالعملات الأجنبية</h4>
+                    <p>إمكانية إضافة معاملات بعملات غير العملة الأساسية</p>
+                </div>
+                <div class="toggle-switch" id="foreignCurrencyToggle" onclick="toggleSetting('foreignCurrency')"></div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>إشعار بانخفاض الرصيد</h4>
+                    <p>إرسال إشعار عندما يقل رصيد الخزنة عن الحد الأدنى</p>
+                </div>
+                <div class="toggle-switch active" id="lowBalanceAlertToggle" onclick="toggleSetting('lowBalanceAlert')"></div>
             </div>
 
             <div class="btn-group">
                 <button class="btn" onclick="saveFinanceSettings()">
                     <i class="fas fa-save"></i>
-                    حفظ الإعدادات
+                    حفظ الإعدادات المالية
                 </button>
             </div>
         </div>
@@ -1113,17 +1481,22 @@
                 <h3><i class="fas fa-code"></i> الإعدادات المتقدمة</h3>
             </div>
 
-            <div class="option-row">
-                <div class="option-info">
-                    <h4>وضع التصحيح</h4>
-                    <p>إظهار أخطاء النظام للتقنيين</p>
-                </div>
-                <div class="toggle-switch" id="debugToggle" onclick="toggleSetting('debug')"></div>
+            <div class="settings-description">
+                <i class="fas fa-exclamation-triangle" style="color: #f59e0b;"></i>
+                تحذير: هذه الإعدادات تؤثر على أداء النظام، يرجى التعامل معها بحذر
             </div>
 
             <div class="option-row">
                 <div class="option-info">
-                    <h4>تسجيل الأحداث</h4>
+                    <h4>وضع التصحيح (Debug Mode)</h4>
+                    <p>إظهار أخطاء النظام للتقنيين</p>
+                </div>
+                <div class="toggle-switch" id="debugModeToggle" onclick="toggleSetting('debugMode')"></div>
+            </div>
+
+            <div class="option-row">
+                <div class="option-info">
+                    <h4>تسجيل الأحداث (Logging)</h4>
                     <p>حفظ سجل كامل لجميع الأنشطة</p>
                 </div>
                 <div class="toggle-switch active" id="loggingToggle" onclick="toggleSetting('logging')"></div>
@@ -1131,16 +1504,34 @@
 
             <div class="form-group">
                 <label>عدد الأيام للاحتفاظ بالسجلات</label>
-                <input type="number" id="logRetention" value="30" min="7" max="365">
+                <input type="number" id="logRetention" value="30" min="7" max="365" onchange="markAsUnsaved()">
+            </div>
+
+            <div class="form-group">
+                <label>النسخ الاحتياطي التلقائي</label>
+                <select id="backupSchedule" onchange="markAsUnsaved()">
+                    <option value="daily">يومي</option>
+                    <option value="weekly" selected>أسبوعي</option>
+                    <option value="monthly">شهري</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>عدد النسخ الاحتياطية المحفوظة</label>
+                <input type="number" id="backupCount" value="5" min="1" max="20" onchange="markAsUnsaved()">
             </div>
 
             <div class="btn-group">
-                <button class="btn" onclick="exportData()">
+                <button class="btn" onclick="exportSettings()">
                     <i class="fas fa-download"></i>
-                    تصدير البيانات
+                    تصدير الإعدادات
                 </button>
-                <button class="btn btn-danger" onclick="resetSystem()">
-                    <i class="fas fa-exclamation-triangle"></i>
+                <button class="btn btn-secondary" onclick="importSettings()">
+                    <i class="fas fa-upload"></i>
+                    استيراد إعدادات
+                </button>
+                <button class="btn btn-danger" onclick="resetToDefault()">
+                    <i class="fas fa-undo"></i>
                     إعادة ضبط المصنع
                 </button>
             </div>
@@ -1159,7 +1550,7 @@
     <script type="module">
         // ===== استيراد Firebase =====
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-        import { getDatabase, ref, get, onValue, update, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
+        import { getDatabase, ref, get, update, set } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-database.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCaPhRG_1c7Rsu5Ss_MUNqsE18Ky_nyEAA",
@@ -1174,6 +1565,69 @@
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
+        // ===== نظام الأمان المتقدم =====
+        (function() {
+            document.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                showSecurityAlert('🚫 القائمة محجوزة للنظام');
+                return false;
+            });
+
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'F12' || 
+                    (e.ctrlKey && e.shiftKey && e.key === 'I') ||
+                    (e.ctrlKey && e.shiftKey && e.key === 'J') ||
+                    (e.ctrlKey && e.key === 'U')) {
+                    e.preventDefault();
+                    showSecurityAlert('🚫 هذه الميزة غير متاحة');
+                    return false;
+                }
+            });
+
+            document.addEventListener('copy', function(e) {
+                e.preventDefault();
+                showSecurityAlert('📋 النسخ غير مسموح');
+            });
+
+            document.addEventListener('paste', function(e) {
+                e.preventDefault();
+                showSecurityAlert('📋 اللصق غير مسموح');
+            });
+
+            document.addEventListener('cut', function(e) {
+                e.preventDefault();
+            });
+
+            document.addEventListener('selectstart', function(e) {
+                e.preventDefault();
+                return false;
+            });
+
+            setInterval(function() {
+                const widthThreshold = window.outerWidth - window.innerWidth > 160;
+                const heightThreshold = window.outerHeight - window.innerHeight > 160;
+                
+                if (widthThreshold || heightThreshold) {
+                    document.body.innerHTML = `
+                        <div style="height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; background:#f8d7da; color:#721c24; font-family:'Cairo'; padding:20px;">
+                            <i class="fas fa-shield-alt" style="font-size:80px; margin-bottom:20px;"></i>
+                            <h1 style="font-size:32px;">🚫 تم إغلاق النظام</h1>
+                            <p style="font-size:18px;">لأسباب أمنية، تم إنهاء الجلسة</p>
+                            <button onclick="location.reload()" style="margin-top:20px; padding:10px 30px; background:#721c24; color:white; border:none; border-radius:5px; font-size:16px; cursor:pointer;">إعادة تحميل الصفحة</button>
+                        </div>
+                    `;
+                }
+            }, 1000);
+
+            function showSecurityAlert(message) {
+                const alert = document.createElement('div');
+                alert.className = 'security-alert';
+                alert.textContent = message;
+                document.body.appendChild(alert);
+                setTimeout(() => alert.remove(), 3000);
+            }
+        })();
+
         // ===== التحقق من تسجيل الدخول =====
         const currentUser = JSON.parse(sessionStorage.getItem('currentUser'));
         
@@ -1185,6 +1639,11 @@
         if (currentUser.role !== 'president') {
             window.location.href = 'dashboard.html';
         }
+
+        // ===== متغيرات عامة =====
+        let originalSettings = {};
+        let hasUnsavedChanges = false;
+        let activeTab = 'general';
 
         // ===== تحديث التاريخ والوقت =====
         function updateDateTime() {
@@ -1202,14 +1661,12 @@
         updateDateTime();
         setInterval(updateDateTime, 60000);
 
-        // ===== عرض معلومات المستخدم =====
+        // ===== عرض معلومات المستخدم في الشريط الجانبي =====
         function displayUserInfo() {
-            const userInfo = document.getElementById('userInfo');
+            const userInfo = document.getElementById('unionInfo');
             userInfo.innerHTML = `
-                <div class="user-avatar" onclick="window.location.href='profile.html'">
-                    ${currentUser?.profileImage ? 
-                        `<img src="${currentUser.profileImage}" alt="صورة المستخدم">` : 
-                        '<i class="fas fa-user-circle"></i>'}
+                <div class="union-logo">
+                    <i class="fas fa-users-cog"></i>
                 </div>
                 <h3>${currentUser?.fullName || 'مستخدم'}</h3>
                 <p>النقيب العام</p>
@@ -1221,30 +1678,149 @@
         }
         displayUserInfo();
 
-        // ===== تحميل الإعدادات =====
+        // ===== إضافة علامة مائية =====
+        function addWatermark() {
+            const watermark = document.createElement('div');
+            watermark.className = 'security-watermark';
+            watermark.textContent = (currentUser?.fullName || 'زائر') + ' - ' + new Date().toLocaleDateString('ar-EG');
+            document.body.appendChild(watermark);
+        }
+        addWatermark();
+
+        // ===== تحديث العلامة المائية =====
+        setInterval(function() {
+            const watermark = document.querySelector('.security-watermark');
+            if (watermark && currentUser) {
+                watermark.textContent = currentUser.fullName + ' - ' + new Date().toLocaleDateString('ar-EG') + ' - ' + new Date().toLocaleTimeString('ar-EG');
+            }
+        }, 60000);
+
+        // ===== تحميل الإعدادات من Firebase =====
         async function loadSettings() {
+            showLoading(true);
+            
             try {
                 const settingsRef = ref(database, 'system/settings');
                 const snapshot = await get(settingsRef);
                 
                 if (snapshot.exists()) {
-                    const settings = snapshot.val();
+                    originalSettings = snapshot.val();
                     
-                    // تعبئة الحقول
-                    if (settings.general) {
-                        document.getElementById('unionNameAr').value = settings.general.nameAr || '';
-                        document.getElementById('unionNameEn').value = settings.general.nameEn || '';
-                        document.getElementById('unionEmail').value = settings.general.email || '';
-                        document.getElementById('unionPhone').value = settings.general.phone || '';
-                        document.getElementById('unionAddress').value = settings.general.address || '';
+                    // تعبئة الإعدادات العامة
+                    if (originalSettings.general) {
+                        document.getElementById('unionNameAr').value = originalSettings.general.nameAr || '';
+                        document.getElementById('unionNameEn').value = originalSettings.general.nameEn || '';
+                        document.getElementById('unionShortName').value = originalSettings.general.shortName || '';
+                        document.getElementById('unionYear').value = originalSettings.general.year || '';
+                        document.getElementById('unionEmail').value = originalSettings.general.email || '';
+                        document.getElementById('unionPhone').value = originalSettings.general.phone || '';
+                        document.getElementById('unionFax').value = originalSettings.general.fax || '';
+                        document.getElementById('unionWebsite').value = originalSettings.general.website || '';
+                        document.getElementById('unionAddress').value = originalSettings.general.address || '';
+                        document.getElementById('unionDescription').value = originalSettings.general.description || '';
+                        document.getElementById('unionRegister').value = originalSettings.general.register || '';
+                        document.getElementById('unionTax').value = originalSettings.general.tax || '';
                         
-                        if (settings.general.logoUrl) {
-                            document.getElementById('logoPreviewImg').src = settings.general.logoUrl;
+                        if (originalSettings.general.logoUrl) {
+                            document.getElementById('logoUrl').value = originalSettings.general.logoUrl;
                         }
                     }
+                    
+                    // تعبئة إعدادات المظهر
+                    if (originalSettings.appearance) {
+                        document.getElementById('baseFontSize').value = originalSettings.appearance.baseFontSize || '16px';
+                        document.getElementById('fontFamily').value = originalSettings.appearance.fontFamily || 'Cairo';
+                        document.getElementById('buttonStyle').value = originalSettings.appearance.buttonStyle || 'rounded';
+                        document.getElementById('cardStyle').value = originalSettings.appearance.cardStyle || 'shadow';
+                        
+                        if (originalSettings.appearance.primaryColor) {
+                            document.getElementById('primaryColorPicker').value = originalSettings.appearance.primaryColor;
+                            document.getElementById('primaryColorValue').value = originalSettings.appearance.primaryColor;
+                        }
+                        
+                        if (originalSettings.appearance.secondaryColor) {
+                            document.getElementById('secondaryColorPicker').value = originalSettings.appearance.secondaryColor;
+                            document.getElementById('secondaryColorValue').value = originalSettings.appearance.secondaryColor;
+                        }
+                        
+                        // تحديث التبديلات
+                        updateToggle('animationsToggle', originalSettings.appearance.animations);
+                        updateToggle('hoverEffectsToggle', originalSettings.appearance.hoverEffects);
+                    }
+                    
+                    // تعبئة إعدادات الأمان
+                    if (originalSettings.security) {
+                        document.getElementById('sessionTimeout').value = originalSettings.security.sessionTimeout || 30;
+                        document.getElementById('maxLoginAttempts').value = originalSettings.security.maxLoginAttempts || 5;
+                        document.getElementById('allowedIPs').value = originalSettings.security.allowedIPs || '';
+                        
+                        updateToggle('twoFAToggle', originalSettings.security.twoFA);
+                        updateToggle('biometricToggle', originalSettings.security.biometric);
+                        updateToggle('devToolsToggle', originalSettings.security.devTools);
+                        updateToggle('copyToggle', originalSettings.security.preventCopy);
+                        updateToggle('watermarkToggle', originalSettings.security.watermark);
+                    }
+                    
+                    // تعبئة إعدادات الإشعارات
+                    if (originalSettings.notifications) {
+                        updateToggle('inAppNotificationsToggle', originalSettings.notifications.inApp);
+                        updateToggle('emailNotificationsToggle', originalSettings.notifications.email);
+                        updateToggle('whatsappNotificationsToggle', originalSettings.notifications.whatsapp);
+                        updateToggle('smsNotificationsToggle', originalSettings.notifications.sms);
+                        
+                        document.getElementById('notifyNewRequest').checked = originalSettings.notifications.newRequest !== false;
+                        document.getElementById('notifyNewTracking').checked = originalSettings.notifications.newTracking !== false;
+                        document.getElementById('notifyReports').checked = originalSettings.notifications.reports !== false;
+                        document.getElementById('notifyDeadlines').checked = originalSettings.notifications.deadlines !== false;
+                        document.getElementById('notifyNewMember').checked = originalSettings.notifications.newMember || false;
+                        document.getElementById('notifyFinance').checked = originalSettings.notifications.finance || false;
+                        
+                        document.getElementById('deadlineReminder').value = originalSettings.notifications.deadlineReminder || 24;
+                    }
+                    
+                    // تعبئة الإعدادات المالية
+                    if (originalSettings.finance) {
+                        document.getElementById('currency').value = originalSettings.finance.currency || 'EGP';
+                        document.getElementById('currencySymbol').value = originalSettings.finance.currencySymbol || 'ج.م';
+                        document.getElementById('taxRate').value = originalSettings.finance.taxRate || 14;
+                        document.getElementById('defaultMembershipFee').value = originalSettings.finance.defaultMembershipFee || 500;
+                        document.getElementById('minTreasuryBalance').value = originalSettings.finance.minTreasuryBalance || 1000;
+                        document.getElementById('maxExpenseWithoutApproval').value = originalSettings.finance.maxExpenseWithoutApproval || 5000;
+                        
+                        updateToggle('foreignCurrencyToggle', originalSettings.finance.foreignCurrency);
+                        updateToggle('lowBalanceAlertToggle', originalSettings.finance.lowBalanceAlert);
+                    }
+                    
+                    // تعبئة الإعدادات المتقدمة
+                    if (originalSettings.advanced) {
+                        updateToggle('debugModeToggle', originalSettings.advanced.debugMode);
+                        updateToggle('loggingToggle', originalSettings.advanced.logging);
+                        
+                        document.getElementById('logRetention').value = originalSettings.advanced.logRetention || 30;
+                        document.getElementById('backupSchedule').value = originalSettings.advanced.backupSchedule || 'weekly';
+                        document.getElementById('backupCount').value = originalSettings.advanced.backupCount || 5;
+                    }
                 }
+                
+                showMessage('✅ تم تحميل الإعدادات بنجاح', 'success');
+                
             } catch (error) {
                 console.error('Error loading settings:', error);
+                showMessage('❌ حدث خطأ في تحميل الإعدادات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // ===== تحديث حالة التبديل =====
+        function updateToggle(elementId, value) {
+            const toggle = document.getElementById(elementId);
+            if (toggle) {
+                if (value) {
+                    toggle.classList.add('active');
+                } else {
+                    toggle.classList.remove('active');
+                }
             }
         }
 
@@ -1255,99 +1831,398 @@
             
             event.target.classList.add('active');
             document.getElementById(`${tab}Tab`).classList.add('active');
+            activeTab = tab;
         };
 
-        // ===== معاينة الشعار =====
-        window.previewLogo = function(input) {
-            if (input.files && input.files[0]) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.getElementById('logoPreviewImg').src = e.target.result;
-                };
-                reader.readAsDataURL(input.files[0]);
-            }
+        // ===== تتبع التغييرات غير المحفوظة =====
+        window.markAsUnsaved = function() {
+            hasUnsavedChanges = true;
+            document.getElementById('unsavedChanges').classList.add('show');
+        };
+
+        window.resetUnsavedChanges = function() {
+            hasUnsavedChanges = false;
+            document.getElementById('unsavedChanges').classList.remove('show');
+            loadSettings(); // إعادة تحميل الإعدادات الأصلية
         };
 
         // ===== دوال الألوان =====
         window.setPrimaryColor = function(color) {
             document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
             event.target.classList.add('active');
-            document.documentElement.style.setProperty('--primary-color', color);
+            document.getElementById('primaryColorPicker').value = color;
+            document.getElementById('primaryColorValue').value = color;
+            markAsUnsaved();
         };
 
         window.setSecondaryColor = function(color) {
             document.querySelectorAll('.color-option').forEach(opt => opt.classList.remove('active'));
             event.target.classList.add('active');
-            document.documentElement.style.setProperty('--secondary-color', color);
+            document.getElementById('secondaryColorPicker').value = color;
+            document.getElementById('secondaryColorValue').value = color;
+            markAsUnsaved();
         };
 
         // ===== دوال التبديل =====
-        window.toggleDarkMode = function() {
-            const toggle = document.getElementById('darkModeToggle');
-            toggle.classList.toggle('active');
-        };
-
         window.toggleSetting = function(setting) {
             const toggle = document.getElementById(setting + 'Toggle');
             toggle.classList.toggle('active');
+            markAsUnsaved();
         };
 
-        // ===== حفظ الإعدادات =====
+        // ===== رفع الشعار =====
+        window.handleLogoUpload = function(input) {
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                // محاكاة رفع الصورة
+                showMessage('📤 جاري رفع الشعار...', 'info');
+                setTimeout(() => {
+                    markAsUnsaved();
+                    showMessage('✅ تم اختيار الشعار بنجاح', 'success');
+                }, 1000);
+            }
+        };
+
+        // ===== حفظ الإعدادات العامة =====
         window.saveGeneralSettings = async function() {
             showLoading(true);
 
             try {
-                const settings = {
+                const updates = {
                     general: {
                         nameAr: document.getElementById('unionNameAr').value,
                         nameEn: document.getElementById('unionNameEn').value,
+                        shortName: document.getElementById('unionShortName').value,
+                        year: document.getElementById('unionYear').value,
                         email: document.getElementById('unionEmail').value,
                         phone: document.getElementById('unionPhone').value,
+                        fax: document.getElementById('unionFax').value,
+                        website: document.getElementById('unionWebsite').value,
                         address: document.getElementById('unionAddress').value,
-                        logoUrl: document.getElementById('logoPreviewImg').src
+                        description: document.getElementById('unionDescription').value,
+                        register: document.getElementById('unionRegister').value,
+                        tax: document.getElementById('unionTax').value,
+                        logoUrl: document.getElementById('logoUrl').value
                     },
                     updatedAt: new Date().toISOString(),
                     updatedBy: currentUser.userId
                 };
 
-                await update(ref(database, 'system/settings'), settings);
-                showMessage('✅ تم حفظ الإعدادات بنجاح', 'success');
+                await update(ref(database, 'system/settings'), updates);
+                
+                // تحديث الإعدادات الأصلية
+                originalSettings = { ...originalSettings, ...updates };
+                
+                showMessage('✅ تم حفظ الإعدادات العامة بنجاح', 'success');
+                
             } catch (error) {
-                console.error('Error saving settings:', error);
+                console.error('Error saving general settings:', error);
                 showMessage('❌ حدث خطأ في حفظ الإعدادات', 'error');
             } finally {
                 showLoading(false);
             }
         };
 
-        window.saveAppearanceSettings = function() {
-            showMessage('✅ تم حفظ إعدادات المظهر', 'success');
-        };
+        // ===== حفظ إعدادات المظهر =====
+        window.saveAppearanceSettings = async function() {
+            showLoading(true);
 
-        window.saveSecuritySettings = function() {
-            showMessage('✅ تم حفظ إعدادات الأمان', 'success');
-        };
+            try {
+                const updates = {
+                    appearance: {
+                        primaryColor: document.getElementById('primaryColorValue').value,
+                        secondaryColor: document.getElementById('secondaryColorValue').value,
+                        baseFontSize: document.getElementById('baseFontSize').value,
+                        fontFamily: document.getElementById('fontFamily').value,
+                        buttonStyle: document.getElementById('buttonStyle').value,
+                        cardStyle: document.getElementById('cardStyle').value,
+                        animations: document.getElementById('animationsToggle').classList.contains('active'),
+                        hoverEffects: document.getElementById('hoverEffectsToggle').classList.contains('active')
+                    },
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: currentUser.userId
+                };
 
-        window.saveNotificationSettings = function() {
-            showMessage('✅ تم حفظ إعدادات الإشعارات', 'success');
-        };
-
-        window.saveFinanceSettings = function() {
-            showMessage('✅ تم حفظ الإعدادات المالية', 'success');
-        };
-
-        // ===== دوال إضافية =====
-        window.exportData = function() {
-            showMessage('📥 جاري تجهيز البيانات للتصدير...', 'info');
-        };
-
-        window.resetSystem = function() {
-            if (confirm('⚠️ هل أنت متأكد؟ سيتم إعادة تعيين جميع إعدادات النظام!' + 
-                       '\nلا يمكن التراجع عن هذا الإجراء.')) {
-                showMessage('✅ تم إعادة تعيين النظام', 'success');
+                await update(ref(database, 'system/settings'), updates);
+                
+                // تحديث الإعدادات الأصلية
+                originalSettings = { ...originalSettings, ...updates };
+                
+                showMessage('✅ تم حفظ إعدادات المظهر بنجاح', 'success');
+                
+            } catch (error) {
+                console.error('Error saving appearance settings:', error);
+                showMessage('❌ حدث خطأ في حفظ الإعدادات', 'error');
+            } finally {
+                showLoading(false);
             }
         };
 
+        // ===== حفظ إعدادات الأمان =====
+        window.saveSecuritySettings = async function() {
+            showLoading(true);
+
+            try {
+                const updates = {
+                    security: {
+                        twoFA: document.getElementById('twoFAToggle').classList.contains('active'),
+                        biometric: document.getElementById('biometricToggle').classList.contains('active'),
+                        devTools: document.getElementById('devToolsToggle').classList.contains('active'),
+                        preventCopy: document.getElementById('copyToggle').classList.contains('active'),
+                        watermark: document.getElementById('watermarkToggle').classList.contains('active'),
+                        sessionTimeout: parseInt(document.getElementById('sessionTimeout').value),
+                        maxLoginAttempts: parseInt(document.getElementById('maxLoginAttempts').value),
+                        allowedIPs: document.getElementById('allowedIPs').value
+                    },
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: currentUser.userId
+                };
+
+                await update(ref(database, 'system/settings'), updates);
+                
+                // تحديث الإعدادات الأصلية
+                originalSettings = { ...originalSettings, ...updates };
+                
+                showMessage('✅ تم حفظ إعدادات الأمان بنجاح', 'success');
+                
+            } catch (error) {
+                console.error('Error saving security settings:', error);
+                showMessage('❌ حدث خطأ في حفظ الإعدادات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // ===== حفظ إعدادات الإشعارات =====
+        window.saveNotificationSettings = async function() {
+            showLoading(true);
+
+            try {
+                const updates = {
+                    notifications: {
+                        inApp: document.getElementById('inAppNotificationsToggle').classList.contains('active'),
+                        email: document.getElementById('emailNotificationsToggle').classList.contains('active'),
+                        whatsapp: document.getElementById('whatsappNotificationsToggle').classList.contains('active'),
+                        sms: document.getElementById('smsNotificationsToggle').classList.contains('active'),
+                        newRequest: document.getElementById('notifyNewRequest').checked,
+                        newTracking: document.getElementById('notifyNewTracking').checked,
+                        reports: document.getElementById('notifyReports').checked,
+                        deadlines: document.getElementById('notifyDeadlines').checked,
+                        newMember: document.getElementById('notifyNewMember').checked,
+                        finance: document.getElementById('notifyFinance').checked,
+                        deadlineReminder: parseInt(document.getElementById('deadlineReminder').value)
+                    },
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: currentUser.userId
+                };
+
+                await update(ref(database, 'system/settings'), updates);
+                
+                // تحديث الإعدادات الأصلية
+                originalSettings = { ...originalSettings, ...updates };
+                
+                showMessage('✅ تم حفظ إعدادات الإشعارات بنجاح', 'success');
+                
+            } catch (error) {
+                console.error('Error saving notification settings:', error);
+                showMessage('❌ حدث خطأ في حفظ الإعدادات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // ===== حفظ الإعدادات المالية =====
+        window.saveFinanceSettings = async function() {
+            showLoading(true);
+
+            try {
+                const updates = {
+                    finance: {
+                        currency: document.getElementById('currency').value,
+                        currencySymbol: document.getElementById('currencySymbol').value,
+                        taxRate: parseFloat(document.getElementById('taxRate').value),
+                        defaultMembershipFee: parseInt(document.getElementById('defaultMembershipFee').value),
+                        minTreasuryBalance: parseInt(document.getElementById('minTreasuryBalance').value),
+                        maxExpenseWithoutApproval: parseInt(document.getElementById('maxExpenseWithoutApproval').value),
+                        foreignCurrency: document.getElementById('foreignCurrencyToggle').classList.contains('active'),
+                        lowBalanceAlert: document.getElementById('lowBalanceAlertToggle').classList.contains('active')
+                    },
+                    updatedAt: new Date().toISOString(),
+                    updatedBy: currentUser.userId
+                };
+
+                await update(ref(database, 'system/settings'), updates);
+                
+                // تحديث الإعدادات الأصلية
+                originalSettings = { ...originalSettings, ...updates };
+                
+                showMessage('✅ تم حفظ الإعدادات المالية بنجاح', 'success');
+                
+            } catch (error) {
+                console.error('Error saving finance settings:', error);
+                showMessage('❌ حدث خطأ في حفظ الإعدادات', 'error');
+            } finally {
+                showLoading(false);
+            }
+        };
+
+        // ===== حفظ كل الإعدادات =====
+        window.saveAllSettings = async function() {
+            await saveGeneralSettings();
+            await saveAppearanceSettings();
+            await saveSecuritySettings();
+            await saveNotificationSettings();
+            await saveFinanceSettings();
+            
+            hasUnsavedChanges = false;
+            document.getElementById('unsavedChanges').classList.remove('show');
+        };
+
+        // ===== تصدير الإعدادات =====
+        window.exportSettings = async function() {
+            try {
+                const settingsRef = ref(database, 'system/settings');
+                const snapshot = await get(settingsRef);
+                
+                if (snapshot.exists()) {
+                    const data = snapshot.val();
+                    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = `itws-settings-${new Date().toISOString().split('T')[0]}.json`;
+                    a.click();
+                    
+                    showMessage('✅ تم تصدير الإعدادات بنجاح', 'success');
+                }
+            } catch (error) {
+                console.error('Error exporting settings:', error);
+                showMessage('❌ حدث خطأ في تصدير الإعدادات', 'error');
+            }
+        };
+
+        // ===== استيراد الإعدادات =====
+        window.importSettings = function() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = async function(e) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                
+                reader.onload = async function(e) {
+                    try {
+                        const settings = JSON.parse(e.target.result);
+                        
+                        // حفظ في Firebase
+                        await set(ref(database, 'system/settings'), {
+                            ...settings,
+                            importedAt: new Date().toISOString(),
+                            importedBy: currentUser.userId
+                        });
+                        
+                        showMessage('✅ تم استيراد الإعدادات بنجاح', 'success');
+                        
+                        // إعادة تحميل الصفحة
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                        
+                    } catch (error) {
+                        console.error('Error importing settings:', error);
+                        showMessage('❌ ملف غير صالح', 'error');
+                    }
+                };
+                
+                reader.readAsText(file);
+            };
+            input.click();
+        };
+
+        // ===== إعادة ضبط المصنع =====
+        window.resetToDefault = function() {
+            if (confirm('⚠️ هل أنت متأكد؟ سيتم إعادة جميع الإعدادات إلى الوضع الافتراضي!')) {
+                showLoading(true);
+                
+                // إعدادات افتراضية
+                const defaultSettings = {
+                    general: {
+                        nameAr: 'نقابة تكنولوجيا المعلومات والبرمجيات',
+                        nameEn: 'ITWS Union',
+                        shortName: 'ITWS',
+                        email: 'info@itws.org',
+                        phone: '01068865596',
+                        address: 'القاهرة - جمهورية مصر العربية'
+                    },
+                    appearance: {
+                        primaryColor: '#667eea',
+                        secondaryColor: '#764ba2',
+                        baseFontSize: '16px',
+                        fontFamily: 'Cairo',
+                        buttonStyle: 'rounded',
+                        cardStyle: 'shadow',
+                        animations: true,
+                        hoverEffects: true
+                    },
+                    security: {
+                        twoFA: true,
+                        biometric: true,
+                        devTools: true,
+                        preventCopy: true,
+                        watermark: true,
+                        sessionTimeout: 30,
+                        maxLoginAttempts: 5
+                    },
+                    notifications: {
+                        inApp: true,
+                        email: true,
+                        whatsapp: false,
+                        sms: false,
+                        newRequest: true,
+                        newTracking: true,
+                        reports: true,
+                        deadlines: true,
+                        deadlineReminder: 24
+                    },
+                    finance: {
+                        currency: 'EGP',
+                        currencySymbol: 'ج.م',
+                        taxRate: 14,
+                        defaultMembershipFee: 500,
+                        minTreasuryBalance: 1000,
+                        maxExpenseWithoutApproval: 5000,
+                        foreignCurrency: false,
+                        lowBalanceAlert: true
+                    },
+                    advanced: {
+                        debugMode: false,
+                        logging: true,
+                        logRetention: 30,
+                        backupSchedule: 'weekly',
+                        backupCount: 5
+                    },
+                    resetAt: new Date().toISOString(),
+                    resetBy: currentUser.userId
+                };
+                
+                set(ref(database, 'system/settings'), defaultSettings)
+                    .then(() => {
+                        showMessage('✅ تم إعادة تعيين الإعدادات بنجاح', 'success');
+                        setTimeout(() => {
+                            window.location.reload();
+                        }, 1500);
+                    })
+                    .catch((error) => {
+                        console.error('Error resetting settings:', error);
+                        showMessage('❌ حدث خطأ في إعادة التعيين', 'error');
+                    })
+                    .finally(() => {
+                        showLoading(false);
+                    });
+            }
+        };
+
+        // ===== عرض المتصلين =====
         window.showOnlineUsers = async function() {
             const usersRef = ref(database, 'users');
             const snapshot = await get(usersRef);
@@ -1355,7 +2230,7 @@
 
             const users = snapshot.val();
             const online = Object.values(users).filter(u => u.online === true).length;
-            alert(`عدد المتصلين الآن: ${online}`);
+            showMessage(`🟢 عدد المتصلين الآن: ${online}`, 'info');
         };
 
         // ===== دوال مساعدة =====
@@ -1386,6 +2261,14 @@
 
         // ===== تحميل الإعدادات عند فتح الصفحة =====
         loadSettings();
+
+        // ===== تحذير عند محاولة الخروج مع تغييرات غير محفوظة =====
+        window.addEventListener('beforeunload', function(e) {
+            if (hasUnsavedChanges) {
+                e.preventDefault();
+                e.returnValue = 'لديك تغييرات غير محفوظة. هل تريد المغادرة؟';
+            }
+        });
     </script>
 </body>
 </html>
